@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>component-job</artifactId>
+	<packaging>jar</packaging>
+	<name>component-job</name>
+	<url>http://www.jahhan.net</url>
+	<parent>
+		<groupId>net.jahhan</groupId>
+		<artifactId>jahhan-parent</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.2.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>net.jahhan</groupId>
+			<artifactId>base-util</artifactId>
+			<version>${framework.version}</version>
+		</dependency>
+	</dependencies>
+</project>

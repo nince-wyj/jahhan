@@ -1,0 +1,2 @@
+dbTransaction=net.jahhan.dubbo.filter.TransactionFilter
+dbLogistics=net.jahhan.dubbo.filter.DBLogisticsFilter
