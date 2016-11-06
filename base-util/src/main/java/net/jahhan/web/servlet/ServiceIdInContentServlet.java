@@ -19,7 +19,7 @@ import net.jahhan.web.servlet.decodehandler.SICDecodeDataHandler;
  * @author nince
  */
 @Singleton
-@WebServlet(name = "serviceInContentServlet", urlPatterns = { "/sis" })
+@WebServlet(name = "serviceInContentServlet", urlPatterns = { "/sic" })
 public class ServiceIdInContentServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 7437808236758903291L;

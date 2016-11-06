@@ -39,7 +39,6 @@ import net.jahhan.web.action.WriteHelper;
 import net.jahhan.web.servlet.listener.AppAsyncListener;
 
 /**
- * 适配老接口，对前端协议进行适配解码: 车位管家协议适配
  * 
  * @author nince
  */
