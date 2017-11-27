@@ -20,14 +20,14 @@ import net.jahhan.constant.SysConfiguration;
 import net.jahhan.constant.SystemErrorCode;
 import net.jahhan.constant.enumeration.DBConnectionType;
 import net.jahhan.constant.enumeration.ThreadPoolEnum;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.context.InvocationContext;
 import net.jahhan.db.conn.DBConnFactory;
 import net.jahhan.db.dbconnexecutor.DBConnExecutorFactory;
 import net.jahhan.exception.FrameworkException;
 import net.jahhan.factory.ThreadPoolFactory;
-import net.jahhan.handler.SerializerHandler;
 import net.jahhan.mq.annotation.MqListener;
+import net.jahhan.spi.SerializerHandler;
 import net.jahhan.utils.ClassScaner;
 import net.jahhan.utils.JsonUtil;
 
@@ -43,7 +43,7 @@ public abstract class MqScaner {
 	@Inject
 	private ThreadPoolFactory threadPoolFactory;
 	@Inject
-	@Named("hessian")
+	@Named("java")
 	private SerializerHandler serializer;
 
 	public void scan() {
@@ -161,7 +161,7 @@ public abstract class MqScaner {
 		}
 
 		public void run() {
-			ApplicationContext applicationContext = ApplicationContext.CTX;
+			BaseContext applicationContext = BaseContext.CTX;
 			InvocationContext invocationContext = new InvocationContext(null, null);
 			applicationContext.getThreadLocalUtil().openThreadLocal(invocationContext);
 			invocationContext.setConnectionType(dBConnectionType);

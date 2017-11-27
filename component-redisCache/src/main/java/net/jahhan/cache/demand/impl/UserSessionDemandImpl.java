@@ -10,7 +10,7 @@ import net.jahhan.cache.repository.common.HttpSessionRepository;
 import net.jahhan.constant.SysConfiguration;
 import net.jahhan.constant.SystemErrorCode;
 import net.jahhan.constant.enumeration.SessionStrategyEnum;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.demand.HostDemand;
 import net.jahhan.demand.UserSessionDemand;
 import net.jahhan.exception.FrameworkException;
@@ -80,7 +80,7 @@ public class UserSessionDemandImpl extends HttpSessionRepository implements User
 	@Override
 	public void wslogin(Long loginRoleType, Long userId, String wsSessionId, String path) {
 		String bigKey = loginRoleType + ":" + userId + "_wssession";
-		HostDemand hostDemand = ApplicationContext.CTX.getHostManager();
+		HostDemand hostDemand = BaseContext.CTX.getHostManager();
 		String applicationWeb, applicationName, serverName;
 		if (null != hostDemand) {
 			applicationWeb = hostDemand.getThisHost();
@@ -110,7 +110,7 @@ public class UserSessionDemandImpl extends HttpSessionRepository implements User
 	public void wslogout(Long loginRoleType, Long userId, String wsSessionId, String path) {
 		String bigKey = loginRoleType + ":" + userId + "_wssession";
 		String sessionId = get(bigKey, path);
-		HostDemand hostDemand = ApplicationContext.CTX.getHostManager();
+		HostDemand hostDemand = BaseContext.CTX.getHostManager();
 		String applicationWeb, applicationName, serverName;
 		if (null != hostDemand) {
 			applicationWeb = hostDemand.getThisHost();

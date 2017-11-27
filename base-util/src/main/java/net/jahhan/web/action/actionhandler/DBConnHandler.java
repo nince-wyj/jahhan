@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.jahhan.constant.enumeration.DBConnectionType;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.context.InvocationContext;
 import net.jahhan.db.dbconnexecutor.DBConnExecutorFactory;
 import net.jahhan.exception.BussinessException;
@@ -31,7 +31,7 @@ public class DBConnHandler extends ActionHandler {
 
 	@Override
 	public void execute() {
-		ApplicationContext applicationContext = ApplicationContext.CTX;
+		BaseContext applicationContext = BaseContext.CTX;
 		InvocationContext invocationContext = applicationContext.getInvocationContext();
 		invocationContext.setConnectionType(dBConnectionType);
 		DBConnExecutorFactory connExec = new DBConnExecutorFactory(dBConnectionType);

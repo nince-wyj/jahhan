@@ -20,7 +20,7 @@ import com.google.inject.Module;
 
 import net.jahhan.constant.SysConfiguration;
 import net.jahhan.constant.SystemErrorCode;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.exception.FrameworkException;
 import net.jahhan.handler.WorkHandler;
 import net.jahhan.utils.ClassScaner;
@@ -43,7 +43,7 @@ public class InitMethod {
 	public void init() {
 		Map<Integer, WorkHandler> workHandlerMap = new TreeMap<>();
 		Set<WorkHandler> lazyWorkHandlerSet = new HashSet<>();
-		injector.getInstance(ApplicationContext.class);
+		injector.getInstance(BaseContext.class);
 		try {
 			String[] packages = new String[] { "net.jahhan.init.initer",
 					SysConfiguration.getCompanyName() + ".init.initer" };

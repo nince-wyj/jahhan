@@ -13,8 +13,10 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.jahhan.utils.properties.PropertiesInit;
+
 public class PropertiesUtil {
-	private final static Logger logger = LoggerFactory.getLogger("PropertiesHolder");
+	private final static Logger logger = LoggerFactory.getLogger("PropertiesUtil");
 	private static Map<String, Properties> propertiesMap = new HashMap<>();
 
 	static {
@@ -35,15 +37,18 @@ public class PropertiesUtil {
 		for (File f : tempList) {
 			String fileName = f.getName();
 			if (f.isFile() && fileName.endsWith(".properties")) {
-				if (fileName.replace(".properties", "").equals("system")) {
-					Properties sysProperties = load(f.getName());
+				Properties properties = load(f.getName());
+				String fileSortName = fileName.replace(".properties", "");
+				if (fileSortName.equals("system")) {
+					Properties sysProperties = properties;
 					Iterator<Object> iterator = sysProperties.keySet().iterator();
 					while (iterator.hasNext()) {
 						String key = (String) iterator.next();
 						System.setProperty(key, sysProperties.getProperty(key));
 					}
 				} else {
-					propertiesMap.put(fileName.replace(".properties", ""), load(f.getName()));
+					PropertiesInit.reset(fileSortName, properties);
+					propertiesMap.put(fileSortName, PropertiesInit.get(fileSortName, properties));
 				}
 				logger.debug("加载文件：" + fileName);
 			}
@@ -51,19 +56,23 @@ public class PropertiesUtil {
 		propertiesMap.put("system", System.getProperties());
 	}
 
-	public static Properties getProperties(String fileName) {
-		return propertiesMap.get(fileName);
+	public static Properties getProperties(String fileSortName) {
+		Properties properties = propertiesMap.get(fileSortName);
+		if (null == properties) {
+			return PropertiesInit.get(fileSortName, new Properties());
+		}
+		return properties;
 	}
 
-	public static String get(String fileName, String key) {
-		Properties properties = propertiesMap.get(fileName);
+	public static String get(String fileSortName, String key) {
+		Properties properties = propertiesMap.get(fileSortName);
 		if (null != properties) {
 			return properties.getProperty(key);
 		}
 		return null;
 	}
-	
-	public static Properties load(String fileName) {
+
+	private static Properties load(String fileName) {
 		Properties props = new Properties();
 
 		try (InputStream is = PropertiesUtil.class.getClassLoader().getResourceAsStream(fileName)) {

@@ -3,7 +3,7 @@ package net.jahhan.dblogistics.publish;
 import org.apache.commons.lang3.StringUtils;
 
 import net.jahhan.constant.enumeration.DBLogisticsConnectionType;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.context.InvocationContext;
 import net.jahhan.db.event.DBEvent;
 import net.jahhan.db.event.EventOperate;
@@ -21,7 +21,7 @@ public class DBPublisherHandler extends AbstractPublisherHandler {
 	}
 
 	public void publishWrite(DBEvent event) {
-		InvocationContext invocationContext = ApplicationContext.CTX.getInvocationContext();
+		InvocationContext invocationContext = BaseContext.CTX.getInvocationContext();
 		invocationContext.setDBEvent(event);
 		DBLogisticsConnectionType dbLogisticsConnType = invocationContext.getDBLogisticsConnType();
 		if (dbLogisticsConnType.equals(DBLogisticsConnectionType.WRITE)) {
@@ -31,10 +31,10 @@ public class DBPublisherHandler extends AbstractPublisherHandler {
 				return;
 			}
 			if (op.equals(EventOperate.GET) || op.equals(EventOperate.INSERT) || op.equals(EventOperate.UPDATE)) {
-				ApplicationContext.CTX.getInvocationContext().addPojo(event.getSource().getClass(), id,
+				BaseContext.CTX.getInvocationContext().addPojo(event.getSource().getClass(), id,
 						event.getSource());
 			} else if (EventOperate.isModify(op)) {
-				ApplicationContext.CTX.getInvocationContext().delPojo(event.getSource().getClass(), id);
+				BaseContext.CTX.getInvocationContext().delPojo(event.getSource().getClass(), id);
 			}
 		}
 	}

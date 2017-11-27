@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.jahhan.constant.enumeration.DBLogisticsConnectionType;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.context.InvocationContext;
 import net.jahhan.dblogistics.DBConnExecutorHandler;
 import net.jahhan.dblogistics.DBConnExecutorHelper;
@@ -32,7 +32,7 @@ public class DBLogisticsHandler extends ActionHandler {
 	@Override
 	public void execute() {
 		if (dbLogistics != DBLogisticsConnectionType.NONE) {
-			ApplicationContext applicationContext = ApplicationContext.CTX;
+			BaseContext applicationContext = BaseContext.CTX;
 			InvocationContext invocationContext = applicationContext.getInvocationContext();
 			invocationContext.setDBLogisticsConnType(dbLogistics);
 			DBConnExecutorHandler dbConnExecutorHandler = DBConnExecutorHelper.getDBConnExecutorHandler(dbLogistics);

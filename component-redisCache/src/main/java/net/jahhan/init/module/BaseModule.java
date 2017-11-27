@@ -9,12 +9,12 @@ import com.google.inject.AbstractModule;
 import net.jahhan.constant.SysConfiguration;
 import net.jahhan.factory.LoggerFactory;
 import net.jahhan.init.InitAnnocation;
-import net.jahhan.init.module.SerializerModule;
+import net.jahhan.init.module.PluginSetModule;
 import net.jahhan.utils.ScanUtils;
 
 @InitAnnocation(isLazy = false, initSequence = 1300)
 public class BaseModule extends AbstractModule {
-	private final Logger logger = LoggerFactory.getInstance().getLogger(SerializerModule.class);
+	private final Logger logger = LoggerFactory.getInstance().getLogger(PluginSetModule.class);
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override

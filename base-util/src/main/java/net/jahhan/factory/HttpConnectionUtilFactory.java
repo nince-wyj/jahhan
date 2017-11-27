@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.inject.Singleton;
 
 import net.jahhan.constant.enumeration.HttpConnectionEnum;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.context.InvocationContext;
 import net.jahhan.factory.httpclient.AsyncHttpConnection;
 import net.jahhan.factory.httpclient.HttpConnection;
@@ -29,7 +29,7 @@ public class HttpConnectionUtilFactory {
 	}
 
 	public HttpConnection getHttpClient(HttpConnectionEnum httpClientEnum) {
-		ApplicationContext applicationContext = ApplicationContext.CTX;
+		BaseContext applicationContext = BaseContext.CTX;
 		InvocationContext invocationContext = applicationContext.getInvocationContext();
 		if (null != invocationContext && invocationContext.isAsyncClient()) {
 			return httpConnectionMap.get(HttpConnectionEnum.ASYNC);

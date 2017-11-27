@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.context.InvocationContext;
 import net.jahhan.db.conn.DBConnFactory;
 import net.jahhan.db.conn.DataSource;
@@ -53,7 +53,7 @@ public class ConnectionHelper {
      * @throws SQLException
      */
     private static boolean closeTransact() throws SQLException {
-        InvocationContext ic = ApplicationContext.CTX.getInvocationContext();
+        InvocationContext ic = BaseContext.CTX.getInvocationContext();
         Connection cur = ic.getCurrentConn();
         if (cur != null) {
             DBConnFactory.freeConnection(cur);

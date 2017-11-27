@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import net.jahhan.cache.UserEntityCache;
 import net.jahhan.constant.SystemErrorCode;
 import net.jahhan.constant.enumeration.CryptEnum;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.exception.FrameworkException;
 import net.jahhan.factory.crypto.ICrypto;
 import net.jahhan.utils.Assert;
@@ -85,7 +85,7 @@ public class WSSessionManager {
 	public void sendMessage(String sessionId, UserEntity userEntity, String message) {
 		Session session = sessionMap.get(sessionId);
 		try {
-			ApplicationContext applicationContext = ApplicationContext.CTX;
+			BaseContext applicationContext = BaseContext.CTX;
 			String encryptKey = userEntity.getToken();
 			ICrypto icrypto = applicationContext.getCrypto(CryptEnum.AES);
 			String secrityMessage = icrypto.encrypt(message, encryptKey);
@@ -99,7 +99,7 @@ public class WSSessionManager {
 
 	public void sendMessageByPath(String path, String message) {
 		Iterator<Long> userKeyIt = userMap.keySet().iterator();
-		ApplicationContext applicationContext = ApplicationContext.CTX;
+		BaseContext applicationContext = BaseContext.CTX;
 		logger.info("ws广播" + path + "返回值：" + message);
 		while (userKeyIt.hasNext()) {
 			Map<String, String> pathMap = userMap.get(userKeyIt.next()).getValue();

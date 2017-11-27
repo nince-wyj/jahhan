@@ -5,7 +5,7 @@ import org.quartz.JobExecutionException;
 
 import net.jahhan.annotation.Job;
 import net.jahhan.constant.enumeration.DBConnectionType;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.context.InvocationContext;
 import net.jahhan.db.conn.DBConnFactory;
 import net.jahhan.db.dbconnexecutor.DBConnExecutorFactory;
@@ -21,7 +21,7 @@ public class JobInvokerImpl implements JobInvoker {
 		Job jobAnnotation = jobClass.getAnnotation(Job.class);
 		JobTask jobTask = jobDetail.getInjector().getInstance(jobClass);
 
-		ApplicationContext applicationContext = ApplicationContext.CTX;
+		BaseContext applicationContext = BaseContext.CTX;
 		InvocationContext invocationContext = new InvocationContext();
 		applicationContext.getThreadLocalUtil().openThreadLocal(invocationContext);
 		DBConnectionType dBConnectionType = jobAnnotation.value();

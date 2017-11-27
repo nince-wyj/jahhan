@@ -18,7 +18,7 @@ import com.alibaba.dubbo.remoting.zookeeper.ChildListener;
 import com.alibaba.dubbo.remoting.zookeeper.StateListener;
 import com.alibaba.dubbo.remoting.zookeeper.ZookeeperClient;
 import com.alibaba.dubbo.remoting.zookeeper.ZookeeperTransporter;
-import com.alibaba.dubbo.rpc.RpcException;
+import com.frameworkx.exception.FrameWorkXException;
 
 public class ZookeeperRegistry extends FailbackRegistry {
 
@@ -80,7 +80,7 @@ public class ZookeeperRegistry extends FailbackRegistry {
 			zkClient.create(toUrlPath(url),
 					url.getParameter(Constants.DYNAMIC_KEY, true));
 		} catch (Throwable e) {
-			throw new RpcException("Failed to register " + url
+			throw new FrameWorkXException("Failed to register " + url
 					+ " to zookeeper " + getUrl() + ", cause: "
 					+ e.getMessage(), e);
 		}
@@ -90,7 +90,7 @@ public class ZookeeperRegistry extends FailbackRegistry {
 		try {
 			zkClient.delete(toUrlPath(url));
 		} catch (Throwable e) {
-			throw new RpcException("Failed to unregister " + url
+			throw new FrameWorkXException("Failed to unregister " + url
 					+ " to zookeeper " + getUrl() + ", cause: "
 					+ e.getMessage(), e);
 		}
@@ -178,7 +178,7 @@ public class ZookeeperRegistry extends FailbackRegistry {
 				notify(url, listener, urls);
 			}
 		} catch (Throwable e) {
-			throw new RpcException("Failed to subscribe " + url
+			throw new FrameWorkXException("Failed to subscribe " + url
 					+ " to zookeeper " + getUrl() + ", cause: "
 					+ e.getMessage(), e);
 		}
@@ -213,7 +213,7 @@ public class ZookeeperRegistry extends FailbackRegistry {
 			}
 			return toUrlsWithoutEmpty(url, providers);
 		} catch (Throwable e) {
-			throw new RpcException("Failed to lookup " + url
+			throw new FrameWorkXException("Failed to lookup " + url
 					+ " from zookeeper " + getUrl() + ", cause: "
 					+ e.getMessage(), e);
 		}

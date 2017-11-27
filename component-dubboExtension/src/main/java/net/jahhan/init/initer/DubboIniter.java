@@ -14,7 +14,6 @@ import com.alibaba.dubbo.common.utils.ConfigUtils;
 import com.alibaba.dubbo.config.ArgumentConfig;
 import com.alibaba.dubbo.config.MethodConfig;
 import com.alibaba.dubbo.config.ReferenceConfig;
-import com.alibaba.dubbo.config.ServiceConfig;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.google.inject.Injector;
@@ -24,7 +23,7 @@ import net.jahhan.dubbo.annotation.DubboArgument;
 import net.jahhan.dubbo.annotation.DubboInterface;
 import net.jahhan.dubbo.annotation.DubboMethod;
 import net.jahhan.dubbo.cache.HostCache;
-import net.jahhan.dubbo.config.guice.extension.GuiceExtensionFactory;
+import net.jahhan.dubbo.config.dubbo.ServiceConfigBean;
 import net.jahhan.dubbo.enumeration.ClusterTypeEnum;
 import net.jahhan.init.BootstrapInit;
 import net.jahhan.init.InitAnnocation;
@@ -38,7 +37,6 @@ public class DubboIniter implements BootstrapInit {
 
 	@Override
 	public void execute() {
-		GuiceExtensionFactory.setInjector(injector);
 		String scanPath = ConfigUtils.getProperty("dubbo.annotation.package");
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		List<String> classNameList = new ClassScaner().parse(scanPath.split(","));
@@ -54,7 +52,7 @@ public class DubboIniter implements BootstrapInit {
 			ActionService actionService = (ActionService) scanClass.getAnnotation(ActionService.class);
 			Job job = (Job) scanClass.getAnnotation(Job.class);
 			if (null != service) {
-				ServiceConfig<Object> serviceConfig = new ServiceConfig<>(service);
+				ServiceConfigBean<Object> serviceConfig = new ServiceConfigBean<>(service);
 				if (void.class.equals(service.interfaceClass()) && "".equals(service.interfaceName())) {
 					if (scanClass.getInterfaces().length > 0) {
 						serviceConfig.setInterface(scanClass.getInterfaces()[0]);
@@ -103,6 +101,10 @@ public class DubboIniter implements BootstrapInit {
 						} else if (referenceClass.isInterface()) {
 							referenceConfig.setMethods(getMethodConfigs(referenceClass, false));
 						}
+						referenceConfig.setProtocol("rest");
+						referenceConfig.setCluster("frameWork");
+						referenceConfig.setProxy("javassist");
+						referenceConfig.setVersion("1.0.0");
 						try {
 							field.setAccessible(true);
 							field.set(object, referenceConfig.get());

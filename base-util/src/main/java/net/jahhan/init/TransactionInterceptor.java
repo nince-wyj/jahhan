@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import net.jahhan.annotation.Transaction;
 import net.jahhan.constant.enumeration.DBConnectionType;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.context.InvocationContext;
 import net.jahhan.db.dbconnexecutor.DBConnExecutorFactory;
 import net.jahhan.exception.BussinessException;
@@ -18,7 +18,7 @@ public class TransactionInterceptor implements MethodInterceptor {
 
 	@Override
 	public Object invoke(MethodInvocation invocation) throws Throwable {
-		ApplicationContext applicationContext = ApplicationContext.CTX;
+		BaseContext applicationContext = BaseContext.CTX;
 		InvocationContext invocationContext = applicationContext.getInvocationContext();
 		DBConnectionType connectionType = invocationContext.getConnectionType();
 		Object obj = null;

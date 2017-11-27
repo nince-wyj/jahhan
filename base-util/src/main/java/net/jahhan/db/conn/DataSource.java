@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.mchange.v2.c3p0.PooledDataSource;
 
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.context.InvocationContext;
 
 public class DataSource {
@@ -95,8 +95,8 @@ public class DataSource {
         if (this.readOnly) {
             dbConn.setReadOnly(true);
         }
-        if (ApplicationContext.CTX.getThreadLocalUtil() != null) {
-            InvocationContext ic = ApplicationContext.CTX.getInvocationContext();
+        if (BaseContext.CTX.getThreadLocalUtil() != null) {
+            InvocationContext ic = BaseContext.CTX.getInvocationContext();
             if (ic != null) {
                 ic.addDbCon(dbConn);
             }

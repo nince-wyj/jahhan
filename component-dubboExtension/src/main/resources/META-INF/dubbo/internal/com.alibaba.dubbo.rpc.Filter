@@ -1,1 +1,2 @@
 dbTransaction=net.jahhan.dubbo.filter.TransactionFilter
+context=net.jahhan.dubbo.filter.ContextFilter

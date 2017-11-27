@@ -15,7 +15,7 @@ import com.alibaba.dubbo.rpc.Invocation;
 import com.alibaba.dubbo.rpc.Invoker;
 import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.dubbo.rpc.RpcContext;
-import com.alibaba.dubbo.rpc.RpcException;
+import com.frameworkx.exception.FrameWorkXException;
 import com.alibaba.dubbo.rpc.cluster.Directory;
 import com.alibaba.dubbo.rpc.cluster.LoadBalance;
 import com.alibaba.dubbo.rpc.cluster.support.AbstractClusterInvoker;
@@ -34,7 +34,7 @@ public class FrameWorkClusterInvoker<T> extends AbstractClusterInvoker<T> {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Result doInvoke(Invocation invocation, final List<Invoker<T>> invokers, LoadBalance loadbalance)
-			throws RpcException {
+			throws FrameWorkXException {
 		Class<T> invokeInterface = invokers.get(0).getInterface();
 		DubboInterface dubboInterface = invokeInterface.getAnnotation(DubboInterface.class);
 		if (null != dubboInterface && dubboInterface.clusterType().equals(ClusterTypeEnum.DIRECT)) {
@@ -53,12 +53,12 @@ public class FrameWorkClusterInvoker<T> extends AbstractClusterInvoker<T> {
 						}
 					}
 				}
-				throw new RpcException(RpcException.UNKNOWN_EXCEPTION,
+				throw new FrameWorkXException(FrameWorkXException.UNKNOWN_EXCEPTION,
 						"Failed to invoke the method " + invocation.getMethodName() + " in the service "
 								+ getInterface().getName() + ". unkown host:" + target
 								+ " or target application stop! ");
 			}
-			throw new RpcException(RpcException.UNKNOWN_EXCEPTION, "error argument,need host target!!");
+			throw new FrameWorkXException(FrameWorkXException.UNKNOWN_EXCEPTION, "error argument,need host target!!");
 		}
 		List<Invoker<T>> copyinvokers = invokers;
 		copyinvokers.get(0).getUrl();
@@ -69,7 +69,7 @@ public class FrameWorkClusterInvoker<T> extends AbstractClusterInvoker<T> {
 			len = 1;
 		}
 		// retry loop.
-		RpcException le = null; // last exception.
+		FrameWorkXException le = null; // last exception.
 		List<Invoker<T>> invoked = new ArrayList<Invoker<T>>(copyinvokers.size()); // invoked
 																					// invokers.
 		Set<String> providers = new HashSet<String>(len);
@@ -97,18 +97,18 @@ public class FrameWorkClusterInvoker<T> extends AbstractClusterInvoker<T> {
 							+ le.getMessage(), le);
 				}
 				return result;
-			} catch (RpcException e) {
+			} catch (FrameWorkXException e) {
 				if (e.isBiz()) { // biz exception.
 					throw e;
 				}
 				le = e;
 			} catch (Throwable e) {
-				le = new RpcException(e.getMessage(), e);
+				le = new FrameWorkXException(e.getMessage(), e);
 			} finally {
 				providers.add(invoker.getUrl().getAddress());
 			}
 		}
-		throw new RpcException(le != null ? le.getCode() : 0,
+		throw new FrameWorkXException(le != null ? le.getCode() : 0,
 				"Failed to invoke the method " + invocation.getMethodName() + " in the service "
 						+ getInterface().getName() + ". Tried " + len + " times of the providers " + providers + " ("
 						+ providers.size() + "/" + copyinvokers.size() + ") from the registry "

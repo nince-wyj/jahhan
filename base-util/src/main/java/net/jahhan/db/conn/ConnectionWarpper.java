@@ -26,7 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.jahhan.context.AppContext;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.context.InvocationContext;
 import net.jahhan.db.event.DBEvent;
 import net.jahhan.db.event.EventOperate;
@@ -121,14 +121,14 @@ public class ConnectionWarpper implements Connection {
 		for (DBEvent event : events) {
 			AppContext.instance().realPublishWrite(event);
 		}
-		ApplicationContext.CTX.getInvocationContext().clearLocalCache();
+		BaseContext.CTX.getInvocationContext().clearLocalCache();
 	}
 
 	@Override
 	public void rollback() throws SQLException {
 		inner.rollback();
 		events.clear();
-		ApplicationContext.CTX.getInvocationContext().clearLocalCache();
+		BaseContext.CTX.getInvocationContext().clearLocalCache();
 	}
 
 	@Override
@@ -145,8 +145,8 @@ public class ConnectionWarpper implements Connection {
 			}
 		}
 		this.resetStatement();
-		if (ApplicationContext.CTX.getThreadLocalUtil() != null) {
-			InvocationContext ic = ApplicationContext.CTX.getInvocationContext();
+		if (BaseContext.CTX.getThreadLocalUtil() != null) {
+			InvocationContext ic = BaseContext.CTX.getInvocationContext();
 			if (ic != null) {
 				ic.removeDbCon(this);
 			}
@@ -412,17 +412,17 @@ public class ConnectionWarpper implements Connection {
 
 	public void addEvent(DBEvent event) {
 		events.add(event);
-		if (ApplicationContext.CTX.isWriteConnection()) {
+		if (BaseContext.CTX.isWriteConnection()) {
 			String id = event.getId();
 			String op = event.getOperate();
 			if (StringUtils.isEmpty(id)) {
 				return;
 			}
 			if (op.equals(EventOperate.GET) || op.equals(EventOperate.INSERT) || op.equals(EventOperate.UPDATE)) {
-				ApplicationContext.CTX.getInvocationContext().addPojo(event.getSource().getClass(), id,
+				BaseContext.CTX.getInvocationContext().addPojo(event.getSource().getClass(), id,
 						event.getSource());
 			} else if (EventOperate.isModify(op)) {
-				ApplicationContext.CTX.getInvocationContext().delPojo(event.getSource().getClass(), id);
+				BaseContext.CTX.getInvocationContext().delPojo(event.getSource().getClass(), id);
 			}
 		}
 	}

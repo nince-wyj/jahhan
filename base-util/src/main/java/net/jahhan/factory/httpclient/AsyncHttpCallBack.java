@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import net.jahhan.annotation.DbConn;
 import net.jahhan.api.HttpCallBack;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.context.InvocationContext;
 import net.jahhan.db.dbconnexecutor.DBConnExecutorFactory;
 import net.jahhan.exception.BussinessException;
@@ -31,7 +31,7 @@ public class AsyncHttpCallBack implements FutureCallback<HttpResponse> {
 	@Override
 	public void completed(HttpResponse response) {
 		DbConn transaction = callBack.getClass().getAnnotation(DbConn.class);
-		ApplicationContext applicationContext = ApplicationContext.CTX;
+		BaseContext applicationContext = BaseContext.CTX;
 		InvocationContext thisInvocationContext = new InvocationContext(invocationContext);
 		applicationContext.getThreadLocalUtil().openThreadLocal(thisInvocationContext);
 		thisInvocationContext.setConnectionType(transaction.value());

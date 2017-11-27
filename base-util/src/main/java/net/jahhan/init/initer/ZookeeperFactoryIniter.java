@@ -6,7 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 
 import net.jahhan.constant.SysConfiguration;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.demand.HostDemand;
 import net.jahhan.factory.LoggerFactory;
 import net.jahhan.init.BootstrapInit;
@@ -23,7 +23,7 @@ public class ZookeeperFactoryIniter implements BootstrapInit {
 	@Override
 	public void execute() {
 		String thisHost = "";
-		HostDemand hostManager = ApplicationContext.CTX.getHostManager();
+		HostDemand hostManager = BaseContext.CTX.getHostManager();
 		if (null != hostManager) {
 			thisHost = hostManager.getThisHostAndPort();
 		} else {

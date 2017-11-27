@@ -20,7 +20,7 @@ import com.mongodb.client.MongoCollection;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import net.jahhan.constant.SystemErrorCode;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.context.InvocationContext;
 import net.jahhan.dblogistics.DblogisticContext;
 import net.jahhan.dblogistics.annotation.DocQuery;
@@ -152,7 +152,7 @@ public class RepositoryQueryProxy implements RepositoryQuery {
 		}
 		Long ooid = ((SuperEntity) query).getOoid();
 		if (DBLogisticsConf.isUseDoc() && neoQuery.useDoc()) {
-			InvocationContext invocationContext = ApplicationContext.CTX.getInvocationContext();
+			InvocationContext invocationContext = BaseContext.CTX.getInvocationContext();
 			Object localCache = invocationContext.getLocalCachePojo(returnType, String.valueOf(ooid));
 			if (null != localCache) {
 				BeanTools.copyBean(localCache, query);
@@ -324,7 +324,7 @@ public class RepositoryQueryProxy implements RepositoryQuery {
 				// cypher条件空，则先取缓存里的对象，再去cypher里搜未命中的数据回来填充
 				List<Object> result = new ArrayList<>();
 				List<Long> cachedOoids = new ArrayList<>();
-				InvocationContext invocationContext = ApplicationContext.CTX.getInvocationContext();
+				InvocationContext invocationContext = BaseContext.CTX.getInvocationContext();
 				for (Long ooid : ooids) {
 					Object localCache = invocationContext.getLocalCachePojo(concreteType, String.valueOf(ooid));
 					if (null != localCache) {
@@ -429,7 +429,7 @@ public class RepositoryQueryProxy implements RepositoryQuery {
 				// cypher条件空，则先取缓存里的对象，再去cypher里搜未命中的数据回来填充
 				List<Object> result = new ArrayList<>();
 				List<Long> cachedOoids = new ArrayList<>();
-				InvocationContext invocationContext = ApplicationContext.CTX.getInvocationContext();
+				InvocationContext invocationContext = BaseContext.CTX.getInvocationContext();
 				for (Long ooid : ooids) {
 					Object localCache = invocationContext.getLocalCachePojo(concreteType, String.valueOf(ooid));
 					if (null != localCache) {
@@ -497,7 +497,7 @@ public class RepositoryQueryProxy implements RepositoryQuery {
 			// 先搜本地缓存
 			List<Long> cachedOoids = new ArrayList<>();
 			List<Object> result = new ArrayList<>();
-			InvocationContext invocationContext = ApplicationContext.CTX.getInvocationContext();
+			InvocationContext invocationContext = BaseContext.CTX.getInvocationContext();
 			for (Long ooid : ooids) {
 				Object localCache = invocationContext.getLocalCachePojo(concreteType, String.valueOf(ooid));
 				if (null != localCache) {

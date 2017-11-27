@@ -29,7 +29,7 @@ import net.jahhan.api.HttpCallBack;
 import net.jahhan.cache.PipelineUrlQueue;
 import net.jahhan.constant.SysConfiguration;
 import net.jahhan.constant.SystemErrorCode;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.context.InvocationContext;
 import net.jahhan.exception.FrameworkException;
 import net.jahhan.factory.LoggerFactory;
@@ -253,7 +253,7 @@ public class AsyncHttpConnection implements HttpConnection {
 
 	@Override
 	public void executeGet(String url, CookieStore cookie, HttpCallBack callBack) {
-		ApplicationContext applicationContext = ApplicationContext.CTX;
+		BaseContext applicationContext = BaseContext.CTX;
 		InvocationContext invocationContext = applicationContext.getInvocationContext();
 		URL uRL = null;
 		try {
@@ -280,7 +280,7 @@ public class AsyncHttpConnection implements HttpConnection {
 
 	@Override
 	public void executeGet(String url, CookieStore cookie, Map<String, String> headers, HttpCallBack callBack) {
-		ApplicationContext applicationContext = ApplicationContext.CTX;
+		BaseContext applicationContext = BaseContext.CTX;
 		InvocationContext invocationContext = applicationContext.getInvocationContext();
 		URL uRL = null;
 		try {
@@ -310,7 +310,7 @@ public class AsyncHttpConnection implements HttpConnection {
 
 	@Override
 	public void executeGetFile(String url, CookieStore cookie, HttpCallBack callBack) {
-		ApplicationContext applicationContext = ApplicationContext.CTX;
+		BaseContext applicationContext = BaseContext.CTX;
 		InvocationContext invocationContext = applicationContext.getInvocationContext();
 		URL uRL = null;
 		try {
@@ -339,7 +339,7 @@ public class AsyncHttpConnection implements HttpConnection {
 
 	@Override
 	public void executePost(String url, CookieStore cookie, HttpCallBack callBack) {
-		ApplicationContext applicationContext = ApplicationContext.CTX;
+		BaseContext applicationContext = BaseContext.CTX;
 		InvocationContext invocationContext = applicationContext.getInvocationContext();
 		AsyncHttpCallBack asyncHttpCallBack = new AsyncHttpCallBack(callBack, invocationContext);
 		invocationContext.addAsyncHttpCallBack(asyncHttpCallBack);
@@ -356,7 +356,7 @@ public class AsyncHttpConnection implements HttpConnection {
 
 	@Override
 	public void executePost(String url, String parameter, CookieStore cookie, HttpCallBack callBack) {
-		ApplicationContext applicationContext = ApplicationContext.CTX;
+		BaseContext applicationContext = BaseContext.CTX;
 		InvocationContext invocationContext = applicationContext.getInvocationContext();
 		AsyncHttpCallBack asyncHttpCallBack = new AsyncHttpCallBack(callBack, invocationContext);
 		invocationContext.addAsyncHttpCallBack(asyncHttpCallBack);
@@ -375,7 +375,7 @@ public class AsyncHttpConnection implements HttpConnection {
 
 	@Override
 	public void executePost(String url, Map<String, String> parameters, CookieStore cookie, HttpCallBack callBack) {
-		ApplicationContext applicationContext = ApplicationContext.CTX;
+		BaseContext applicationContext = BaseContext.CTX;
 		InvocationContext invocationContext = applicationContext.getInvocationContext();
 		AsyncHttpCallBack asyncHttpCallBack = new AsyncHttpCallBack(callBack, invocationContext);
 		invocationContext.addAsyncHttpCallBack(asyncHttpCallBack);
@@ -399,7 +399,7 @@ public class AsyncHttpConnection implements HttpConnection {
 	@Override
 	public void executePost(String url, Map<String, String> parameters, CookieStore cookie, Map<String, String> headers,
 			HttpCallBack callBack) {
-		ApplicationContext applicationContext = ApplicationContext.CTX;
+		BaseContext applicationContext = BaseContext.CTX;
 		InvocationContext invocationContext = applicationContext.getInvocationContext();
 		AsyncHttpCallBack asyncHttpCallBack = new AsyncHttpCallBack(callBack, invocationContext);
 		invocationContext.addAsyncHttpCallBack(asyncHttpCallBack);

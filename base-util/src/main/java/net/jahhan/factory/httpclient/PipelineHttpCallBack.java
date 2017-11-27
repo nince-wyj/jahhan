@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import net.jahhan.annotation.DbConn;
 import net.jahhan.api.HttpCallBack;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.context.InvocationContext;
 import net.jahhan.db.dbconnexecutor.DBConnExecutorFactory;
 import net.jahhan.exception.BussinessException;
@@ -33,7 +33,7 @@ public class PipelineHttpCallBack implements FutureCallback<List<HttpResponse>> 
 			PipeLineCallbackHold pipeLineCallbackHold = pipeLineCallbackHoldList.get(i);
 			HttpCallBack callBack = pipeLineCallbackHold.getHttpCallBack();
 			DbConn transaction = callBack.getClass().getAnnotation(DbConn.class);
-			ApplicationContext applicationContext = ApplicationContext.CTX;
+			BaseContext applicationContext = BaseContext.CTX;
 			InvocationContext thisInvocationContext = new InvocationContext(pipeLineCallbackHold.getInvocationContext());
 			applicationContext.getThreadLocalUtil().openThreadLocal(thisInvocationContext);
 			thisInvocationContext.setConnectionType(transaction.value());

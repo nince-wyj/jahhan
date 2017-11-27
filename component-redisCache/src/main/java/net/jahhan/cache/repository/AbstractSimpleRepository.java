@@ -9,8 +9,8 @@ import net.jahhan.cache.JedisCallBackHandler;
 import net.jahhan.cache.Redis;
 import net.jahhan.cache.RedisConfigurationManger;
 import net.jahhan.cache.RedisFactory;
-import net.jahhan.context.ApplicationContext;
-import net.jahhan.handler.SerializerHandler;
+import net.jahhan.context.BaseContext;
+import net.jahhan.spi.SerializerHandler;
 import net.jahhan.utils.BeanTools;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Transaction;
@@ -67,7 +67,7 @@ public abstract class AbstractSimpleRepository {
 	public void set(String id, Object object) {
 		Redis redis = RedisFactory.getMainRedis(getType(), id);
 		String key = getKey(id);
-		SerializerHandler serializer = ApplicationContext.CTX.getSerializer();
+		SerializerHandler serializer = BaseContext.CTX.getSerializer();
 		redis.setByte(key.getBytes(), serializer.serializeFrom(object));
 	}
 
@@ -132,7 +132,7 @@ public abstract class AbstractSimpleRepository {
 		}
 		Redis redis = RedisFactory.getReadRedis(getType(), "1");
 		List<byte[]> multi = redis.mgetByte(keysB);
-		SerializerHandler serializer = ApplicationContext.CTX.getSerializer();
+		SerializerHandler serializer = BaseContext.CTX.getSerializer();
 		List<T> result = new ArrayList<>();
 		for(byte[] b:multi){
 			T object = (T) serializer.deserializeInto(b);
@@ -219,7 +219,7 @@ public abstract class AbstractSimpleRepository {
 		if (!checkedClass.isInstance(updatedObj)) {
 			return;
 		}
-		SerializerHandler serializer = ApplicationContext.CTX.getSerializer();
+		SerializerHandler serializer = BaseContext.CTX.getSerializer();
 		byte[] returnBytes = getBytes(id);
 		if (returnBytes != null) {
 			Object mergeObject = mergeObject(serializer.deserializeInto(returnBytes), updatedObj);

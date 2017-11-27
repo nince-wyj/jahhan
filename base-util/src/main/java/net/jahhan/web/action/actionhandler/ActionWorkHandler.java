@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import net.jahhan.api.Action;
 import net.jahhan.api.ResponseMessage;
 import net.jahhan.constant.SystemErrorCode;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.context.InvocationContext;
 import net.jahhan.exception.BussinessException;
 import net.jahhan.exception.FrameworkException;
@@ -28,7 +28,7 @@ public class ActionWorkHandler extends ActionHandler {
 
 	@Override
 	public void execute() {
-		ApplicationContext applicationContext = ApplicationContext.CTX;
+		BaseContext applicationContext = BaseContext.CTX;
 		InvocationContext invocationContext = applicationContext.getInvocationContext();
 		ResponseMessage responseMessage = invocationContext.getResponseMessage();
 		try {

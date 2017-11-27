@@ -7,7 +7,7 @@ import com.mongodb.client.MongoDatabase;
 
 import net.jahhan.constant.SystemErrorCode;
 import net.jahhan.constant.enumeration.DBLogisticsConnectionType;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.context.InvocationContext;
 import net.jahhan.dblogistics.doc.DocClientFactory;
 import net.jahhan.dblogistics.doc.DocConnExecutorHandler;
@@ -18,7 +18,7 @@ import net.jahhan.utils.PropertiesUtil;
 
 public class SessionUtils {
 	public static Session getNeoWriteSession() {
-		InvocationContext invocationContext = ApplicationContext.CTX.getInvocationContext();
+		InvocationContext invocationContext = BaseContext.CTX.getInvocationContext();
 		Session session = (Session) invocationContext.getSession("neoWrite");
 		if (null == session) {
 			session = Neo4jSessionFactory.getInstance().getNeo4jSession(DBLogisticsConnectionType.WRITE);
@@ -28,7 +28,7 @@ public class SessionUtils {
 	}
 
 	public static Session getNeoReadSession() {
-		InvocationContext invocationContext = ApplicationContext.CTX.getInvocationContext();
+		InvocationContext invocationContext = BaseContext.CTX.getInvocationContext();
 		DBLogisticsConnectionType dbLogisticsConnType = invocationContext.getDBLogisticsConnType();
 		switch (dbLogisticsConnType) {
 		case NONE: {
@@ -58,7 +58,7 @@ public class SessionUtils {
 	}
 
 	public static DocConnExecutorHandler getDocReadExecutor() {
-		InvocationContext invocationContext = ApplicationContext.CTX.getInvocationContext();
+		InvocationContext invocationContext = BaseContext.CTX.getInvocationContext();
 		DBLogisticsConnectionType dbLogisticsConnType = invocationContext.getDBLogisticsConnType();
 		switch (dbLogisticsConnType) {
 		case NONE: {
@@ -94,7 +94,7 @@ public class SessionUtils {
 	}
 
 	public static DocConnExecutorHandler getDocWriteExecutor() {
-		InvocationContext invocationContext = ApplicationContext.CTX.getInvocationContext();
+		InvocationContext invocationContext = BaseContext.CTX.getInvocationContext();
 		DocConnExecutorHandler dbConnExecutorHandler = (DocConnExecutorHandler) invocationContext
 				.getSession("docWrite");
 		if (null == dbConnExecutorHandler) {

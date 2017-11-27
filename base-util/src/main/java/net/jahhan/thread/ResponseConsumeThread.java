@@ -1,6 +1,6 @@
 package net.jahhan.thread;
 
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.context.InvocationContext;
 
 /**
@@ -24,7 +24,7 @@ public class ResponseConsumeThread implements Runnable {
 
 	@Override
 	public void run() {
-		ApplicationContext applicationContext = ApplicationContext.CTX;
+		BaseContext applicationContext = BaseContext.CTX;
 		applicationContext.getThreadLocalUtil().openThreadLocal(new InvocationContext());
 		applicationContext.getConsumeManager().addActionConsume(actName, consumeTime);
 	}

@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import net.jahhan.cache.Redis;
 import net.jahhan.cache.RedisConstants;
 import net.jahhan.cache.RedisFactory;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 
 /**
  * 分布式锁
@@ -43,7 +43,7 @@ public class LockRepository {
 		String ret = null;
 		int retryTime = 0;
 		String lock = RandomStringUtils.randomAlphanumeric(8);
-		ApplicationContext.CTX.getInvocationContext().setLock(lock);
+		BaseContext.CTX.getInvocationContext().setLock(lock);
 		while ((null == ret || !(ret.equals("OK") || ret.equals("1"))) && retryTime < 3000) {
 			try {
 				Thread.currentThread().sleep(100);
@@ -70,7 +70,7 @@ public class LockRepository {
 		String ret = null;
 		int retryTime = 0;
 		String lock = RandomStringUtils.randomAlphanumeric(12);
-		ApplicationContext.CTX.getInvocationContext().setLock(lock);
+		BaseContext.CTX.getInvocationContext().setLock(lock);
 		while ((null == ret || !(ret.equals("OK") || ret.equals("1"))) && retryTime < 3000) {
 			try {
 				Thread.currentThread().sleep(100);
@@ -93,7 +93,7 @@ public class LockRepository {
 	 */
 	public static void releaseLock(String lockName) {
 		Redis redis = getRedis();
-		redis.evalsha(sha, 2, getKey(lockName), ApplicationContext.CTX.getInvocationContext().getLock());
+		redis.evalsha(sha, 2, getKey(lockName), BaseContext.CTX.getInvocationContext().getLock());
 	}
 	
 	public static void main(String[] args) {

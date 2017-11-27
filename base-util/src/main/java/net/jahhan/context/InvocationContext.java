@@ -17,7 +17,6 @@ import net.jahhan.constant.enumeration.DBLogisticsConnectionType;
 import net.jahhan.constant.enumeration.InvocationEnum;
 import net.jahhan.db.event.DBEvent;
 import net.jahhan.factory.httpclient.AsyncHttpCallBack;
-import net.jahhan.web.UserEntity;
 import net.jahhan.web.ws.WSRequest;
 
 /**
@@ -38,9 +37,6 @@ public class InvocationContext {
 	// 分布式锁
 	private String lock;
 
-	private String sessionId;
-
-	private UserEntity userEntity;
 	// 数据库连接
 	private List<Connection> connList = new ArrayList<Connection>();
 
@@ -99,8 +95,6 @@ public class InvocationContext {
 		this.response = invocationContext.getResponse();
 		this.requestMessage = invocationContext.getRequestMessage();
 		this.responseMessage = invocationContext.getResponseMessage();
-		this.sessionId = invocationContext.getSessionId();
-		this.userEntity = invocationContext.getUserEntity();
 		this.wsRequest = invocationContext.getWsRequest();
 	}
 
@@ -194,14 +188,6 @@ public class InvocationContext {
 		return invocationEnum;
 	}
 
-	public UserEntity getUserEntity() {
-		return userEntity;
-	}
-
-	public void setUserEntity(UserEntity userEntity) {
-		this.userEntity = userEntity;
-	}
-
 	private DBConnectionType connectionType = null;
 
 	private DBLogisticsConnectionType DBLogisticsConnType = null;
@@ -252,14 +238,6 @@ public class InvocationContext {
 
 	public void setResponseMessage(ResponseMessage responseMessage) {
 		this.responseMessage = responseMessage;
-	}
-
-	public String getSessionId() {
-		return sessionId;
-	}
-
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
 	}
 
 	public Connection getCurrentConn() {

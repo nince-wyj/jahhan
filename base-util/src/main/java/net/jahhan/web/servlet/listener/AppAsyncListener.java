@@ -11,7 +11,7 @@ import javax.servlet.annotation.WebListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@WebListener
+//@WebListener
 public class AppAsyncListener implements AsyncListener {
 	private final static Logger logger = LoggerFactory.getLogger("AsyncDecodeDataHandler");
 

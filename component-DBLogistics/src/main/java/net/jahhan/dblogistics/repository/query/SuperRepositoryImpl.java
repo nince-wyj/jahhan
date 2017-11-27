@@ -26,7 +26,7 @@ import net.jahhan.cache.repository.AbstractSmpTTLCountRepository;
 import net.jahhan.cache.util.SeqRepository;
 import net.jahhan.cache.util.TagUtil;
 import net.jahhan.constant.SystemErrorCode;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.context.InvocationContext;
 import net.jahhan.db.event.EventOperate;
 import net.jahhan.db.publish.EventPublisherManager;
@@ -232,7 +232,7 @@ public class SuperRepositoryImpl<T extends SuperEntity> extends AbstractSmpTTLCo
 		Session neo4jSession = SessionUtils.getNeoReadSession();
 		T load = IterableUtils.getSingleOrNull(neo4jSession.loadAll(clazz, new Filter("ooid", ooid), depth));
 		if (DBLogisticsConf.isUseDoc()) {
-			InvocationContext invocationContext = ApplicationContext.CTX.getInvocationContext();
+			InvocationContext invocationContext = BaseContext.CTX.getInvocationContext();
 			T localCache = (T) invocationContext.getLocalCachePojo(clazz, String.valueOf(ooid));
 			if (null != localCache) {
 				BeanTools.copyBean(localCache, load);
@@ -289,7 +289,7 @@ public class SuperRepositoryImpl<T extends SuperEntity> extends AbstractSmpTTLCo
 			ooidList.add(t.getOoid());
 		}
 		if (DBLogisticsConf.isUseDoc()) {
-			InvocationContext invocationContext = ApplicationContext.CTX.getInvocationContext();
+			InvocationContext invocationContext = BaseContext.CTX.getInvocationContext();
 			List<T> result = new ArrayList<>();
 			List<Long> cachedOoids = new ArrayList<>();
 			for (Long ooid : ooidList) {
@@ -361,7 +361,7 @@ public class SuperRepositoryImpl<T extends SuperEntity> extends AbstractSmpTTLCo
 			ooidList.add(t.getOoid());
 		}
 		if (DBLogisticsConf.isUseDoc()) {
-			InvocationContext invocationContext = ApplicationContext.CTX.getInvocationContext();
+			InvocationContext invocationContext = BaseContext.CTX.getInvocationContext();
 			List<T> result = new ArrayList<>();
 			List<Long> cachedOoids = new ArrayList<>();
 			for (Long ooid : ooidList) {

@@ -11,13 +11,13 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 import net.jahhan.constant.enumeration.ThreadPoolEnum;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.context.InvocationContext;
 import net.jahhan.factory.ThreadPoolFactory;
 import net.jahhan.handler.WorkHandler;
 
 /**
- * 接口异步线程方法
+ * 请求异步线程方法
  * 
  * @author nince
  */
@@ -63,7 +63,7 @@ public class AsyncThread implements Runnable {
 	@Override
 	public void run() {
 		long startTime = System.currentTimeMillis();
-		ApplicationContext applicationContext = ApplicationContext.CTX;
+		BaseContext applicationContext = BaseContext.CTX;
 		try {
 			invocationContext.setAsyncClient(true);
 			invocationContext.setAsyncCtx(asyncCtx);

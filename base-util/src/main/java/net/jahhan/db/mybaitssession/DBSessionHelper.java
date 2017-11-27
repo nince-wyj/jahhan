@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 import net.jahhan.constant.SystemErrorCode;
 import net.jahhan.constant.enumeration.DBConnectionType;
 import net.jahhan.context.AppContext;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.context.InvocationContext;
 import net.jahhan.db.SessionHandler;
 import net.jahhan.db.conn.ConnectionWarpper;
@@ -115,7 +115,7 @@ public class DBSessionHelper implements SessionHandler {
 	}
 
 	public void setConn(Connection conn) {
-		InvocationContext ic = ApplicationContext.CTX.getInvocationContext();
+		InvocationContext ic = BaseContext.CTX.getInvocationContext();
 		ic.setCurrentConn(conn);
 	}
 
@@ -150,7 +150,7 @@ public class DBSessionHelper implements SessionHandler {
 	 * @throws SQLException
 	 */
 	public Connection _getConnection(int type) throws SQLException {
-		InvocationContext ic = ApplicationContext.CTX.getInvocationContext();
+		InvocationContext ic = BaseContext.CTX.getInvocationContext();
 		if (ic == null) {
 			return null;
 		}

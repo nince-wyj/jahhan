@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import net.jahhan.annotation.DbLogisticsConn;
 import net.jahhan.constant.SystemErrorCode;
 import net.jahhan.constant.enumeration.DBLogisticsConnectionType;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.context.InvocationContext;
 import net.jahhan.dblogistics.DBConnExecutorHandler;
 import net.jahhan.dblogistics.DBConnExecutorHelper;
@@ -20,7 +20,7 @@ public class DbLogisticsConnectionInterceptor implements MethodInterceptor {
 
 	@Override
 	public Object invoke(MethodInvocation invocation) throws Throwable {
-		ApplicationContext applicationContext = ApplicationContext.CTX;
+		BaseContext applicationContext = BaseContext.CTX;
 		InvocationContext invocationContext = applicationContext.getInvocationContext();
 		DBLogisticsConnectionType dbLogisticsConnType = invocationContext.getDBLogisticsConnType();
 		DbLogisticsConn dbconn = invocation.getMethod().getAnnotation(DbLogisticsConn.class);

@@ -10,7 +10,7 @@ import org.junit.BeforeClass;
 import com.google.inject.Injector;
 
 import net.jahhan.constant.enumeration.DBConnectionType;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.context.InvocationContext;
 import net.jahhan.db.conn.DBConnFactory;
 import net.jahhan.db.dbconnexecutor.DBConnExecutorFactory;
@@ -42,7 +42,7 @@ public abstract class AbstractTestMethod {
 
 	@Before
 	public void setUp() throws Exception {
-		ApplicationContext applicationContext = ApplicationContext.CTX;
+		BaseContext applicationContext = BaseContext.CTX;
 		InvocationContext invocationContext = new InvocationContext(null, null);
 		applicationContext.getThreadLocalUtil().openThreadLocal(invocationContext);
 		connExec = new DBConnExecutorFactory(dbType);
@@ -56,7 +56,7 @@ public abstract class AbstractTestMethod {
 
 	@AfterClass
 	public static void finish() throws Exception {
-		Connection[] conns = ApplicationContext.CTX.getInvocationContext().getConnections()
+		Connection[] conns = BaseContext.CTX.getInvocationContext().getConnections()
 				.toArray(new Connection[0]);
 		if (conns != null) {
 			for (Connection conn : conns) {

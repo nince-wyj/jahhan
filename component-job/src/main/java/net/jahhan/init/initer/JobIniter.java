@@ -4,7 +4,7 @@ import javax.inject.Inject;
 
 import com.google.inject.Injector;
 
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.init.BootstrapInit;
 import net.jahhan.init.InitAnnocation;
 import net.jahhan.job.api.TaskProcessor;
@@ -19,10 +19,10 @@ public class JobIniter implements BootstrapInit {
 		TaskProcessor p = injector.getInstance(TaskProcessor.class);
 
 		try {
-			ApplicationContext applicationContext = null;
+			BaseContext applicationContext = null;
 			while (null == applicationContext) {
 				Thread.sleep(1000);
-				applicationContext = ApplicationContext.CTX;
+				applicationContext = BaseContext.CTX;
 			}
 			p.start();
 		} catch (Exception e) {

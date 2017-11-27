@@ -7,10 +7,10 @@ import org.apache.commons.lang.StringUtils;
 import net.jahhan.cache.Redis;
 import net.jahhan.cache.RedisFactory;
 import net.jahhan.cache.util.Counter;
-import net.jahhan.context.ApplicationContext;
+import net.jahhan.context.BaseContext;
 import net.jahhan.db.event.DBEvent;
 import net.jahhan.db.event.EventOperate;
-import net.jahhan.handler.SerializerHandler;
+import net.jahhan.spi.SerializerHandler;
 
 /**
  * @author nince
@@ -24,7 +24,7 @@ public abstract class AbstractSmpTTLCountRepository extends AbstractSimpleReposi
 	}
 
 	public void set(String id, Object object) {
-		SerializerHandler serializer = ApplicationContext.CTX.getSerializer();
+		SerializerHandler serializer = BaseContext.CTX.getSerializer();
 		Redis redis = RedisFactory.getMainRedis(getType(), id);
 		String key = getKey(id);
 		redis.setEx(key.getBytes(), getExistSecond(), serializer.serializeFrom(object));
@@ -48,7 +48,7 @@ public abstract class AbstractSmpTTLCountRepository extends AbstractSimpleReposi
 		byte[] bytes = super.getBytes(String.valueOf(id));
 		if (bytes != null) {
 			counter.incCached();
-			SerializerHandler serializer = ApplicationContext.CTX.getSerializer();
+			SerializerHandler serializer = BaseContext.CTX.getSerializer();
 			return (T) serializer.deserializeInto(bytes);
 		}
 		return null;
