@@ -9,6 +9,7 @@ import java.util.Properties;
 
 import lombok.extern.slf4j.Slf4j;
 import net.jahhan.common.extension.utils.properties.PropertiesInit;
+import net.jahhan.context.BaseContext;
 
 @Slf4j
 public class PropertiesUtil {

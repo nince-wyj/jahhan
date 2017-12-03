@@ -20,7 +20,7 @@ public class DBListenerIniter implements BootstrapInit {
 
 	@Override
 	public void execute() {
-		String[] packages = PackageUtil.packages("dblistener");
+		String[] packages = PackageUtil.packages("dao.listen");
 		List<String> classNameList = new ClassScaner().parse(packages);
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		for (String className : classNameList) {

@@ -1,4 +1,4 @@
-package net.jahhan.extension.registryFactory;
+package net.jahhan.extension.register.registryFactory;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -17,7 +17,7 @@ public class ZookeeperRegistryFactory implements RegistryFactory {
 
 	@Override
 	public Registry getRegistry(Node node) {
-		zookeeperRegistry.setNode(node);
+		zookeeperRegistry.init(node);
 		return zookeeperRegistry;
 	}
 

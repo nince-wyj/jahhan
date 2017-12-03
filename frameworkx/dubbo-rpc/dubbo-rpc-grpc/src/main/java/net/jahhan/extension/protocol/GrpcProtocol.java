@@ -42,8 +42,8 @@ public class GrpcProtocol extends AbstractProxyProtocol {
 			String substring = name.substring(name.lastIndexOf(".") + 1,
 					name.indexOf(BaseConfiguration.INTERFACE_SUFFIX));
 			String grpcImplName;
-			if (name.startsWith(BaseConfiguration.COMPANY_PATH)) {
-				grpcImplName = BaseConfiguration.COMPANY_PATH + packageName + substring + "GrpcImpl";
+			if (name.startsWith(BaseConfiguration.SERVICE_PATH)) {
+				grpcImplName = BaseConfiguration.SERVICE_PATH + packageName + substring + "GrpcImpl";
 			} else if (name.startsWith(BaseConfiguration.FRAMEWORK_PATH)) {
 				grpcImplName = BaseConfiguration.FRAMEWORK_PATH + packageName + substring + "GrpcImpl";
 			} else {
@@ -87,8 +87,8 @@ public class GrpcProtocol extends AbstractProxyProtocol {
 			String substring = name.substring(name.lastIndexOf(".") + 1,
 					name.indexOf(BaseConfiguration.INTERFACE_SUFFIX));
 			String grpcImplName;
-			if (name.startsWith(BaseConfiguration.COMPANY_PATH)) {
-				grpcImplName = BaseConfiguration.COMPANY_PATH + packageName + substring + "GrpcInvoker";
+			if (name.startsWith(BaseConfiguration.SERVICE_PATH)) {
+				grpcImplName = BaseConfiguration.SERVICE_PATH + packageName + substring + "GrpcInvoker";
 			} else if (name.startsWith(BaseConfiguration.FRAMEWORK_PATH)) {
 				grpcImplName =BaseConfiguration.FRAMEWORK_PATH + packageName + substring + "GrpcInvoker";
 			} else {

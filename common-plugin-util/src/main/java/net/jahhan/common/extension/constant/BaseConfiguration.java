@@ -13,7 +13,7 @@ import net.jahhan.common.extension.utils.PropertiesUtil;
 @Slf4j
 public class BaseConfiguration {
 	public static String FRAMEWORK_PATH;
-	public static String COMPANY_PATH;
+	public static String SERVICE_PATH;
 	public static String SYSTEM_ERROR_CODE_LEVEL = "JAHHAN";
 	public static String SERVICE = "";
 	public static boolean IS_DEBUG = false;
@@ -24,7 +24,7 @@ public class BaseConfiguration {
 		Properties property = PropertiesUtil.getProperties("base");
 		try {
 			FRAMEWORK_PATH = property.getProperty("path.framework");
-			COMPANY_PATH = property.getProperty("path.company");
+			SERVICE_PATH = property.getProperty("path.company");
 			IS_DEBUG = Boolean.parseBoolean(property.getProperty("debug", "false"));
 			SERVICE = property.getProperty("serviceCode");
 			String globalExpireSecond = property.getProperty("globalExpireSecond", "7200");

@@ -46,7 +46,7 @@ public class InitMethod {
 		Map<Integer, WorkHandler> workHandlerMap = new TreeMap<>();
 		Set<WorkHandler> lazyWorkHandlerSet = new HashSet<>();
 		BaseContext instance = injector.getInstance(BaseContext.class);
-		instance.getNode().setNodeId(UUID.randomUUID().toString());
+		System.setProperty("nodeId", BaseContext.CTX.getNode().getNodeId());
 		try {
 			String[] packages = PackageUtil.packages("init.initer");
 			List<String> classNameList = new ClassScaner().parse(packages);

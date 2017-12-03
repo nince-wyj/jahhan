@@ -19,14 +19,14 @@ public class ZookeeperRegistry extends FailbackRegistry {
 	private final static int DEFAULT_ZOOKEEPER_PORT = 2181;
 
 	@Getter
-	private final ZookeeperClient zkClient;
+	private ZookeeperClient zkClient;
 	@Inject
 	private JahhanZookeeperTransporter zookeeperTransporter;
 	@Inject
 	private ClusterMessageHolder clusterMessageHolder;
 
-	public ZookeeperRegistry() {
-		super();
+	public void init(Node node) {
+		this.node = node;
 		zkClient = zookeeperTransporter.connect();
 		zkClient.create(toPath(), JsonUtil.toJson(node), true);
 		zkClient.addChildNodeListener("/node", new ChildNodeListener() {

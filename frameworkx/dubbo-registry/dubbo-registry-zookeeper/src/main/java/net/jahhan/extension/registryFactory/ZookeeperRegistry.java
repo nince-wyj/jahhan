@@ -81,34 +81,34 @@ public class ZookeeperRegistry extends FailbackRegistry {
 //		}
 //		zkClient.create("/service/" + BaseConfiguration.SERVICE + "/" + BaseContext.CTX.getNode().getNodeId(), hostString,
 //				true);
-		zkClient.addChildNodeListener("/service", new ChildNodeListener() {
-			@Override
-			public void childChanged(String path, String type, String value) {
-				switch (type) {
-				case "NODE_ADDED": {
-					String[] pathSplit = path.split("/");
-					if (pathSplit.length > 3) {
-						ClusterMessageHolder instance = BaseContext.CTX.getInjector()
-								.getInstance(ClusterMessageHolder.class);
-						instance.addServer(pathSplit[2], pathSplit[3], value);
-					}
-					break;
-				}
-				case "NODE_REMOVED": {
-					String[] pathSplit = path.split("/");
-					if (pathSplit.length > 3) {
-						ClusterMessageHolder instance = BaseContext.CTX.getInjector()
-								.getInstance(ClusterMessageHolder.class);
-						instance.deleteServer(pathSplit[2], pathSplit[3]);
-					}
-					break;
-				}
-				default:
-					break;
-				}
-
-			}
-		});
+//		zkClient.addChildNodeListener("/service", new ChildNodeListener() {
+//			@Override
+//			public void childChanged(String path, String type, String value) {
+//				switch (type) {
+//				case "NODE_ADDED": {
+//					String[] pathSplit = path.split("/");
+//					if (pathSplit.length > 3) {
+//						ClusterMessageHolder instance = BaseContext.CTX.getInjector()
+//								.getInstance(ClusterMessageHolder.class);
+//						instance.addServer(pathSplit[2], pathSplit[3], value);
+//					}
+//					break;
+//				}
+//				case "NODE_REMOVED": {
+//					String[] pathSplit = path.split("/");
+//					if (pathSplit.length > 3) {
+//						ClusterMessageHolder instance = BaseContext.CTX.getInjector()
+//								.getInstance(ClusterMessageHolder.class);
+//						instance.deleteServer(pathSplit[2], pathSplit[3]);
+//					}
+//					break;
+//				}
+//				default:
+//					break;
+//				}
+//
+//			}
+//		});
 		zkClient.addStateListener(new StateListener() {
 			public void stateChanged(int state) {
 				if (state == RECONNECTED) {
