@@ -9,7 +9,7 @@ import com.alibaba.dubbo.common.serialize.ObjectOutput;
 
 import net.jahhan.common.extension.utils.LogUtil;
 import net.jahhan.context.BaseContext;
-import net.jahhan.spi.Serialization;
+import net.jahhan.spi.common.Serialization;
 
 public class SerializerUtil {
 	private static Serialization serializer = BaseContext.CTX.getInjector().getInstance(Serialization.class);

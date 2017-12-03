@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.frameworkx.soa.rpcx.grpc.common";
+option java_outer_classname = "CommonIntfProto";
+
+package com.frameworkx.soa.rpcx.grpc.common;
+
+service CommonIntf {
+    rpc push (stream CommonPushRequest) returns (stream CommonPushResponse) {}
+    rpc confirm (CommonConfirmRequest) returns (CommonConfirmResponse) {}
+}
+
+message CommonPushRequest {
+	string deviceType = 1;			//设备类型
+	string appType = 2;				//应用类型
+	string mac = 3;					//mac地址
+	string token = 4;				//token
+	string deviceId = 5;			//设备唯一标识
+	repeated string topics = 6;		//订阅内容
+	string appVersion = 7;			//应用版本
+	string sysVersion = 8;			//设备系统版本
+}
+
+message CommonPushResponse {
+	CommonPushGOVO result = 1;
+}
+
+message CommonPushGOVO {
+	string pushId = 1;		//推送id
+    string messageId = 2;	//消息id
+	string topic = 3;		//消息主题
+    string message = 4;		//消息内容
+    int64 timestamp = 5;	//时间戳
+    bool confirm = 6;		//是否需要确认
+}
+
+message CommonConfirmRequest {
+	map<string, string> attachment = 1;
+	string pushId = 2;		//推送id
+    string messageId = 3;	//消息id
+}
+
+message CommonConfirmResponse{}

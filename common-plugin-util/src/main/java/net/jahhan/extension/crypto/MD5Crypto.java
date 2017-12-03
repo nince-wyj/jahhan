@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.exception.JahhanException;
-import net.jahhan.spi.ICrypto;
+import net.jahhan.spi.common.ICrypto;
 
 /**
  * @author nince

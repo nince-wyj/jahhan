@@ -12,7 +12,7 @@ import com.alibaba.dubbo.common.serialize.support.java.JavaObjectInput;
 import com.alibaba.dubbo.common.serialize.support.java.JavaObjectOutput;
 
 import net.jahhan.common.extension.annotation.Extension;
-import net.jahhan.spi.Serialization;
+import net.jahhan.spi.common.Serialization;
 
 /**
  * @author ding.lid

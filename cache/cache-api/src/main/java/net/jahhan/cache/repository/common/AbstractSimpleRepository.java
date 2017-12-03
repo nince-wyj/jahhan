@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import com.google.inject.name.Named;
+
 import net.jahhan.cache.util.SerializerUtil;
 import net.jahhan.common.extension.constant.BaseConfiguration;
 import net.jahhan.common.extension.utils.BeanTools;

@@ -19,7 +19,7 @@ import net.jahhan.jdbc.constant.enumeration.DBConnectLevel;
 import net.jahhan.jdbc.constant.enumeration.DBConnectStrategy;
 import net.jahhan.jdbc.context.DBVariable;
 import net.jahhan.jdbc.dbconnexecutor.DBConnExecutorHolder;
-import net.jahhan.spi.BroadcastSender;
+import net.jahhan.spi.common.BroadcastSender;
 
 public class DBConnInterceptor implements MethodInterceptor {
 	private static Logger logger = LoggerFactory.getLogger(DBConnInterceptor.class);

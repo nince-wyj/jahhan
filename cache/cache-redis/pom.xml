@@ -28,7 +28,7 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.frameworkx</groupId>
+			<groupId>net.jahhan</groupId>
 			<artifactId>dubbo-common</artifactId>
 			<version>${project.parent.version}</version>
 			<scope>provided</scope>

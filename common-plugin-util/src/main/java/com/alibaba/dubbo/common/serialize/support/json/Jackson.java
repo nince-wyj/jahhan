@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import net.jahhan.common.extension.utils.ExtensionUtil;
-import net.jahhan.spi.JacksonObjectMapperProvider;
+import net.jahhan.spi.common.JacksonObjectMapperProvider;
 
 /**
  * @author dylan

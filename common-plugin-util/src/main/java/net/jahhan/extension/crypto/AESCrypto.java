@@ -9,7 +9,7 @@ import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.common.extension.utils.Base64Util;
 import net.jahhan.exception.JahhanException;
-import net.jahhan.spi.ICrypto;
+import net.jahhan.spi.common.ICrypto;
 
 /**
  * @author nince

@@ -8,7 +8,7 @@ import java.util.Map;
 import com.alibaba.dubbo.common.serialize.ObjectInput;
 import com.alibaba.dubbo.common.serialize.ObjectOutput;
 
-import net.jahhan.spi.Serialization;
+import net.jahhan.spi.common.Serialization;
 
 public class JsonUtil {
 

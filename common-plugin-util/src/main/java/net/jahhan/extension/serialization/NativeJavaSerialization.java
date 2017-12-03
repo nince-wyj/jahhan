@@ -12,7 +12,7 @@ import com.alibaba.dubbo.common.serialize.support.nativejava.NativeJavaObjectInp
 import com.alibaba.dubbo.common.serialize.support.nativejava.NativeJavaObjectOutput;
 
 import net.jahhan.common.extension.annotation.Extension;
-import net.jahhan.spi.Serialization;
+import net.jahhan.spi.common.Serialization;
 
 /**
  * @author <a href="mailto:gang.lvg@alibaba-inc.com">kimi</a>

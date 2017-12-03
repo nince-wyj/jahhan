@@ -18,7 +18,7 @@
 		<dependency>
 			<groupId>net.jahhan</groupId>
 			<artifactId>common-plugin-util</artifactId>
-			<version>${parent_version}</version>
+			<version>${project.parent.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -30,7 +30,7 @@
 		<dependency>
 			<groupId>net.jahhan</groupId>
 			<artifactId>register-api</artifactId>
-			<version>${parent_version}</version>
+			<version>${project.parent.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		

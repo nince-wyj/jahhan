@@ -16,7 +16,7 @@ import net.jahhan.exception.NoRollBackException;
 import net.jahhan.jdbc.annotation.Transaction;
 import net.jahhan.jdbc.context.DBVariable;
 import net.jahhan.jdbc.dbconnexecutor.DBConnExecutorHolder;
-import net.jahhan.spi.BroadcastSender;
+import net.jahhan.spi.common.BroadcastSender;
 
 @Slf4j
 public class TransactionInterceptor implements MethodInterceptor {

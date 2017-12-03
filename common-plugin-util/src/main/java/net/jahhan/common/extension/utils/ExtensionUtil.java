@@ -15,7 +15,7 @@ import net.jahhan.context.BaseContext;
 
 public abstract class ExtensionUtil {
 	@Getter
-	private volatile static Map<Class<?>, Map<Class<?>, String>> extensionCacheClassNameMap = new ConcurrentHashMap<>();
+	protected volatile static Map<Class<?>, Map<Class<?>, String>> extensionCacheClassNameMap = new ConcurrentHashMap<>();
 
 	public static <T> T getExtension(Class<T> type, String name) {
 		Injector injector = BaseContext.CTX.getInjector();

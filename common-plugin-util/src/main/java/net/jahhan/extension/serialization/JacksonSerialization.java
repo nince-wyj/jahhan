@@ -12,7 +12,7 @@ import com.alibaba.dubbo.common.serialize.support.json.JacksonObjectInput;
 import com.alibaba.dubbo.common.serialize.support.json.JacksonObjectOutput;
 
 import net.jahhan.common.extension.annotation.Extension;
-import net.jahhan.spi.Serialization;
+import net.jahhan.spi.common.Serialization;
 
 /**
  * JsonSerialization

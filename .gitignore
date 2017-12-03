@@ -10,26 +10,7 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-/apidoc/apidoc-swagger/.classpath
-/apidoc/apidoc-swagger/.gitignore
-/apidoc/apidoc-swagger/.project
-/apidoc/apidoc-swagger/.settings
-/apidoc/.settings
-/apidoc/*.project
-/cache/.project
-/cache/.settings
-/cache/cache-api/.project
-/cache/cache-ehcache/.classpath
-/cache/cache-redis-sentinel/.classpath
-/cache/cache-redis-sentinel/.settings
-/cache/cache-ehcache/.settings
-/cache/cache-redis/*.classpath
-/cache/cache-redis/*.project
-/cache/cache-redis/.settings/org.eclipse.jdt.core.prefs
-/cache/cache-redis-sentinel/.project
-/cache/cache-redis/.settings/org.eclipse.m2e.core.prefs
-/cache/cache-redis/.settings/org.eclipse.core.resources.prefs
-/common-main/.classpath
+target
 .settings
 .project
 .classpath

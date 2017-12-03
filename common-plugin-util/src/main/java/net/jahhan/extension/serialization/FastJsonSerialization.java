@@ -12,7 +12,7 @@ import com.alibaba.dubbo.common.serialize.support.json.FastJsonObjectInput;
 import com.alibaba.dubbo.common.serialize.support.json.FastJsonObjectOutput;
 
 import net.jahhan.common.extension.annotation.Extension;
-import net.jahhan.spi.Serialization;
+import net.jahhan.spi.common.Serialization;
 
 /**
  * FastJsonSerialization

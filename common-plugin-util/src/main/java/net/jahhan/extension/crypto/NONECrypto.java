@@ -3,7 +3,7 @@ package net.jahhan.extension.crypto;
 import javax.inject.Singleton;
 
 import net.jahhan.common.extension.annotation.Extension;
-import net.jahhan.spi.ICrypto;
+import net.jahhan.spi.common.ICrypto;
 
 @Extension("none")
 @Singleton

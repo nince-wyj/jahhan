@@ -1,0 +1,48 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.jahhan</groupId>
+		<artifactId>dubbo-rpc</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>dubbo-rpc-grpc</artifactId>
+	<packaging>jar</packaging>
+	<name>${project.artifactId}</name>
+	<description>The grpc module of dubbo project</description>
+	<properties>
+		<skip_maven_deploy>true</skip_maven_deploy>
+
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>net.jahhan</groupId>
+			<artifactId>common-plugin-util</artifactId>
+			<version>${project.parent.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.jahhan</groupId>
+			<artifactId>dubbo-rpc-api</artifactId>
+			<version>${project.parent.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-netty</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-protobuf</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-stub</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+
+	</dependencies>
+
+</project>

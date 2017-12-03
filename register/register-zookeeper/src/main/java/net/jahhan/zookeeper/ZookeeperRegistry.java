@@ -11,7 +11,7 @@ import net.jahhan.context.Node;
 import net.jahhan.exception.JahhanException;
 import net.jahhan.register.ClusterMessageHolder;
 import net.jahhan.register.api.FailbackRegistry;
-import net.jahhan.spi.ZookeeperTransporter;
+import net.jahhan.spi.JahhanZookeeperTransporter;
 
 @Slf4j
 public class ZookeeperRegistry extends FailbackRegistry {
@@ -21,7 +21,7 @@ public class ZookeeperRegistry extends FailbackRegistry {
 	@Getter
 	private final ZookeeperClient zkClient;
 	@Inject
-	private ZookeeperTransporter zookeeperTransporter;
+	private JahhanZookeeperTransporter zookeeperTransporter;
 	@Inject
 	private ClusterMessageHolder clusterMessageHolder;
 

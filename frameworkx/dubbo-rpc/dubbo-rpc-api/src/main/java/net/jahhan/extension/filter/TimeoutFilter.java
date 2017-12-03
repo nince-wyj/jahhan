@@ -1,0 +1,60 @@
+/*
+ * Copyright 1999-2011 Alibaba Group.
+ *  
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *  
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *  
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package net.jahhan.extension.filter;
+
+import java.util.Arrays;
+
+import javax.inject.Singleton;
+
+import com.alibaba.dubbo.common.Constants;
+import com.alibaba.dubbo.rpc.Invocation;
+import com.alibaba.dubbo.rpc.Invoker;
+import com.alibaba.dubbo.rpc.Result;
+import com.frameworkx.annotation.Activate;
+
+import lombok.extern.slf4j.Slf4j;
+import net.jahhan.common.extension.annotation.Extension;
+import net.jahhan.exception.JahhanException;
+import net.jahhan.spi.Filter;
+
+/**
+ * 如果执行timeout，则log记录下，不干涉服务的运行
+ * 
+ * @author chao.liuc
+ */
+@Activate(group = Constants.PROVIDER)
+@Extension("timeout")
+@Singleton
+@Slf4j
+public class TimeoutFilter implements Filter {
+
+    public Result invoke(Invoker<?> invoker, Invocation invocation) throws JahhanException {
+        long start = System.currentTimeMillis();
+        Result result = invoker.invoke(invocation);
+        long elapsed = System.currentTimeMillis() - start;
+        if (invoker.getUrl() != null
+                && elapsed > invoker.getUrl().getMethodParameter(invocation.getMethodName(),
+                        "timeout", Integer.MAX_VALUE)) {
+            if (log.isWarnEnabled()) {
+                log.warn("invoke time out. method: " + invocation.getMethodName()
+                        + " arguments: " + Arrays.toString(invocation.getArguments()) + " , url is "
+                        + invoker.getUrl() + ", invoke elapsed " + elapsed + " ms.");
+            }
+        }
+        return result;
+    }
+    
+}

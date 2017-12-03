@@ -8,14 +8,14 @@
 
 	<distributionManagement>
 		<snapshotRepository>
-			<id>jahhan</id>
-			<url>http://123.206.186.31:8081/nexus/content/repositories/jahhan</url>
+			<id>frameworkx</id>
+			<url>http://123.206.186.31:8081/nexus/content/repositories/frameworkx</url>
 		</snapshotRepository>
 	</distributionManagement>
 	<repositories>
 		<repository>
-			<id>jahhan</id>
-			<url>http://123.206.186.31:8081/nexus/content/repositories/jahhan</url>
+			<id>frameworkx</id>
+			<url>http://123.206.186.31:8081/nexus/content/repositories/frameworkx</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
@@ -35,58 +35,39 @@
 		<module>apidoc</module>
 		<module>logappend</module>
 		<module>register</module>
-		<module>supported</module>
 		
-		<module>deploy</module>
+		<module>frameworkx</module>
+		<module>package</module>
+		<module>supported</module>
 	</modules>
 	<properties>
 		<!-- Common libs -->
-		<parent_version>1.0-SNAPSHOT</parent_version>
 		<project.parent.version>1.0-SNAPSHOT</project.parent.version>
-		<spring.bom.version>3.2.9.RELEASE</spring.bom.version>
+		<commons_lang3>3.4</commons_lang3>
 		<javassist_version>3.20.0-GA</javassist_version>
-		<netty_version>3.7.0.Final</netty_version>
-		<mina_version>1.1.7</mina_version>
-		<grizzly_version>2.1.4</grizzly_version>
-		<httpclient_version>4.5.3</httpclient_version>
-		<hessian_lite_version>3.2.1-fixed-2</hessian_lite_version>
-		<xstream_version>1.4.1</xstream_version>
 		<fastjson_version>1.2.38</fastjson_version>
-		<bsf_version>3.1</bsf_version>
-		<sorcerer_version>0.8</sorcerer_version>
 		<zookeeper_version>3.4.9</zookeeper_version>
 		<zkclient_version>0.2</zkclient_version>
 		<curator_version>2.12.0</curator_version>
 		<jedis_version>2.9.0</jedis_version>
-		<xmemcached_version>1.3.6</xmemcached_version>
-		<cxf_version>3.0.14</cxf_version>
-		<thrift2_version>0.10.0</thrift2_version>
-		<avro_version>1.8.0</avro_version>
-		<jfreechart_version>1.0.13</jfreechart_version>
-		<hessian_version>4.0.38</hessian_version>
 		<servlet_version>3.1.0</servlet_version>
-		<jetty_version>6.1.26</jetty_version>
 		<validation_version>1.1.0.Final</validation_version>
 		<hibernate_validator_version>5.4.1.Final</hibernate_validator_version>
-		<jcache_version>1.0.0</jcache_version>
-		<jel_version>3.0.1-b08</jel_version>
-		<sca_version>2.0-M5.1</sca_version>
 		<guice_version>3.0</guice_version>
-		<cglib_version>2.2</cglib_version>
-		<webx_version>3.0.8</webx_version>
 		<jackson_version>2.8.5</jackson_version>
-		<commons_pool_version>1.6</commons_pool_version>
-		<tomcat_embed_version>8.0.44</tomcat_embed_version>
+		<jetty_version>6.1.26</jetty_version>
+		
+		<c3p0_version>0.9.1.2</c3p0_version>
+		<mysql_connector_version>5.1.29</mysql_connector_version>
 		<!-- Log libs -->
 		<slf4j_version>1.7.25</slf4j_version>
 		<jcl_version>1.2</jcl_version>
-		<log4j_version>1.2.16</log4j_version>
 		<logback_version>1.2.3</logback_version>
 		<!-- Test libs -->
 		<junit_version>4.10</junit_version>
 		<easymock_version>3.0</easymock_version>
 		<jmockit_version>0.999.8</jmockit_version>
-		<resteasy_version>3.1.4.Final</resteasy_version>
+		
 		<!-- Build args -->
 		<argline>-server -Xms64m -Xmx256m -XX:PermSize=64m
 			-XX:MaxPermSize=128m -Dfile.encoding=UTF-8
@@ -112,15 +93,14 @@
 		<maven_deploy_plugin_version>2.5</maven_deploy_plugin_version>
 
 		<maven-surefire-plugin_version>3.1</maven-surefire-plugin_version>
-		<c3p0_version>0.9.1.2</c3p0_version>
-		<mysql_connector_version>5.1.29</mysql_connector_version>
+		
 	</properties>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
-				<version>3.4</version>
+				<version>${commons_lang3}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.javassist</groupId>
@@ -132,21 +112,7 @@
 				<artifactId>fastjson</artifactId>
 				<version>${fastjson_version}</version>
 			</dependency>
-			<dependency>
-				<groupId>com.thoughtworks.xstream</groupId>
-				<artifactId>xstream</artifactId>
-				<version>${xstream_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.bsf</groupId>
-				<artifactId>bsf-api</artifactId>
-				<version>${bsf_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jvnet.sorcerer</groupId>
-				<artifactId>sorcerer-javac</artifactId>
-				<version>${sorcerer_version}</version>
-			</dependency>
+			
 			<dependency>
 				<groupId>org.apache.zookeeper</groupId>
 				<artifactId>zookeeper</artifactId>
@@ -177,36 +143,7 @@
 				<artifactId>jedis</artifactId>
 				<version>${jedis_version}</version>
 			</dependency>
-			<dependency>
-				<groupId>com.googlecode.xmemcached</groupId>
-				<artifactId>xmemcached</artifactId>
-				<version>${xmemcached_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-rt-frontend-simple</artifactId>
-				<version>${cxf_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-rt-transports-http</artifactId>
-				<version>${cxf_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.thrift</groupId>
-				<artifactId>libthrift</artifactId>
-				<version>${thrift_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>jfree</groupId>
-				<artifactId>jfreechart</artifactId>
-				<version>${jfreechart_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.caucho</groupId>
-				<artifactId>hessian</artifactId>
-				<version>${hessian_version}</version>
-			</dependency>
+			
 			<dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>javax.servlet-api</artifactId>
@@ -232,21 +169,13 @@
 				<artifactId>cache-api</artifactId>
 				<version>${jcache_version}</version>
 			</dependency>
-			<dependency>
-				<groupId>org.apache.tuscany.sca</groupId>
-				<artifactId>tuscany-sca-api</artifactId>
-				<version>${sca_version}</version>
-			</dependency>
+			
 			<dependency>
 				<groupId>com.google.inject</groupId>
 				<artifactId>guice</artifactId>
 				<version>${guice_version}</version>
 			</dependency>
-			<dependency>
-				<groupId>com.alibaba.citrus</groupId>
-				<artifactId>citrus-webx-all</artifactId>
-				<version>${webx_version}</version>
-			</dependency>
+			
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-core</artifactId>
@@ -273,11 +202,7 @@
 				<artifactId>commons-logging</artifactId>
 				<version>${jcl_version}</version>
 			</dependency>
-			<dependency>
-				<groupId>log4j</groupId>
-				<artifactId>log4j</artifactId>
-				<version>${log4j_version}</version>
-			</dependency>
+			
 			<dependency>
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-classic</artifactId>
@@ -308,26 +233,6 @@
 				<version>${easymock_version}</version>
 				<scope>test</scope>
 			</dependency>
-			<dependency>
-				<groupId>cglib</groupId>
-				<artifactId>cglib-nodep</artifactId>
-				<version>${cglib_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-pool</groupId>
-				<artifactId>commons-pool</artifactId>
-				<version>${commons_pool_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.tomcat.embed</groupId>
-				<artifactId>tomcat-embed-core</artifactId>
-				<version>${tomcat_embed_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.tomcat.embed</groupId>
-				<artifactId>tomcat-embed-logging-juli</artifactId>
-				<version>${tomcat_embed_version}</version>
-			</dependency>
 
 			<!-- TODO move versions into properties -->
 			<dependency>
@@ -335,41 +240,7 @@
 				<artifactId>javax.ws.rs-api</artifactId>
 				<version>2.0</version>
 			</dependency>
-			<dependency>
-				<groupId>org.jboss.resteasy</groupId>
-				<artifactId>resteasy-jaxrs</artifactId>
-				<version>${resteasy_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.resteasy</groupId>
-				<artifactId>resteasy-client</artifactId>
-				<version>${resteasy_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.resteasy</groupId>
-				<artifactId>resteasy-netty</artifactId>
-				<version>${resteasy_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.resteasy</groupId>
-				<artifactId>resteasy-jdk-http</artifactId>
-				<version>${resteasy_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.resteasy</groupId>
-				<artifactId>resteasy-jackson-provider</artifactId>
-				<version>${resteasy_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.resteasy</groupId>
-				<artifactId>resteasy-jaxb-provider</artifactId>
-				<version>${resteasy_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.resteasy</groupId>
-				<artifactId>resteasy-servlet-initializer</artifactId>
-				<version>${resteasy_version}</version>
-			</dependency>
+			
 			<dependency>
 				<groupId>com.esotericsoftware.kryo</groupId>
 				<artifactId>kryo</artifactId>
@@ -395,6 +266,13 @@
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
 				<version>${mysql_connector_version}</version>
+			</dependency>
+			
+			
+			<dependency>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty</artifactId>
+				<version>${jetty_version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
