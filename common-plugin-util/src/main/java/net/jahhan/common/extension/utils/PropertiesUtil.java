@@ -41,7 +41,11 @@ public class PropertiesUtil {
 					resourcePath = split[0];
 				}
 			} else {
-				String[] classPath = System.getProperty("java.class.path").split(";");
+				String envClassPath = System.getProperty("java.class.path");
+				String[] classPath = envClassPath.split(";");
+				if (classPath.length <= 1) {
+					classPath = envClassPath.split(":");
+				}
 				if (classPath.length > 1) {
 					for (String path : classPath) {
 						if (path.endsWith("classes")) {
@@ -49,15 +53,14 @@ public class PropertiesUtil {
 							break;
 						}
 						if (path.contains("apache-jmeter") && path.contains("ext")) {
-							File file =new File(path);
+							File file = new File(path);
 							resourcePath = file.getParent();
 						}
 					}
 				}
 				if (null == resourcePath) {
-					resourcePath = System.getProperty("java.class.path").split(":")[0];
+					resourcePath = classPath[0];
 				}
-
 			}
 		}
 

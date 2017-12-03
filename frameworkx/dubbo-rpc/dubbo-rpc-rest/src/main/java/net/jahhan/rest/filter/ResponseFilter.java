@@ -37,19 +37,34 @@ public class ResponseFilter implements ContainerResponseFilter {
 			responseContext.setEntity(exceptionMessage, new Annotation[] {}, MediaType.valueOf("application/json"));
 		} else if (HttpResponseCodes.SC_BAD_REQUEST == responseContext.getStatus()) {
 			Object entity = responseContext.getEntity();
-			if (entity != null && entity instanceof String
-					&& entity.equals("java.io.EOFException: No content to map to Object due to end of input")) {
-				ExceptionMessage exceptionMessage = new ExceptionMessage();
-				exceptionMessage.setHttpStatus(404);
-				exceptionMessage.setCode(JahhanErrorCode.VALIATION_EXCEPTION);
-				exceptionMessage.setMessage("错误的请求内容");
-				exceptionMessage.setService(BaseConfiguration.SERVICE);
-				exceptionMessage.setHost(LocalIpUtils.getFirstIp());
-				exceptionMessage.setThreadId(Thread.currentThread().getId());
-				exceptionMessage.setThreadName(Thread.currentThread().getName());
-				exceptionMessage.setTime(new Date());
-				responseContext.setEntity(exceptionMessage, new Annotation[] {}, MediaType.valueOf("application/json"));
+			if (entity != null && entity instanceof String) {
+				if (entity.equals("java.io.EOFException: No content to map to Object due to end of input")) {
+					ExceptionMessage exceptionMessage = new ExceptionMessage();
+					exceptionMessage.setHttpStatus(HttpResponseCodes.SC_NOT_FOUND);
+					exceptionMessage.setCode(JahhanErrorCode.VALIATION_EXCEPTION);
+					exceptionMessage.setMessage("错误的请求内容");
+					exceptionMessage.setService(BaseConfiguration.SERVICE);
+					exceptionMessage.setHost(LocalIpUtils.getFirstIp());
+					exceptionMessage.setThreadId(Thread.currentThread().getId());
+					exceptionMessage.setThreadName(Thread.currentThread().getName());
+					exceptionMessage.setTime(new Date());
+					responseContext.setEntity(exceptionMessage, new Annotation[] {},
+							MediaType.valueOf("application/json"));
+				} else if (entity.toString().startsWith("com.fasterxml.jackson.core.JsonParseException:")) {
+					ExceptionMessage exceptionMessage = new ExceptionMessage();
+					exceptionMessage.setHttpStatus(HttpResponseCodes.SC_BAD_REQUEST);
+					exceptionMessage.setCode(JahhanErrorCode.PARAMETER_ERROR);
+					exceptionMessage.setMessage("请求参数错误");
+					exceptionMessage.setService(BaseConfiguration.SERVICE);
+					exceptionMessage.setHost(LocalIpUtils.getFirstIp());
+					exceptionMessage.setThreadId(Thread.currentThread().getId());
+					exceptionMessage.setThreadName(Thread.currentThread().getName());
+					exceptionMessage.setTime(new Date());
+					responseContext.setEntity(exceptionMessage, new Annotation[] {},
+							MediaType.valueOf("application/json"));
+				}
 			}
+
 		}
 	}
 }
