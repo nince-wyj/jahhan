@@ -13,6 +13,6 @@
 	<modules>
 		<module>package-service</module>
 		<module>package-base</module>
-<!-- 		<module>package-common</module> -->
+ 		<module>package-common</module>
 	</modules>
 </project>
