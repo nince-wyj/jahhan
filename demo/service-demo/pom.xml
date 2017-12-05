@@ -43,8 +43,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>net.jahhan</groupId>
-			<artifactId>dependency-frameworkx-base</artifactId>
+			<groupId>com.jahhan</groupId>
+			<artifactId>dependency-frameworkx-common</artifactId>
 			<version>${framework.version}</version>
 		</dependency>
 		<dependency>

@@ -3,10 +3,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.jahhan</groupId>
-		<artifactId>package</artifactId>
+		<artifactId>package-frameworkx</artifactId>
 		<version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>package-base</artifactId>
+    <artifactId>package-frameworkx-base</artifactId>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
     <description>The all in one project of common</description>
@@ -16,48 +16,17 @@
     <dependencies>
 		<dependency>
 			<groupId>net.jahhan</groupId>
-			<artifactId>common-plugin-util</artifactId>
+			<artifactId>package-base</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.jahhan</groupId>
-			<artifactId>jdbc-druid</artifactId>
+			<artifactId>frameworkx-package</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.jahhan</groupId>
-			<artifactId>jdbc-api</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>net.jahhan</groupId>
-			<artifactId>cache-redis-sentinel</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>net.jahhan</groupId>
-			<artifactId>cache-api</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>net.jahhan</groupId>
-			<artifactId>apidoc-swagger</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>net.jahhan</groupId>
-			<artifactId>logappend-logback</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>net.jahhan</groupId>
-			<artifactId>register-api</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>net.jahhan</groupId>
-			<artifactId>register-zookeeper</artifactId>
+			<artifactId>supported-frameworkx-base</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
     </dependencies>
@@ -90,7 +59,13 @@
                             <promoteTransitiveDependencies>true</promoteTransitiveDependencies>
                             <artifactSet>
                                 <includes>
-                                    <include>net.jahhan:common-plugin-util</include>
+                                    <include>net.jahhan:package-base</include>
+                                    <include>net.jahhan:frameworkx-package</include>
+                                    <include>net.jahhan:supported-frameworkx-base</include>
+                                    
+                                    <include>net.jahhan:deploy-service</include>
+									<include>net.jahhan:deploy-base</include>
+									<include>net.jahhan:common-plugin-util</include>
                                     <include>net.jahhan:jdbc-api</include>
                                     <include>net.jahhan:jdbc-druid</include>
                                     <include>net.jahhan:jdbc-c3p0</include>
@@ -101,6 +76,38 @@
                                     <include>net.jahhan:logappend-logback</include>
                                     <include>net.jahhan:register-api</include>
                                     <include>net.jahhan:register-zookeeper</include>
+                                    
+                                    <include>net.jahhan:hessian-lite</include>
+									<include>net.jahhan:common-plugin-util</include>
+									<include>net.jahhan:dubbo-common</include>
+									<include>net.jahhan:dubbo-remoting-api</include>
+									<include>net.jahhan:dubbo-remoting-netty</include>
+									<include>net.jahhan:dubbo-remoting-mina</include>
+									<include>net.jahhan:dubbo-remoting-grizzly</include>
+									<include>net.jahhan:dubbo-remoting-p2p</include>
+									<include>net.jahhan:dubbo-remoting-http</include>
+									<include>net.jahhan:dubbo-remoting-zookeeper</include>
+									<include>net.jahhan:dubbo-rpc-api</include>
+									<include>net.jahhan:dubbo-rpc-default</include>
+									<include>net.jahhan:dubbo-rpc-injvm</include>
+									<include>net.jahhan:dubbo-rpc-rmi</include>
+									<include>net.jahhan:dubbo-rpc-hessian</include>
+									<include>net.jahhan:dubbo-rpc-http</include>
+									<include>net.jahhan:dubbo-rpc-webservice</include>
+									<include>net.jahhan:dubbo-rpc-memcached</include>
+									<include>net.jahhan:dubbo-rpc-redis</include>
+									<include>net.jahhan:dubbo-rpc-rest</include>
+									<include>net.jahhan:dubbo-filter-validation</include>
+									<include>net.jahhan:dubbo-filter-cache</include>
+									<include>net.jahhan:dubbo-cluster</include>
+									<include>net.jahhan:dubbo-registry-api</include>
+									<include>net.jahhan:dubbo-registry-default</include>
+									<include>net.jahhan:dubbo-registry-multicast</include>
+									<include>net.jahhan:dubbo-registry-zookeeper</include>
+									<include>net.jahhan:dubbo-registry-redis</include>
+									<include>net.jahhan:dubbo-monitor-api</include>
+									<include>net.jahhan:dubbo-monitor-default</include>
+									<include>net.jahhan:dubbo-config-api</include>
                                 </includes>
                             </artifactSet>
                         </configuration>

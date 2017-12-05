@@ -16,13 +16,15 @@
 	<dependencies>
 		<dependency>
 			<groupId>net.jahhan</groupId>
-			<artifactId>package-base</artifactId>
+			<artifactId>package-service</artifactId>
 			<version>${project.parent.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>net.jahhan</groupId>
-			<artifactId>package-service</artifactId>
+			<artifactId>package-base</artifactId>
 			<version>${project.parent.version}</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<build>
@@ -77,8 +79,8 @@
 							<promoteTransitiveDependencies>true</promoteTransitiveDependencies>
 							<artifactSet>
 								<includes>
-									<include>net.jahhan:deploy-base</include>
 									<include>net.jahhan:deploy-service</include>
+									<include>net.jahhan:deploy-base</include>
 								</includes>
 							</artifactSet>
 						</configuration>

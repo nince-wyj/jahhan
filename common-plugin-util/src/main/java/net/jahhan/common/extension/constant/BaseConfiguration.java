@@ -24,7 +24,7 @@ public class BaseConfiguration {
 		Properties property = PropertiesUtil.getProperties("base");
 		try {
 			FRAMEWORK_PATH = property.getProperty("path.framework");
-			SERVICE_PATH = property.getProperty("path.company");
+			SERVICE_PATH = property.getProperty("path.service");
 			IS_DEBUG = Boolean.parseBoolean(property.getProperty("debug", "false"));
 			SERVICE = property.getProperty("serviceCode");
 			String globalExpireSecond = property.getProperty("globalExpireSecond", "7200");

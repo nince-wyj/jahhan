@@ -34,7 +34,7 @@
 		</dependency>
 
 		<dependency>
-			<groupId>net.jahhan.package</groupId>
+			<groupId>net.jahhan</groupId>
 			<artifactId>frameworkx-package</artifactId>
 			<version>${project.parent.version}</version>
 			<scope>provided</scope>

@@ -40,6 +40,7 @@
 		<module>package</module>
 		<module>sdk</module>
 		<module>supported</module>
+		
 		<module>dependency</module>
 	</modules>
 	<properties>

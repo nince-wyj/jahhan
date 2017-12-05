@@ -6,7 +6,6 @@
 		<artifactId>frameworkx-parent</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<groupId>net.jahhan.package</groupId>
 	<artifactId>frameworkx-package</artifactId>
 	<packaging>jar</packaging>
 	<name>${project.artifactId}</name>

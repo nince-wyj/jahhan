@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>net.jahhan</groupId>
+	<groupId>com.jahhan</groupId>
 	<artifactId>dependency-frameworkx-base</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
@@ -404,12 +404,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>net.jahhan</groupId>
-			<artifactId>package-common</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>net.jahhan</groupId>
-			<artifactId>supported-frameworkx-base</artifactId>
+			<artifactId>package-frameworkx-base</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 
