@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+	<property resource="system.properties" />
+	<conversionRule conversionWord="tid"
+		converterClass="net.jahhan.logback.ThreadIdConvert" />
+	<conversionRule conversionWord="rid"
+		converterClass="net.jahhan.logback.RequestIdConvert" />
+		<conversionRule conversionWord="cid"
+		converterClass="net.jahhan.logback.ChainIdConvert" />
+	<conversionRule conversionWord="host"
+		converterClass="net.jahhan.logback.HostConvert" />
+	<conversionRule conversionWord="pid"
+		converterClass="net.jahhan.logback.PidConvert" />
+	<conversionRule conversionWord="port"
+		converterClass="net.jahhan.logback.PortConvert" />
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>%d{HH:mm:ss.SSS} %thread[%tid] %rid %-5level %logger{36} %L - [%msg]%n
+			</Pattern>
+		</layout>
+	</appender>
+
+	<appender name="FILEOUT"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>/www/logs/${service.type}/application${nodeId}.log</file>
+		<append>true</append>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>/www/logs/${service.type}/bak${nodeId}.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} %L - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- This is the kafkaAppender -->
+	<appender name="kafkaAppender"
+		class="com.github.danielwegener.logback.kafka.KafkaAppender">
+		<!-- This is the default encoder that encodes every log message to an utf8-encoded 
+			string -->
+		<encoder
+			class="com.github.danielwegener.logback.kafka.encoding.LayoutKafkaMessageEncoder">
+			<layout class="ch.qos.logback.classic.PatternLayout">
+				<pattern>${service.type} %host ${service.name} %pid %port %logger{36} %level %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread>%tid] %cid %rid - %msg%n
+				</pattern>
+			</layout>
+		</encoder>
+		<topic>log</topic>
+		<keyingStrategy
+			class="com.github.danielwegener.logback.kafka.keying.RoundRobinKeyingStrategy" />
+		<deliveryStrategy
+			class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy" />
+
+		<!-- each <producerConfig> translates to regular kafka-client config (format: 
+			key=value) -->
+		<!-- producer configs are documented here: https://kafka.apache.org/documentation.html#newproducerconfigs -->
+		<!-- bootstrap.servers is the only mandatory producerConfig -->
+		<producerConfig>bootstrap.servers=${kafka.servers}</producerConfig>
+
+		<!-- this is the fallback appender if kafka is not available. -->
+		<appender-ref ref="FILEOUT" />
+	</appender>
+
+	<appender name="ASYNC_KAFKA" class="net.jahhan.logback.JahhanAsyncAppender">
+		<!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+		<discardingThreshold>0</discardingThreshold>
+		<!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+		<queueSize>512</queueSize>
+		<neverBlock>true</neverBlock>
+		<!-- 添加附加的appender,最多只能添加一个 -->
+		<appender-ref ref="kafkaAppender" />
+	</appender>
+
+	<appender name="ASYNC_FILEOUT" class="net.jahhan.logback.JahhanAsyncAppender">
+		<!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+		<discardingThreshold>0</discardingThreshold>
+		<!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+		<queueSize>512</queueSize>
+		<neverBlock>true</neverBlock>
+		<!-- 添加附加的appender,最多只能添加一个 -->
+		<appender-ref ref="FILEOUT" />
+	</appender>
+
+	<root level="DEBUG">
+		<appender-ref ref="ASYNC_FILEOUT" />
+		<appender-ref ref="ASYNC_KAFKA" />
+		<appender-ref ref="STDOUT" />
+	</root>
+
+	<logger name="org.apache.commons" level="ERROR" />
+	<logger name="org.apache.zookeeper" level="ERROR" />
+	<logger name="io.swagger" level="ERROR" />
+	<logger name="org.reflections.Reflections" level="ERROR" />
+	<logger name="org.apache.kafka" level="ERROR" />
+
+	<logger name="com.request.log" additivity="true" level="INFO">
+		<appender-ref ref="REQLOG" />
+	</logger>
+</configuration>
