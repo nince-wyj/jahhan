@@ -34,7 +34,7 @@ public interface DemoIntf {
 	@PUT
 	@Path("updateUserName")
 	@ApiOperation(value = "用户更名")
-	public UserOVO updateUserName(@NotNull(message = "用户信息不能为空") UserNameIVO userNameIVO,User user);
+	public UserOVO updateUserName(@NotNull(message = "用户信息不能为空") UserNameIVO userNameIVO/*,User user*/);
 
 	@DELETE
 	@ApiOperation(value = "删除")

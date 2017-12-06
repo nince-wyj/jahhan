@@ -20,7 +20,6 @@ import net.jahhan.demo.vo.UserOVO;
 import net.jahhan.demo.vo.UserRegistIVO;
 import net.jahhan.demo.vo.UserRegistOVO;
 import net.jahhan.exception.JahhanException;
-import net.jahhan.service.service.bean.User;
 import net.jahhan.test.intf.TestService;
 
 @Controller
@@ -45,8 +44,8 @@ public class UserController implements DemoIntf {
 	}
 
 	@Override
-	public UserOVO updateUserName(UserNameIVO userNameIVO, User user) {
-		log.info("登陆用户id：" + user.getUserId());
+	public UserOVO updateUserName(UserNameIVO userNameIVO) {
+//		log.info("登陆用户id：" + user.getUserId());
 		log.info("修改用户id：" + userNameIVO.getUserId());
 		return userService.updateUserName(userNameIVO);
 	}

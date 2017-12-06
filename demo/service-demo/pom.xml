@@ -44,7 +44,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.jahhan</groupId>
-			<artifactId>dependency-frameworkx-common</artifactId>
+			<artifactId>dependency-frameworkx-base</artifactId>
 			<version>${framework.version}</version>
 		</dependency>
 		<dependency>

@@ -63,8 +63,7 @@
                                     <include>net.jahhan:frameworkx-package</include>
                                     <include>net.jahhan:supported-frameworkx-base</include>
                                     
-                                    <include>net.jahhan:deploy-service</include>
-									<include>net.jahhan:deploy-base</include>
+                                    <include>net.jahhan:package-service</include>
 									<include>net.jahhan:common-plugin-util</include>
                                     <include>net.jahhan:jdbc-api</include>
                                     <include>net.jahhan:jdbc-druid</include>

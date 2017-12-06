@@ -82,8 +82,8 @@
                                     <include>net.jahhan:sdk-interface-cache</include>
                                     <include>net.jahhan:supported-frameworkx-interface-cache</include>
                                     
-                                    <include>net.jahhan:deploy-service</include>
-									<include>net.jahhan:deploy-base</include>
+                                    <include>net.jahhan:package-service</include>
+									<include>net.jahhan:package-base</include>
 									<include>net.jahhan:common-plugin-util</include>
                                     <include>net.jahhan:jdbc-api</include>
                                     <include>net.jahhan:jdbc-druid</include>
@@ -126,6 +126,7 @@
 									<include>net.jahhan:dubbo-registry-redis</include>
 									<include>net.jahhan:dubbo-monitor-api</include>
 									<include>net.jahhan:dubbo-monitor-default</include>
+									<include>net.jahhan:dubbo-config-api</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
