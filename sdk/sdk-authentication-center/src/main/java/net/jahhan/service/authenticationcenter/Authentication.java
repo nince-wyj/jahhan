@@ -1,4 +1,4 @@
-package net.jahhan.controller.authenticationcenter;
+package net.jahhan.service.authenticationcenter;
 
 import java.util.Map;
 

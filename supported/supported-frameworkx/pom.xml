@@ -23,7 +23,6 @@
 	</properties>
 	<modules>
 		<module>supported-frameworkx-base</module>
-		<module>supported-frameworkx-interface-cache</module>
 		<module>supported-frameworkx-authentication-center</module>
 	</modules>
 </project>

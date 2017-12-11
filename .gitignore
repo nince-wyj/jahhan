@@ -14,3 +14,7 @@ target
 .settings
 .project
 .classpath
+/demo/service-demo/dubbo-registry.properties
+/demo/service-demo/dubbo-registry.properties.lock
+/demo/service-demo/dubbo-registry.properties
+/demo/service-demo/dubbo-registry.properties.lock

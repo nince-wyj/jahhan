@@ -24,7 +24,17 @@
 			<artifactId>frameworkx-package</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>net.jahhan</groupId>
+			<artifactId>supported-frameworkx-base</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
 		
+		<dependency>
+			<groupId>net.jahhan</groupId>
+			<artifactId>intf-authentication-center</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>net.jahhan</groupId>
 			<artifactId>sdk-authentication-center</artifactId>
@@ -38,11 +48,6 @@
 		<dependency>
 			<groupId>net.jahhan</groupId>
 			<artifactId>sdk-interface-cache</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>net.jahhan</groupId>
-			<artifactId>supported-frameworkx-interface-cache</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
     </dependencies>
@@ -77,10 +82,11 @@
                                 <includes>
                                     <include>net.jahhan:package-common</include>
                                     <include>net.jahhan:frameworkx-package</include>
+                                    <include>net.jahhan:intf-authentication-center</include>
                                     <include>net.jahhan:sdk-authentication-center</include>
                                     <include>net.jahhan:supported-frameworkx-authentication-center</include>
                                     <include>net.jahhan:sdk-interface-cache</include>
-                                    <include>net.jahhan:supported-frameworkx-interface-cache</include>
+                                    <include>net.jahhan:supported-frameworkx-base</include>
                                     
                                     <include>net.jahhan:package-service</include>
 									<include>net.jahhan:package-base</include>
@@ -97,7 +103,6 @@
                                     <include>net.jahhan:register-zookeeper</include>
                                     
                                     <include>net.jahhan:hessian-lite</include>
-									<include>net.jahhan:common-plugin-util</include>
 									<include>net.jahhan:dubbo-common</include>
 									<include>net.jahhan:dubbo-remoting-api</include>
 									<include>net.jahhan:dubbo-remoting-netty</include>

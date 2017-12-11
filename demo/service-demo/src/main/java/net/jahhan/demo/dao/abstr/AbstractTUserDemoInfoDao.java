@@ -10,14 +10,15 @@ import javax.inject.Inject;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.ibatis.session.SqlSession;
 
+import net.jahhan.demo.pojo.TUserDemoInfo;
+import net.jahhan.demo.dao.TUserDemoInfoDao;
+import net.jahhan.demo.pojo.page.TUserDemoInfoPage;
+import net.jahhan.demo.dao.listen.TUserDemoInfoRep;
+
 import lombok.extern.slf4j.Slf4j;
 import net.jahhan.cache.repository.common.SeqRepository;
 import net.jahhan.cache.util.SerializerUtil;
 import net.jahhan.common.extension.utils.ListUtils;
-import net.jahhan.demo.dao.TUserDemoInfoDao;
-import net.jahhan.demo.dao.listen.TUserDemoInfoRep;
-import net.jahhan.demo.pojo.TUserDemoInfo;
-import net.jahhan.demo.pojo.page.TUserDemoInfoPage;
 import net.jahhan.jdbc.context.DBContext;
 import net.jahhan.jdbc.event.EventOperate;
 import net.jahhan.jdbc.pojo.page.PagedResult;

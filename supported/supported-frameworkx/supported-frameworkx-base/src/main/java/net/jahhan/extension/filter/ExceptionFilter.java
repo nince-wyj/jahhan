@@ -10,7 +10,6 @@ import javax.inject.Singleton;
 import com.alibaba.dubbo.common.Constants;
 import com.alibaba.dubbo.rpc.Invocation;
 import com.alibaba.dubbo.rpc.Invoker;
-import com.alibaba.dubbo.rpc.OperationMessage;
 import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.dubbo.rpc.RpcContext;
 import com.alibaba.dubbo.rpc.RpcResult;
@@ -21,6 +20,7 @@ import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.common.extension.utils.JsonUtil;
 import net.jahhan.common.extension.utils.LogUtil;
+import net.jahhan.content.UserOperationMessage;
 import net.jahhan.exception.JahhanException;
 import net.jahhan.spi.Filter;
 
@@ -59,7 +59,7 @@ public class ExceptionFilter implements Filter {
 							requestMap.put(parameters[i].getName(), arguments[i]);
 						}
 
-						OperationMessage op = new OperationMessage(RpcContext.getContext().getRemoteHost(),
+						UserOperationMessage op = new UserOperationMessage(RpcContext.getContext().getRemoteHost(),
 								invoker.getInterface().getName() + "." + invocation.getMethodName(), attachments,
 								requestMap, result, null, System.currentTimeMillis() - startTime);
 						StringBuilder sb = new StringBuilder();
@@ -90,7 +90,7 @@ public class ExceptionFilter implements Filter {
 						requestMap.put(parameters[i].getName(), arguments[i]);
 					}
 
-					OperationMessage op = new OperationMessage(RpcContext.getContext().getRemoteHost(),
+					UserOperationMessage op = new UserOperationMessage(RpcContext.getContext().getRemoteHost(),
 							invoker.getInterface().getName() + "." + invocation.getMethodName(), attachments,
 							requestMap, result, null, System.currentTimeMillis() - startTime);
 					StringBuilder sb = new StringBuilder();
@@ -122,7 +122,7 @@ public class ExceptionFilter implements Filter {
 				requestMap.put(parameters[i].getName(), arguments[i]);
 			}
 
-			OperationMessage op = new OperationMessage(RpcContext.getContext().getRemoteHost(),
+			UserOperationMessage op = new UserOperationMessage(RpcContext.getContext().getRemoteHost(),
 					invoker.getInterface().getName() + "." + invocation.getMethodName(), attachments, requestMap, null,
 					e.getMessage(), System.currentTimeMillis() - startTime);
 			StringBuilder sb = new StringBuilder();

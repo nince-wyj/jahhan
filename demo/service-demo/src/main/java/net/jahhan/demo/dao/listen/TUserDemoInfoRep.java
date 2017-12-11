@@ -1,13 +1,12 @@
 package net.jahhan.demo.dao.listen;
 
 import java.util.EventObject;
-
 import javax.inject.Singleton;
+import net.jahhan.demo.pojo.TUserDemoInfo;
 
 import net.jahhan.cache.constants.RedisConstants;
 import net.jahhan.cache.repository.common.AbstractSmpTTLCountRepository;
 import net.jahhan.common.extension.constant.BaseConfiguration;
-import net.jahhan.demo.pojo.TUserDemoInfo;
 import net.jahhan.jdbc.publish.EventPublisherManager;
 import net.jahhan.jdbc.utils.TagUtil;
 import net.jahhan.spi.DBEventListener;

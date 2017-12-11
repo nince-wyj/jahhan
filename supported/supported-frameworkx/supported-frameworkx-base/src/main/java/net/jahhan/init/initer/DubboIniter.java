@@ -21,6 +21,7 @@ import com.frameworkx.annotation.Reference;
 import com.google.inject.Injector;
 
 import net.jahhan.common.extension.utils.ClassScaner;
+import net.jahhan.common.extension.utils.PackageUtil;
 import net.jahhan.init.BootstrapInit;
 import net.jahhan.init.InitAnnocation;
 
@@ -31,10 +32,9 @@ public class DubboIniter implements BootstrapInit {
 
 	@Override
 	public void execute() {
-		String scanPath = ConfigUtils.getProperty("dubbo.annotation.package");
-		scanPath = scanPath + ",net.jahhan.controller";
+		String[] packages = PackageUtil.packages("controller", "service");
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		List<String> classNameList = new ClassScaner().parse(scanPath.split(","));
+		List<String> classNameList = new ClassScaner().parse(packages);
 		for (String className : classNameList) {
 			Class<?> scanClass = null;
 			try {

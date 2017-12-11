@@ -1,8 +1,14 @@
 package net.jahhan.demo.pojo.page;
 
-import net.jahhan.demo.pojo.TUserDemoInfo;
+import java.math.BigDecimal;
+
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.List;
+
 import net.jahhan.jdbc.pojo.page.Pagable;
 import net.jahhan.jdbc.pojo.page.Paged;
+import net.jahhan.demo.pojo.TUserDemoInfo;
 
 /**
  * t_user_demo_info:用户信息表

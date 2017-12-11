@@ -21,12 +21,16 @@ public abstract class PackageUtil {
 	 * @param packageName
 	 * @return
 	 */
-	public static String[] packages(String packageName) {
+	public static String[] packages(String... packageNames) {
 		List<String> packageList = new ArrayList<>();
 		for (String path : servicePathList) {
-			packageList.add(path + "." + packageName);
+			for (String packageName : packageNames) {
+				packageList.add(path + "." + packageName);
+			}
 		}
-		packageList.add(BaseConfiguration.FRAMEWORK_PATH + "." + packageName);
+		for (String packageName : packageNames) {
+			packageList.add(BaseConfiguration.FRAMEWORK_PATH + "." + packageName);
+		}
 		return packageList.toArray(new String[packageList.size()]);
 	}
 }

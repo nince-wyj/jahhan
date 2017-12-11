@@ -1,21 +1,18 @@
 package net.jahhan.demo.pojo;
 
 import java.sql.Timestamp;
+import java.sql.Date;
+import java.math.BigDecimal;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
-
+import net.jahhan.jdbc.SuperPojo;
+import net.jahhan.jdbc.validategroup.*;
+import org.hibernate.validator.constraints.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import net.jahhan.jdbc.SuperPojo;
-import net.jahhan.jdbc.validategroup.Create;
-import net.jahhan.jdbc.validategroup.Modify;
-import net.jahhan.jdbc.validategroup.Reset;
 
 /**
  * t_user_demo_info:用户信息表

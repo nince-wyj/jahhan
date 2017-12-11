@@ -1,8 +1,6 @@
 package net.jahhan.extension.filter.authenticationcenter;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Singleton;
@@ -22,9 +20,6 @@ import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.constant.BaseConfiguration;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.common.extension.utils.Assert;
-import net.jahhan.common.extension.utils.JsonUtil;
-import net.jahhan.common.extension.utils.LogUtil;
-import net.jahhan.context.authenticationcenter.UserOperationMessage;
 import net.jahhan.exception.JahhanException;
 import net.jahhan.sdk.authenticationcenter.annotation.FirstToken;
 import net.jahhan.sdk.authenticationcenter.annotation.NoneToken;
@@ -37,13 +32,12 @@ import net.jahhan.service.service.bean.Service;
 import net.jahhan.service.service.bean.User;
 import net.jahhan.spi.Filter;
 
-@Activate(group = Constants.PROVIDER, order = -9000)
+@Activate(group = Constants.PROVIDER, order = 1500)
 @Extension("authenticationProvider")
 @Singleton
 public class AuthenticationProviderFilter implements Filter {
 
 	public Result invoke(Invoker<?> invoker, Invocation invocation) throws JahhanException {
-		long startTime = System.currentTimeMillis();
 		RpcContext context = RpcContext.getContext();
 		Map<String, String> attachments = context.getAttachments();
 		HttpServletRequest request = context.getRequest(HttpServletRequest.class);
@@ -115,28 +109,7 @@ public class AuthenticationProviderFilter implements Filter {
 				}
 			}
 		}
-		Parameter[] parameters = interfaceMethod.getParameters();
-		Object[] arguments = invocation.getArguments();
-		Map<String, Object> requestMap = new HashMap<>();
-		for (int i = 0; i < parameters.length; i++) {
-			requestMap.put(parameters[i].getName(), arguments[i]);
-			Class<?> type = parameters[i].getType();
-			if (type.equals(User.class)) {
-				
-				Assert.notNull(user, "用户未登陆！", HttpStatus.SC_BAD_REQUEST, JahhanErrorCode.NO_AUTHORITY);
-				arguments[i] = user;
-			}
-			if (type.equals(Service.class)) {
-				Assert.notNull(authenticationVariable.getService(), "服务未登陆！", HttpStatus.SC_BAD_REQUEST,
-						JahhanErrorCode.NO_AUTHORITY);
-				arguments[i] = authenticationVariable.getService();
-			}
-		}
 		Result invoke = invoker.invoke(invocation);
-		UserOperationMessage op = new UserOperationMessage(RpcContext.getContext().getRemoteHost(),
-				interfaceClassName + "." + methodName, attachments, requestMap, invoke,
-				System.currentTimeMillis() - startTime);
-		LogUtil.requestInfo(JsonUtil.toJson(op));
 		return invoke;
 	}
 
