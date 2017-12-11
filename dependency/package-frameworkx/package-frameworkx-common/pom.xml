@@ -45,11 +45,6 @@
 			<artifactId>supported-frameworkx-authentication-center</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>net.jahhan</groupId>
-			<artifactId>sdk-interface-cache</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
     </dependencies>
     <build>
         <plugins>
@@ -83,7 +78,6 @@
                                     <include>net.jahhan:package-common</include>
                                     <include>net.jahhan:frameworkx-package</include>
                                     <include>net.jahhan:intf-authentication-center</include>
-                                    <include>net.jahhan:sdk-authentication-center</include>
                                     <include>net.jahhan:supported-frameworkx-authentication-center</include>
                                     <include>net.jahhan:sdk-interface-cache</include>
                                     <include>net.jahhan:supported-frameworkx-base</include>

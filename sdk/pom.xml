@@ -13,6 +13,5 @@
 	<modules>
 		<module>intf-authentication-center</module>
 		<module>sdk-authentication-center</module>
-		<module>sdk-interface-cache</module>
 	</modules>
 </project>
