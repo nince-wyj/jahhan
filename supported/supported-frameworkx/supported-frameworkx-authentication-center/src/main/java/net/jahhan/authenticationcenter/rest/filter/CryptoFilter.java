@@ -1,4 +1,4 @@
-package net.jahhan.extension.filter.authenticationcenter;
+package net.jahhan.authenticationcenter.rest.filter;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
