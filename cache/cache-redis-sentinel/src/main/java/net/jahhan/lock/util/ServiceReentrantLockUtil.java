@@ -6,6 +6,8 @@ import net.jahhan.common.extension.constant.BaseConfiguration;
 import net.jahhan.lock.DistributedLock;
 import net.jahhan.lock.impl.ServiceReentrantLock;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * 服务重入锁
  * 
@@ -42,10 +44,14 @@ public class ServiceReentrantLockUtil {
 	 * 
 	 * @param lockName
 	 */
-	public static DistributedLock lock(String lockName, int ttl) {
+	public static DistributedLock lock(String lockName, long ttl, TimeUnit timeUnit) {
 		DistributedLock distributedLock = RedisVariable.getDBVariable().getServiceLock(getKey(lockName));
 		if (null == distributedLock) {
-			distributedLock = new ServiceReentrantLock(RedisConstants.COMMON, getKey(lockName), ttl);
+			long tempttl=ttl;
+			if(!timeUnit.equals(TimeUnit.MILLISECONDS)){
+				tempttl=timeUnit.toMillis(ttl);
+			}
+			distributedLock = new ServiceReentrantLock(RedisConstants.COMMON, getKey(lockName), tempttl);
 			RedisVariable.getDBVariable().setServiceLock(getKey(lockName), distributedLock);
 		}
 		distributedLock.lock();

@@ -9,13 +9,16 @@ import net.jahhan.context.BaseVariable;
 import net.jahhan.exception.JahhanException;
 import net.jahhan.lock.DistributedLock;
 
+import java.util.concurrent.TimeUnit;
+
 public class ServiceReentrantLock implements DistributedLock {
 	private Redis redis;
 	private int level = 0;
 	private String lockName;
-	private int ttl = 0;
+	/** 毫秒 */
+	private long ttl = 0;
 
-	public ServiceReentrantLock(String redisType, String lockName, int ttl) {
+	public ServiceReentrantLock(String redisType, String lockName, long ttl) {
 		this.redis = RedisFactory.getRedis(redisType, null);
 		this.lockName = lockName;
 		this.ttl = ttl;
@@ -36,7 +39,7 @@ public class ServiceReentrantLock implements DistributedLock {
 			return;
 		}
 		if (ttl > 0) {
-			ret = redis.setNxTTL(lockName, requestId, ttl);
+			ret = redis.setNxTTL(lockName, requestId, ttl, TimeUnit.MILLISECONDS);
 		} else {
 			ret = String.valueOf(redis.setnx(lockName, requestId));
 		}
@@ -52,7 +55,7 @@ public class ServiceReentrantLock implements DistributedLock {
 			} catch (InterruptedException e) {
 			}
 			if (ttl > 0) {
-				ret = redis.setNxTTL(lockName, requestId, ttl);
+				ret = redis.setNxTTL(lockName, requestId, ttl, TimeUnit.MILLISECONDS);
 			} else {
 				ret = String.valueOf(redis.setnx(lockName, requestId));
 			}
