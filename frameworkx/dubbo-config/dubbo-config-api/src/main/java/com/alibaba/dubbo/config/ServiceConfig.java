@@ -302,7 +302,7 @@ public class ServiceConfig<T> extends AbstractServiceConfig {
 					realMachine ? protocolConfig.getPort() : mappingPort);
 		}
 		for (ProtocolConfig protocolConfig : protocols) {
-			if (interfaceName.startsWith("com.frameworkx.soa.service.swagger")
+			if (interfaceName.startsWith("net.jahhan.intf.swagger")
 					&& !protocolConfig.getName().equals("rest")) {
 				continue;
 			}

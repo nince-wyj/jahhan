@@ -11,6 +11,7 @@ import net.jahhan.common.extension.annotation.Order;
 import net.jahhan.common.extension.annotation.PropertiesFile;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.common.extension.utils.ClassScaner;
+import net.jahhan.common.extension.utils.PackageUtil;
 import net.jahhan.exception.JahhanException;
 
 import java.util.Properties;
@@ -23,7 +24,7 @@ public class PropertiesInit {
 
 	static {
 		try {
-			String[] packages = new String[] { "com.frameworkx.properties" };
+			String[] packages = PackageUtil.packages("properties");
 			List<String> classNameList = new ClassScaner().parse(packages);
 			ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
