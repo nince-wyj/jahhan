@@ -60,7 +60,7 @@ public class UserController implements DemoIntf {
 
 	@Override
 //	@NoneToken
-	@Cache(blockTime = 3,isCustomCacheKey = true,argumentIndexNumbers = {0,1},customCacheKeyCreaterClass = CacheKeyCreater.class)
+	@Cache(blockTime = 3,isCustomCacheKey = true,argumentIndexNumbers = {0},customCacheKeyCreaterClass = CacheKeyCreater.class)
 	public UserOVO getUser(Long userId) {
 		return userService.getUser(userId);
 	}
