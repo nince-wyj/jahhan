@@ -46,4 +46,8 @@ public class JahhanErrorCode {
 	public static final int FAST_RESPONSE_ERROR = 921;
 	// 未支持
 	public static final int UNSUPPORT_ERROR = 922;
+	/**配置错误*/
+	public static final int CONFIGURATION_ERROR=901;
+	/**实例化错误*/
+	public static final int INSTANTIATION_ERROR=902;
 }
