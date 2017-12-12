@@ -75,5 +75,12 @@
 			<version>${project.parent.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>net.jahhan</groupId>
+			<artifactId>dubbo-rpc-rest</artifactId>
+			<version>${project.parent.version}</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 </project>
