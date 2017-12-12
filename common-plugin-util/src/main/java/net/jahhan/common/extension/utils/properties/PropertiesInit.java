@@ -5,18 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Properties;
+import java.util.Set;
+import java.util.TreeMap;
 
 import net.jahhan.api.PropertiesResetter;
 import net.jahhan.common.extension.annotation.Order;
 import net.jahhan.common.extension.annotation.PropertiesFile;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.common.extension.utils.ClassScaner;
-import net.jahhan.common.extension.utils.PackageUtil;
 import net.jahhan.exception.JahhanException;
-
-import java.util.Properties;
-import java.util.Set;
-import java.util.TreeMap;
 
 public class PropertiesInit {
 	private static Map<String, Properties> propertiesMap = new HashMap<>();
@@ -24,7 +22,7 @@ public class PropertiesInit {
 
 	static {
 		try {
-			String[] packages = PackageUtil.packages("properties");
+			String[] packages = new String[] { "net.jahhan.properties" };
 			List<String> classNameList = new ClassScaner().parse(packages);
 			ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
