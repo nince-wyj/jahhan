@@ -79,7 +79,6 @@
                                     <include>net.jahhan:frameworkx-package</include>
                                     <include>net.jahhan:intf-authentication-center</include>
                                     <include>net.jahhan:supported-frameworkx-authentication-center</include>
-                                    <include>net.jahhan:sdk-interface-cache</include>
                                     <include>net.jahhan:supported-frameworkx-base</include>
                                     
                                     <include>net.jahhan:package-service</include>
