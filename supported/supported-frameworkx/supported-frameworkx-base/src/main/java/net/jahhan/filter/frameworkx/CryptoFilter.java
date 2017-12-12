@@ -1,4 +1,4 @@
-package net.jahhan.filter.authenticationcenter;
+package net.jahhan.filter.frameworkx;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
