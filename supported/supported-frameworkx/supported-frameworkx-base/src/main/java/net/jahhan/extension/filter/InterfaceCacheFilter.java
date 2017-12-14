@@ -24,6 +24,8 @@ import net.jahhan.spi.Filter;
 
 import javax.inject.Singleton;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Activate(group = Constants.PROVIDER, order = 1000)
@@ -37,21 +39,30 @@ public class InterfaceCacheFilter implements Filter {
 
 	private String createrCacheKey(Cache cache, String interfaceClassName, Method implMethod, Invocation invocation) {
 		StringBuilder sb = new StringBuilder(PRE);
-		sb.append("_").append(interfaceClassName).append("_").append(implMethod);
+		sb.append(interfaceClassName).append("_").append(implMethod);
 		if (cache.isCustomCacheKey()) {
 			Class createrClass = cache.customCacheKeyCreaterClass();
 			CustomCacheKeyCreater keyCreater = null;
-			if (createrClass != null && CustomCacheKeyCreater.class.isAssignableFrom(createrClass)) {
-				try {
-					keyCreater = (CustomCacheKeyCreater) createrClass.newInstance();
-				} catch (Exception e) {
-					log.error("service customCacheKeyCreater error!!", e);
+			if (createrClass != null) {
+				if (CustomCacheKeyCreater.class.isAssignableFrom(createrClass)) {
+					try {
+						keyCreater = (CustomCacheKeyCreater) createrClass.newInstance();
+					} catch (Exception e) {
+						JahhanException.throwException(JahhanErrorCode.INSTANTIATION_ERROR,
+								"customCacheKeyCreater:" + createrClass.getName() + " can't new instance error!", e);
+					}
+				} else {// 配置有问题抛异常，测试阶段就能发现
+					JahhanException.throwException(JahhanErrorCode.CONFIGURATION_ERROR,
+							"service:" + interfaceClassName + " method:" + implMethod + " customCacheKeyCreaterClass:"
+									+ createrClass.getName()
+									+ " isn't a sub class of CustomCacheKeyCreater.class error!!");
 				}
 			}
 
 			if (keyCreater != null) {
 				String key = keyCreater.createCacheKey(invocation.getAttachments(), invocation.getArguments());
 				sb.append("_createCacheKey:").append(key);
+
 				return sb.toString();
 			}
 
@@ -59,17 +70,26 @@ public class InterfaceCacheFilter implements Filter {
 			Object[] args = invocation.getArguments();
 			if (indexArr != null && args != null && args.length > 0) {
 				int maxIndex = args.length - 1;
-				sb.append("_createCacheKey(");
+				sb.append("_customCacheKey(");
 				int len = sb.length();
+				List<Integer> errorIndexList = new ArrayList<>();
 				for (int idx : indexArr) {
 					if (idx >= 0 && idx <= maxIndex) {
 						sb.append("index[").append(idx).append("]:").append(args[idx]).append("_");
+					} else {
+						errorIndexList.add(idx);
 					}
+				}
+				if (errorIndexList.size() > 0) {// 配置有问题抛异常，测试阶段就能发现
+					JahhanException.throwException(JahhanErrorCode.CONFIGURATION_ERROR,
+							"service:" + interfaceClassName + " method:" + implMethod + " argumentIndexNumbers:"
+									+ errorIndexList + " is invalid index!!");
 				}
 				if (sb.length() > len) {
 					sb.deleteCharAt(sb.length() - 1);
 				}
 				sb.append(")");
+
 				return sb.toString();
 			}
 		}
@@ -93,7 +113,7 @@ public class InterfaceCacheFilter implements Filter {
 			throw new JahhanException(JahhanErrorCode.UNKNOW_ERROR, "未知错误", e);
 		}
 		Cache cache = implMethod.getAnnotation(Cache.class);
-		Result invoke;
+		Result invoke = null;
 		if (null == cache || cache.blockTime() < 1) {
 			return invoker.invoke(invocation);
 		} else {
@@ -113,6 +133,7 @@ public class InterfaceCacheFilter implements Filter {
 				break;
 
 			}
+			log.trace("##cache key:{}", key);
 			byte[] bytes = redis.getBinary(key.getBytes());
 			if (bytes != null) {
 				if (cache.fastBackFail()) {
@@ -141,10 +162,16 @@ public class InterfaceCacheFilter implements Filter {
 						blockTimeUnit);
 			} catch (Exception e) {
 				log.error("错误", e);
-				throw new JahhanException(e);
+				if (!(e instanceof JahhanException
+						&& JahhanErrorCode.LOCK_OVERTIME == ((JahhanException) e).getCode())) {
+					throw new JahhanException(e);
+				}
 			}
 			if (cache.fastBackFail() && (null == ret || !ret.equals("OK"))) {
-				throw new JahhanException(JahhanErrorCode.LOCK_ERROE, "快速返回失败错误");
+				// 缓存设置不成功，但是数据库查询都能查询到数据，不要抛异常导致业务功能异常,只记录异常情况
+				log.error("保存至redis错误，key:{}  value:{}", key, invoke);
+				// throw new JahhanException(JahhanErrorCode.LOCK_ERROE,
+				// "快速返回失败错误");
 			}
 		}
 		return invoke;

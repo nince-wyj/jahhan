@@ -94,6 +94,7 @@
 	<logger name="io.swagger" level="ERROR" />
 	<logger name="org.reflections.Reflections" level="ERROR" />
 	<logger name="org.apache.kafka" level="ERROR" />
+	<logger name="net.jahhan.extension.filter" level="TRACE" />
 
 	<logger name="com.request.log" additivity="true" level="INFO">
 		<appender-ref ref="REQLOG" />

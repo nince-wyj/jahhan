@@ -1,12 +1,7 @@
 package net.jahhan.demo.controller;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import javax.servlet.http.HttpServletResponse;
-
 import com.frameworkx.annotation.Controller;
 import com.frameworkx.annotation.Reference;
-
 import lombok.extern.slf4j.Slf4j;
 import net.jahhan.cache.annotation.Cache;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
@@ -21,6 +16,10 @@ import net.jahhan.demo.vo.UserRegistIVO;
 import net.jahhan.demo.vo.UserRegistOVO;
 import net.jahhan.exception.JahhanException;
 import net.jahhan.test.intf.TestService;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @Slf4j
@@ -61,6 +60,7 @@ public class UserController implements DemoIntf {
 
 	@Override
 //	@NoneToken
+	@Cache(blockTime = 3,isCustomCacheKey = true,argumentIndexNumbers = {0},customCacheKeyCreaterClass = CacheKeyCreater.class)
 	public UserOVO getUser(Long userId) {
 		return userService.getUser(userId);
 	}
