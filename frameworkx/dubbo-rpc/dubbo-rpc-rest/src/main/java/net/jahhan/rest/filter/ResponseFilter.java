@@ -1,21 +1,19 @@
 package net.jahhan.rest.filter;
 
-import java.io.IOException;
-import java.lang.annotation.Annotation;
-import java.util.Date;
+import net.jahhan.common.extension.constant.BaseConfiguration;
+import net.jahhan.common.extension.constant.JahhanErrorCode;
+import net.jahhan.common.extension.utils.LocalIpUtils;
+import net.jahhan.exception.ExceptionMessage;
+import org.jboss.resteasy.util.HttpResponseCodes;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.ext.Provider;
-
-import org.jboss.resteasy.util.HttpResponseCodes;
-
-import net.jahhan.common.extension.constant.BaseConfiguration;
-import net.jahhan.common.extension.constant.JahhanErrorCode;
-import net.jahhan.common.extension.utils.LocalIpUtils;
-import net.jahhan.exception.ExceptionMessage;
+import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.util.Date;
 
 @Provider
 public class ResponseFilter implements ContainerResponseFilter {
@@ -54,7 +52,7 @@ public class ResponseFilter implements ContainerResponseFilter {
 					ExceptionMessage exceptionMessage = new ExceptionMessage();
 					exceptionMessage.setHttpStatus(HttpResponseCodes.SC_BAD_REQUEST);
 					exceptionMessage.setCode(JahhanErrorCode.PARAMETER_ERROR);
-					exceptionMessage.setMessage("请求参数错误");
+					exceptionMessage.setMessage("请求参数JSON转化错误");
 					exceptionMessage.setService(BaseConfiguration.SERVICE);
 					exceptionMessage.setHost(LocalIpUtils.getFirstIp());
 					exceptionMessage.setThreadId(Thread.currentThread().getId());
