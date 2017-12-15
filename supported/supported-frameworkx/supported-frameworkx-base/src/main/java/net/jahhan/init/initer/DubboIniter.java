@@ -1,6 +1,7 @@
 package net.jahhan.init.initer;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
@@ -8,6 +9,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.apache.commons.lang3.StringUtils;
+import org.jboss.netty.util.internal.StringUtil;
 
 import com.alibaba.dubbo.common.utils.ConfigUtils;
 import com.alibaba.dubbo.config.ArgumentConfig;
@@ -46,6 +50,31 @@ public class DubboIniter implements BootstrapInit {
 			Named named = (Named) scanClass.getAnnotation(Named.class);
 			if (null != controller) {
 				ServiceConfig<Object> serviceConfig = new ServiceConfig<>(controller);
+				Method[] methods = Controller.class.getMethods();
+				for (Method method : methods) {
+					String methodName = method.getName();
+					if (methodName.equals("local") || methodName.equals("stub")) {
+						try {
+							String value = (String) method.invoke(controller);
+							if (StringUtils.isBlank(value)) {
+								continue;
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+					try {
+						Method serviceMmethod = ServiceConfig.class.getMethod("set" + toUpperCaseFirstOne(methodName),
+								new Class[] { method.getReturnType() });
+						Object o = method.invoke(controller);
+						if (void.class != o && null != o && !StringUtils.isBlank(o.toString())) {
+							serviceMmethod.invoke(serviceConfig, o);
+						}
+					} catch (NoSuchMethodException e) {
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 				if (void.class.equals(controller.interfaceClass()) && "".equals(controller.interfaceName())) {
 					if (scanClass.getInterfaces().length > 0) {
 						serviceConfig.setInterface(scanClass.getInterfaces()[0]);
@@ -77,6 +106,32 @@ public class DubboIniter implements BootstrapInit {
 					Reference reference = field.getAnnotation(Reference.class);
 					if (null != reference) {
 						ReferenceConfig<Object> referenceConfig = new ReferenceConfig<>(reference);
+						Method[] methods = Reference.class.getMethods();
+						for (Method method : methods) {
+							String methodName = method.getName();
+							if (methodName.equals("local") || methodName.equals("stub")) {
+								try {
+									String value = (String) method.invoke(reference);
+									if (StringUtils.isBlank(value)) {
+										continue;
+									}
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+							}
+							try {
+								Method referenceMmethod = ReferenceConfig.class.getMethod(
+										"set" + toUpperCaseFirstOne(methodName),
+										new Class[] { method.getReturnType() });
+								Object o = method.invoke(reference);
+								if (void.class != o && null != o && !StringUtils.isBlank(o.toString())) {
+									referenceMmethod.invoke(referenceConfig, o);
+								}
+							} catch (NoSuchMethodException e) {
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
 						if (void.class.equals(reference.interfaceClass()) && "".equals(reference.interfaceName())
 								&& referenceClass.isInterface()) {
 							referenceConfig.setInterface(referenceClass);
@@ -86,10 +141,7 @@ public class DubboIniter implements BootstrapInit {
 						} else if (referenceClass.isInterface()) {
 							referenceConfig.setMethods(getMethodConfigs(referenceClass, false));
 						}
-						referenceConfig.setProtocol(ConfigUtils.getProperty("dubbo.service.protocol", "rest"));
-						referenceConfig.setCluster(ConfigUtils.getProperty("dubbo.service.cluster", "failback"));
 						referenceConfig.setProxy(ConfigUtils.getProperty("dubbo.service.proxy", "javassist"));
-						referenceConfig.setVersion(ConfigUtils.getProperty("dubbo.service.version", "1.0.0"));
 						try {
 							field.setAccessible(true);
 							field.set(object, referenceConfig.get());
@@ -194,5 +246,12 @@ public class DubboIniter implements BootstrapInit {
 			methodConfigs.add(methodConfig);
 		}
 		return methodConfigs;
+	}
+
+	public static String toUpperCaseFirstOne(String s) {
+		if (Character.isUpperCase(s.charAt(0)))
+			return s;
+		else
+			return (new StringBuilder()).append(Character.toUpperCase(s.charAt(0))).append(s.substring(1)).toString();
 	}
 }
