@@ -15,23 +15,21 @@
  */
 package com.alibaba.dubbo.rpc.proxy;
 
-import java.lang.reflect.InvocationTargetException;
-
-import javax.ws.rs.InternalServerErrorException;
-import javax.ws.rs.ServerErrorException;
-import javax.ws.rs.core.Response;
-
 import com.alibaba.dubbo.common.URL;
 import com.alibaba.dubbo.rpc.Invocation;
 import com.alibaba.dubbo.rpc.Invoker;
 import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.dubbo.rpc.RpcResult;
-
 import lombok.extern.slf4j.Slf4j;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.common.extension.utils.JsonUtil;
 import net.jahhan.exception.ExceptionMessage;
 import net.jahhan.exception.JahhanException;
+
+import javax.ws.rs.InternalServerErrorException;
+import javax.ws.rs.ServerErrorException;
+import javax.ws.rs.core.Response;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * InvokerWrapper
@@ -86,14 +84,17 @@ public abstract class AbstractProxyInvoker<T> implements Invoker<T> {
 			int httpStatus = 500;
 			int code = JahhanErrorCode.UNKNOW_ERROR;
 			String message = e.getTargetException().getMessage();
-			Throwable cause = e.getTargetException().getCause();
-			if (e.getTargetException().getMessage().startsWith(JahhanException.class.getName())) {
-				code = ((JahhanException) e.getCause()).getCode();
-				message = e.getCause().getMessage();
-				cause = e.getCause().getCause();
-				httpStatus = ((JahhanException) e.getCause()).getExceptionMessage().getHttpStatus();
+
+			Throwable targetException = e.getTargetException();
+			Throwable cause = e.getCause().getCause();
+			if (targetException instanceof JahhanException) {// 判断异常是否是调用其他服务抛出的JahhanException异常
+				JahhanException exception = (JahhanException) targetException;
+				httpStatus = exception.getExceptionMessage().getHttpStatus();
+				code = exception.getExceptionMessage().getCode();
+				message = exception.getExceptionMessage().getMessage();
 			}
-			if (e.getTargetException().getMessage().startsWith(InternalServerErrorException.class.getName())) {
+
+			if (e.getTargetException() instanceof InternalServerErrorException) {
 				Response response = ((ServerErrorException) e.getCause()).getResponse();
 				String readEntity = response.readEntity(String.class);
 				ExceptionMessage serverException = JsonUtil.fromJson(readEntity.replace("\r", "").replace("\n", ""),
