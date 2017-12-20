@@ -27,6 +27,7 @@ import net.jahhan.jdbc.annotation.DBConnections;
 import net.jahhan.jdbc.conn.DBConnFactory;
 import net.jahhan.jdbc.context.DBVariable;
 import net.jahhan.jdbc.dbconnexecutor.DBConnExecutorHolder;
+import net.jahhan.jdbc.globaltransaction.DBConnExecutorHolderCache;
 import net.jahhan.register.ClusterMessageHolder;
 import net.jahhan.spi.Filter;
 import net.jahhan.spi.common.BroadcastSender;
@@ -101,13 +102,18 @@ public class DBConnectFilter implements Filter {
 						}
 					}
 					broadcastSender.removeChain(chainId);
-					closeAllConnection(commit);
+				}else{
+					commit = false;
+					broadcastSender.send("TRANSACTION_ROLLBACK", chainId);
 				}
+				closeAllConnection(commit);
 			} else if (baseVariable.isDbLazyCommit()) {
 				broadcastSender.setChainNode(chainId);
+				DBConnExecutorHolderCache.setDbExecutorHolders();
 			} else {
 				closeAllConnection(commit);
 			}
+			DBVariable.getDBVariable().clearLocalCache();
 		}
 		return result;
 	}

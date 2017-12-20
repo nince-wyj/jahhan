@@ -63,8 +63,8 @@ public class DBVariable extends Variable {
 		List<DBConnExecutorHolder> list = connectionData.getExecutorList();
 		if (null == list) {
 			list = new ArrayList<>();
-			connMap.get(dataSource).setExecutorList(list);
 		}
+		connMap.get(dataSource).setExecutorList(list);
 		list.add(con);
 	}
 

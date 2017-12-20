@@ -7,8 +7,6 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import com.google.inject.name.Named;
-
 import net.jahhan.cache.util.SerializerUtil;
 import net.jahhan.common.extension.constant.BaseConfiguration;
 import net.jahhan.common.extension.utils.BeanTools;
@@ -108,15 +106,21 @@ public abstract class AbstractSimpleRepository {
 		String[] keys = getKeys(ids.toArray(new String[ids.size()]));
 		return cache.mget(keys);
 	}
-	
+
 	public List<byte[]> getMultiByteValue(Collection<byte[]> ids) {
 		if (ids == null || ids.isEmpty()) {
 			return new ArrayList<byte[]>();
 		}
-		String[] keys = getKeys(ids.toArray(new String[ids.size()]));
+		String[] idsString = new String[ids.size()];
+		int i = 0;
+		for (byte[] idByte : ids) {
+			idsString[i] = new String(idByte);
+			i++;
+		}
+		String[] keys = getKeys(idsString);
 		byte[][] keysB = new byte[ids.size()][];
-		for (int i = 0; i < ids.size(); i++) {
-			keysB[i] = keys[i].getBytes();
+		for (int j = 0; j < ids.size(); j++) {
+			keysB[j] = keys[j].getBytes();
 		}
 		return cache.mgetByte(keysB);
 	}
@@ -210,6 +214,6 @@ public abstract class AbstractSimpleRepository {
 		Map<String, Object> map2 = BeanTools.toMap(updatedObject);
 		map.putAll(map2);
 		BeanTools.copyFromMap(updatedObject, map);
-		return old;
+		return updatedObject;
 	}
 }

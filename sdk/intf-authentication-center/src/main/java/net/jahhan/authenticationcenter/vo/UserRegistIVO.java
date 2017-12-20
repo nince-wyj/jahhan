@@ -1,9 +1,8 @@
-package net.jahhan.demo.vo;
+package net.jahhan.authenticationcenter.vo;
 
 import java.io.Serializable;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
@@ -12,7 +11,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import net.jahhan.demo.intf.DemoIntf;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -21,21 +19,33 @@ public class UserRegistIVO implements Serializable {
 
 	private static final long serialVersionUID = 10000000L;
 
-	@NotNull(groups = { DemoIntf.Register.class }, message = "userName不能为空")
 	@ApiModelProperty(value = "用户名")
 	@Length(min = 0, max = 32, message = "userName字符串长度需小于32")
 	private String userName;
 
-	@NotNull(message = "email不能为空")
+	@ApiModelProperty(value = "用户头像")
+	@Length(min = 0, max = 128, message = "imageUrl字符串长度需小于128")
+	private String imageUrl;
+
+	@ApiModelProperty(value = "手机号")
+	@Length(min = 11, max = 11, message = "mobilePhone字符串长度需等于11")
+	private String mobilePhone;
+
 	@ApiModelProperty(value = "email")
-	@Email(message = "email格式不正确")
-	@Length(min = 0, max = 32, message = "email字符串长度需小于32")
+	@Email
+	@Length(min = 0, max = 64, message = "email字符串长度需小于64")
 	private String email;
 
-	@NotNull(message = "gender不能为空")
+	@ApiModelProperty(value = "登陆账号")
+	@Length(min = 0, max = 64, message = "login字符串长度需小于64")
+	private String login;
+
 	@ApiModelProperty(value = "性别")
-	@Pattern(regexp = "男|女", message = "输入值必须为男或女")
 	@Length(min = 0, max = 4, message = "gender字符串长度需小于4")
 	private String gender;
 
+	@NotNull(message = "password不能为空")
+	@ApiModelProperty(value = "密码")
+	@Length(min = 0, max = 32, message = "password字符串长度需小于32")
+	private String password;
 }

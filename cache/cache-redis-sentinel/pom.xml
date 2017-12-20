@@ -23,6 +23,12 @@
 		</dependency>
 		<dependency>
 			<groupId>net.jahhan</groupId>
+			<artifactId>jdbc-api</artifactId>
+			<version>${project.parent.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.jahhan</groupId>
 			<artifactId>common-plugin-util</artifactId>
 			<version>${project.parent.version}</version>
 			<scope>provided</scope>

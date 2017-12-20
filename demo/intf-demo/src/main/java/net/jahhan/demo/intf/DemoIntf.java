@@ -26,6 +26,8 @@ import net.jahhan.service.service.bean.User;
 @Api("用户接口")
 public interface DemoIntf {
 
+	@interface Register{}
+	
 	@POST
 	@Path("register")
 	@ApiOperation(value = "用户注册")

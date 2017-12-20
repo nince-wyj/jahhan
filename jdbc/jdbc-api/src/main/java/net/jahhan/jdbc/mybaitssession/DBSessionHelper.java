@@ -63,8 +63,7 @@ public class DBSessionHelper implements SessionHandler {
 		try {
 			return getSqlSession(getReadConnection(dataSource));
 		} catch (SQLException e) {
-			LogUtil.error(e.getMessage(), e);
-			JahhanException.throwException(JahhanErrorCode.DATABASE_ERROR, "数据库错误");
+			JahhanException.throwException(JahhanErrorCode.DATABASE_ERROR, "数据库错误", e);
 			return null;
 		}
 	}
@@ -74,7 +73,7 @@ public class DBSessionHelper implements SessionHandler {
 		try {
 			return getSqlSession(getWriteConnection(dataSource));
 		} catch (SQLException e) {
-			JahhanException.throwException(JahhanErrorCode.DATABASE_ERROR, "数据库错误");
+			JahhanException.throwException(JahhanErrorCode.DATABASE_ERROR, "数据库错误", e);
 			return null;
 		}
 	}
@@ -84,7 +83,7 @@ public class DBSessionHelper implements SessionHandler {
 		try {
 			return getBatchSqlSession(getBatchConnection(dataSource));
 		} catch (SQLException e) {
-			JahhanException.throwException(JahhanErrorCode.DATABASE_ERROR, "数据库错误");
+			JahhanException.throwException(JahhanErrorCode.DATABASE_ERROR, "数据库错误", e);
 			return null;
 		}
 	}
