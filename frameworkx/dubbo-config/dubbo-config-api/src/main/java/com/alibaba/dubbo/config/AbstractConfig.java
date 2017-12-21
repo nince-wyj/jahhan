@@ -437,7 +437,7 @@ public abstract class AbstractConfig implements Serializable {
 				if (log.isInfoEnabled()) {
 					log.info("Run shutdown hook now.");
 				}
-				// ProtocolConfig.destroyAll();
+				 ProtocolConfig.destroyAll();
 			}
 		}, "DubboShutdownHook"));
 	}

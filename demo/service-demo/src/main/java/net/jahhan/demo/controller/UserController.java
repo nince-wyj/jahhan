@@ -9,6 +9,7 @@ import com.frameworkx.annotation.Reference;
 
 import lombok.extern.slf4j.Slf4j;
 import net.jahhan.authenticationcenter.intf.UserIntf;
+import net.jahhan.authenticationcenter.vo.UserAuthenticationOVO;
 import net.jahhan.cache.annotation.Cache;
 import net.jahhan.common.extension.annotation.GlobalSyncTransaction;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
@@ -49,7 +50,8 @@ public class UserController implements DemoIntf {
 		net.jahhan.authenticationcenter.vo.UserRegistIVO r = new net.jahhan.authenticationcenter.vo.UserRegistIVO();
 		r.setEmail(System.currentTimeMillis() + "aaa@bbb.com");
 		r.setPassword("123456");
-		userIntf.register(r);
+		net.jahhan.authenticationcenter.vo.UserRegistOVO register = userIntf.register(r);
+		UserAuthenticationOVO user = userIntf.getUser(register.getUserId());
 		return userService.register(userRegistIVO);
 	}
 
