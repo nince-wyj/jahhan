@@ -1,21 +1,14 @@
 package net.jahhan.common.extension.utils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectOutputStream;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
+import net.jahhan.common.extension.utils.apache.convert.DateConverter;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.beanutils.ConvertUtilsBean;
 import org.apache.commons.beanutils.Converter;
 
-import net.jahhan.common.extension.utils.apache.convert.DateConverter;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectOutputStream;
+import java.lang.reflect.Field;
+import java.util.*;
 
 public class BeanTools {
 	private static ConvertUtilsBean convertUtils = BeanUtilsBean.getInstance().getConvertUtils();
@@ -54,7 +47,7 @@ public class BeanTools {
 				field.setAccessible(true);
 				String name = field.getName();
 				Object value = src.get(name);
-				if (value != null) {
+				if (value != null && !name.equals("serialVersionUID")) {
 					field.set(dest, convertType(value, value.getClass(), field.getType()));
 				}
 			} catch (Exception e) {
