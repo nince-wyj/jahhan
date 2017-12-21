@@ -42,6 +42,8 @@
 		<module>supported</module>
 
 		<module>dependency</module>
+		<module>mq</module>
+		<module>demo</module>
 	</modules>
 	<properties>
 		<!-- Common libs -->
