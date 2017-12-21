@@ -3,7 +3,6 @@ package com.cwgj.lmq.client;
 import net.jahhan.lmq.client.LmqClient;
 import net.jahhan.lmq.client.LmqTokenClient;
 import net.jahhan.lmq.common.define.MqTopic;
-import net.jahhan.lmq.common.define.MqTopicDefine;
 import net.jahhan.lmq.common.define.QoS;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,7 +48,7 @@ public class MqttReciverTest {
 
 	@Test
 	public void testToken() throws Exception {
-		tokenClient.start(MqTopicDefine.parentTopic.getTopicName(),new CwgjLmqToken(), callbackHandlerForToken, new MqTopic("0591", QoS.QoS1));
+		tokenClient.start(deviceId1,new CwgjLmqToken(), callbackHandlerForToken, new MqTopic("0591", QoS.QoS1));
 //		tokenClient.publish(new MqTopic(deviceId1,QoS.QoS1),"======come from token test!!!=======");
 		try {
 			Thread.sleep(Long.MAX_VALUE);

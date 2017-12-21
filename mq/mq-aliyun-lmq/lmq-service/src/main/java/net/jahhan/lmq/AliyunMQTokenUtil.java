@@ -4,12 +4,12 @@ import com.alibaba.fastjson.JSONObject;
 import net.jahhan.lmq.common.define.MqToken;
 import net.jahhan.lmq.common.define.MqTopic;
 import net.jahhan.lmq.common.define.MqTopicDefine;
+import net.jahhan.lmq.common.define.QoS;
 import net.jahhan.lmq.common.util.Tools;
 
 import java.io.IOException;
 import java.security.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by linwb on 2017/12/16 0016.
@@ -18,14 +18,28 @@ public class AliyunMQTokenUtil {
     private AliyunMQTokenUtil() {
     }
 
-    public static String applyToken(MqTopic topic) throws InvalidKeyException, NoSuchAlgorithmException,
+    public static String applyToken(MqTopic... topicArr) throws InvalidKeyException, NoSuchAlgorithmException,
 			UnrecoverableKeyException, KeyManagementException, KeyStoreException, IOException {
+		List<String> paramList = new ArrayList<String>();
+		for (MqTopic topic : topicArr) {
+			paramList.add(topic.getTopicName());
+		}
+		Collections.sort(paramList);
+
+		StringBuilder sb=new StringBuilder();
+		for (String name : paramList) {
+			sb.append(name).append(",");
+		}
+		if(sb.length()>0){
+			sb.deleteCharAt(sb.length()-1);
+		}
+
 		String apiUrl = "https://mqauth.aliyuncs.com/token/apply";
 		Map<String, String> paramMap = new HashMap<String, String>();
-		paramMap.put("resources", topic.getTopicName());
-		paramMap.put("actions", topic.getTokenPermission().toString());
+		paramMap.put("resources",sb.toString());
+		paramMap.put("actions", MqTopicDefine.parentTopic.getTokenPermission().toString());
 		paramMap.put("serviceName", "mq");
-		paramMap.put("expireTime", String.valueOf(System.currentTimeMillis() + topic.getTokenExpireTime()));
+		paramMap.put("expireTime", String.valueOf(System.currentTimeMillis() + 20*60*60*1000));
 		String signature = Tools.doHttpSignature(paramMap, MqTopicDefine.secretKey);
 		paramMap.put("proxyType", MqToken.MQTT.toString());
 		paramMap.put("accessKey", MqTopicDefine.accessKey);
@@ -67,6 +81,6 @@ public class AliyunMQTokenUtil {
 	}
 
 	public static void main(String[] args) throws UnrecoverableKeyException, NoSuchAlgorithmException, KeyManagementException, KeyStoreException, InvalidKeyException, IOException {
-		AliyunMQTokenUtil.applyToken(MqTopicDefine.parentTopic);
+		AliyunMQTokenUtil.applyToken(MqTopicDefine.parentTopic,new MqTopic(MqTopicDefine.parentTopic.getTopicName()+"/1111111111", QoS.QoS1),new MqTopic(MqTopicDefine.parentTopic.getTopicName()+"/0591", QoS.QoS1));
 	}
 }

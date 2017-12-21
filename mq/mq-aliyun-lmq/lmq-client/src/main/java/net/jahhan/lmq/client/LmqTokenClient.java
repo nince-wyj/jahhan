@@ -84,11 +84,17 @@ public class LmqTokenClient {
 		allTopicList.add(deviceTopic);
 		allTopicList.addAll(secondTopicsList);
 
+		for (MqTopic topic : allTopicList) {
+			if (!topic.equals(parentTopic)) {
+				topic.setTopicName(parentTopic.getTopicName() + topic.getTopicName());
+			}
+		}
+
 		try {
 			mqttClient = new MqttClient(brokerUrl, clientId, new MemoryPersistence());
 			mqttClient.setCallback(createMqttCallbackExtended(allTopicList));
 			logger.info("MqttClient({}) connecting...", clientId);
-		IMqttToken mqttToken=	mqttClient.connectWithResult(createConnectOptions());
+			IMqttToken mqttToken = mqttClient.connectWithResult(createConnectOptions());
 			mqttToken.waitForCompletion();
 
 			if (isTokenClient) {// 不一定要执行
@@ -114,7 +120,7 @@ public class LmqTokenClient {
 		logger.info("Connecting to broker:()", brokerUrl);
 		connOpts.setServerURIs(new String[] { brokerUrl });
 		connOpts.setCleanSession(cleanSession);
-		connOpts.setKeepAliveInterval(1);
+		connOpts.setKeepAliveInterval(180);
 		connOpts.setAutomaticReconnect(true);
 		return connOpts;
 	}
@@ -128,7 +134,7 @@ public class LmqTokenClient {
 				try {
 					if (isTokenClient) {
 						JSONObject object = new JSONObject();
-						object.put("token", token.getLocalToken());// body of token
+						object.put("token", token.getLocalToken());
 						object.put("type", MqTopicDefine.uploadTokenTopic.getTokenPermission());
 						MqttMessage message = new MqttMessage(object.toJSONString().getBytes());
 						message.setQos(MqTopicDefine.uploadTokenTopic.getQos().getValue());
@@ -158,7 +164,7 @@ public class LmqTokenClient {
 						JSON.toJSONString(mqttMessage), mqttMessage);
 				if (topic.equals("$SYS/tokenInvalidNotice")) {
 					// 重新申请token
-					token.applyToken();
+					token.applyToken(topicList);
 
 					if (callbackHandler instanceof IMqttCallbackHandlerForToken) {// 客户端不是传入IMqttCallbackHandlerForToken实现类，忽略处理事件
 						((IMqttCallbackHandlerForToken) callbackHandler).tokenInvalidHandler(clientId, groupId,
@@ -167,7 +173,7 @@ public class LmqTokenClient {
 					}
 				} else if (topic.equals("$SYS/tokenExpireNotice")) {
 					// Token过期，重新申请token
-					token.applyToken();
+					token.applyToken(topicList);
 
 					if (callbackHandler instanceof IMqttCallbackHandlerForToken) {// 客户端不是传入IMqttCallbackHandlerForToken实现类，忽略处理事件
 						((IMqttCallbackHandlerForToken) callbackHandler).tokenExpireHandler(clientId, groupId, deviceId,
@@ -209,11 +215,7 @@ public class LmqTokenClient {
 			int[] qosArr = new int[topicList.size()];
 			int index = 0;
 			for (MqTopic topic : topicList) {
-				if (topic.equals(parentTopic)) {
-					topicArr[index] = topic.getTopicName();
-				} else {
-					topicArr[index] = parentTopic.getTopicName() + "/" + topic.getTopicName();
-				}
+				topicArr[index] = topic.getTopicName();
 				qosArr[index] = topic.getQos().getValue();
 				index++;
 			}
