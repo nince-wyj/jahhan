@@ -37,7 +37,7 @@ public class SenderTest {
 
 	@Test
 	public void testToken() {
-		sender.send(new MqTopic(deviceId1, QoS.QoS1), "token test!!token test!!token test!!token test!!",true);
+		sender.send(new MqTopic(deviceId1, QoS.QoS1), "lllllllllllllll",true);
 	}
 
 	@Test

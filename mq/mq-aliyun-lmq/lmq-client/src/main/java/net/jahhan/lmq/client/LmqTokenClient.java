@@ -86,7 +86,7 @@ public class LmqTokenClient {
 
 		for (MqTopic topic : allTopicList) {
 			if (!topic.equals(parentTopic)) {
-				topic.setTopicName(parentTopic.getTopicName() + topic.getTopicName());
+				topic.setTopicName(parentTopic.getTopicName() + "/" + topic.getTopicName());
 			}
 		}
 
@@ -97,18 +97,18 @@ public class LmqTokenClient {
 			IMqttToken mqttToken = mqttClient.connectWithResult(createConnectOptions());
 			mqttToken.waitForCompletion();
 
-			if (isTokenClient) {// 不一定要执行
-				JSONObject object = new JSONObject();
-				object.put("token", token.getLocalToken());// body of token
-				object.put("type", MqTopicDefine.uploadTokenTopic.getTokenPermission());
-				MqttMessage message = new MqttMessage(object.toJSONString().getBytes());
-				message.setQos(MqTopicDefine.uploadTokenTopic.getQos().getValue());
-				MqttTopic pubTopic = mqttClient.getTopic(MqTopicDefine.uploadTokenTopic.getTopicName());
-				MqttDeliveryToken mqttDeliveryToken = pubTopic.publish(message);
-				mqttDeliveryToken.waitForCompletion();// sync wait
-				// Token upload ok , do normal sub and pub
-				subscribe(allTopicList);
-			}
+//			if (isTokenClient) {// 不一定要执行
+//				JSONObject object = new JSONObject();
+//				object.put("token", token.getLocalToken());// body of token
+//				object.put("type", MqTopicDefine.uploadTokenTopic.getTokenPermission());
+//				MqttMessage message = new MqttMessage(object.toJSONString().getBytes());
+//				message.setQos(MqTopicDefine.uploadTokenTopic.getQos().getValue());
+//				MqttTopic pubTopic = mqttClient.getTopic(MqTopicDefine.uploadTokenTopic.getTopicName());
+//				MqttDeliveryToken mqttDeliveryToken = pubTopic.publish(message);
+//				mqttDeliveryToken.waitForCompletion();// sync wait
+//				// Token upload ok , do normal sub and pub
+//				subscribe(allTopicList);
+//			}
 
 		} catch (Exception e) {
 			logger.error("start mqtt receiver error! clientId:" + clientId + " secondTopics:" + secondTopics, e);
@@ -120,7 +120,7 @@ public class LmqTokenClient {
 		logger.info("Connecting to broker:()", brokerUrl);
 		connOpts.setServerURIs(new String[] { brokerUrl });
 		connOpts.setCleanSession(cleanSession);
-		connOpts.setKeepAliveInterval(180);
+		connOpts.setKeepAliveInterval(90);
 		connOpts.setAutomaticReconnect(true);
 		return connOpts;
 	}
