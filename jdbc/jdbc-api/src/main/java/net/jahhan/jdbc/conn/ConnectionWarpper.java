@@ -119,7 +119,6 @@ public class ConnectionWarpper implements Connection {
 		for (DBEvent event : events) {
 			appContext.realPublishWrite(event);
 		}
-		DBVariable.getDBVariable().clearLocalCache();
 	}
 
 	@Override

@@ -19,7 +19,7 @@ import net.jahhan.context.VariableContext;
 import net.jahhan.exception.JahhanException;
 import net.jahhan.spi.Filter;
 
-@Activate(group = Constants.PROVIDER, order = Integer.MIN_VALUE)
+@Activate(group = Constants.PROVIDER, order = Integer.MIN_VALUE + 1)
 @Extension("variablecontext")
 @Singleton
 public class VariableContextFilter implements Filter {

@@ -96,7 +96,7 @@ public class AuthenticationProviderFilter implements Filter {
 			}
 			NoneToken noneToken = implMethod.getAnnotation(NoneToken.class);
 			if (authenticationVariable.isNoneToken() && !authenticationVariable.isDocRequest() && null == noneToken) {
-				Assert.isTrue(null != noneToken, "无token错误！！", HttpStatus.SC_BAD_REQUEST, JahhanErrorCode.NO_AUTHORITY);
+				Assert.isTrue(null == noneToken, "无token错误！！", HttpStatus.SC_BAD_REQUEST, JahhanErrorCode.NO_AUTHORITY);
 			}
 			if (authenticationVariable.isFirstSingleToken() && !BaseConfiguration.IS_DEBUG && null == noneToken) {
 				FirstToken firstToken = implMethod.getAnnotation(FirstToken.class);

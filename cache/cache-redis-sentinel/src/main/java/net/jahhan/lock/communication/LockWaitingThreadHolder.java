@@ -2,15 +2,35 @@ package net.jahhan.lock.communication;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import net.jahhan.globalTransaction.LockParamHolder;
 import net.jahhan.globalTransaction.LockStatus;
 import net.jahhan.globalTransaction.LockThreadStatus;
 import net.jahhan.globalTransaction.WaitingLock;
-import net.jahhan.globalTransaction.WaitingThreadHolder;
 
-public class LockWaitingThreadHolder extends WaitingThreadHolder {
+public class LockWaitingThreadHolder {
+	protected static Map<String, Map<String, WaitingLock>> lockMap = new ConcurrentHashMap<>();
+	protected static Map<String, WaitingLock> chainLockMap = new ConcurrentHashMap<>();
 
+	public static void registWaitingThread(String lock, String chainId, long waitTime) {
+		Map<String, WaitingLock> chainMap = lockMap.get(lock);
+		if (null == chainMap) {
+			chainMap = new ConcurrentHashMap<>();
+			lockMap.put(lock, chainMap);
+		}
+		WaitingLock o = new WaitingLock();
+		o.setLock(lock);
+		o.setChain(chainId);
+		chainLockMap.put(chainId, o);
+		chainMap.put(chainId, o);
+		synchronized (o) {
+			try {
+				o.wait(waitTime);
+			} catch (InterruptedException e) {
+			}
+		}
+	}
 	public static void compete(String lock, String key) {
 		Map<String, WaitingLock> chainMap = lockMap.get(lock);
 		if (null != chainMap) {

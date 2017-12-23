@@ -1,6 +1,6 @@
 package net.jahhan.demo.dao.impl;
 
-import net.jahhan.demo.dao.abstr.AbstractTUserDemoInfoDao;
+import net.jahhan.demo.dao.abstrimpl.AbstrTUserDemoInfoImpl;
 import net.jahhan.demo.pojo.TUserDemoInfo;
 
 /*
@@ -8,7 +8,7 @@ import net.jahhan.demo.pojo.TUserDemoInfo;
  *
  * @author code-generate-service
  */
-public class TUserDemoInfoDaoImpl  extends AbstractTUserDemoInfoDao {
+public class TUserDemoInfoDaoImpl  extends AbstrTUserDemoInfoImpl {
 	
 	@Override
 	protected boolean isCachable() {

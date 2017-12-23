@@ -37,7 +37,7 @@ import net.jahhan.spi.Filter;
  * 
  * @author william.liangf
  */
-@Activate(group = Constants.PROVIDER, order = -10000)
+@Activate(group = Constants.PROVIDER, order = Integer.MIN_VALUE)
 @Extension("context")
 @Singleton
 public class ContextFilter implements Filter {

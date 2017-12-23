@@ -1,6 +1,11 @@
 package net.jahhan.init.initer;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
+
+import javax.inject.Inject;
 
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
@@ -8,11 +13,19 @@ import lombok.extern.slf4j.Slf4j;
 import net.jahhan.cache.Redis;
 import net.jahhan.cache.constants.RedisConstants;
 import net.jahhan.common.extension.utils.PropertiesUtil;
-import net.jahhan.globalTransaction.WaitingThreadHolder;
+import net.jahhan.context.BaseContext;
+import net.jahhan.context.BaseVariable;
+import net.jahhan.context.VariableContext;
 import net.jahhan.init.BootstrapInit;
 import net.jahhan.init.InitAnnocation;
+import net.jahhan.jdbc.constant.JDBCConstants;
+import net.jahhan.jdbc.context.DBVariable;
+import net.jahhan.jdbc.dbconnexecutor.DBConnExecutorHolder;
+import net.jahhan.jdbc.globaltransaction.DBConnExecutorHolderCache;
+import net.jahhan.jdbc.utils.DBConnExecutorHolderUtil;
 import net.jahhan.jedis.JedisSentinelPoolExt;
 import net.jahhan.lock.communication.LockWaitingThreadHolder;
+import net.jahhan.spi.common.BroadcastSender;
 import redis.clients.jedis.Client;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPoolConfig;
@@ -32,6 +45,11 @@ public class GlobalLockLisenterIniter extends JedisPubSub implements BootstrapIn
 	private final String MAXWAIT = "30000";// 获取一个jedis实例的超时时间，如果超过这个时间，就会抛出异常，单位ms
 
 	private final int TIMEOUT = 0;// 用于设置socket的timeout，单位是ms
+
+	@Inject
+	private BroadcastSender broadcastSender;
+	@Inject
+	private DBConnExecutorHolderUtil dBConnExecutorHolderUtil;
 
 	@SuppressWarnings("static-access")
 	@Override
@@ -94,12 +112,74 @@ public class GlobalLockLisenterIniter extends JedisPubSub implements BootstrapIn
 			LockWaitingThreadHolder.compete(lock, chainId);
 		}
 		if (messageType.equals("TRANSACTION_COMMIT")) {
-			String chainId = split[1];
-			WaitingThreadHolder.commit(chainId);
+			Thread t = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						String chainId = split[1];
+						BaseContext applicationContext = BaseContext.CTX;
+						VariableContext variableContext = new VariableContext();
+						if (null == applicationContext.getThreadLocalUtil().getValue()) {
+							applicationContext.getThreadLocalUtil().openThreadLocal(variableContext);
+						}
+						DBVariable dbVariable = DBVariable.getDBVariable();
+						long holdTimeOut = JDBCConstants.getHoldTimeOut();
+						Map<String, List<DBConnExecutorHolder>> dbExecutorHolders = DBConnExecutorHolderCache.getDbExecutorHolders(chainId);
+						long startTime = System.currentTimeMillis();
+						if (null != dbExecutorHolders) {
+							
+							Set<String> dataSourceSet = dbExecutorHolders.keySet();
+							
+							for (String dataSource : dataSourceSet) {
+								dbVariable.initConnectionData(dataSource);
+								List<DBConnExecutorHolder> dBConnExecutorHolderlist = dbExecutorHolders.get(dataSource);
+								if (null != dBConnExecutorHolderlist) {
+									for (DBConnExecutorHolder dbConnExecutorHolder : dBConnExecutorHolderlist) {
+										dbVariable.addDBConnExecutorHolder(dataSource, dbConnExecutorHolder);
+										if (dbConnExecutorHolder.getStartTime() < startTime) {
+											startTime = dbConnExecutorHolder.getStartTime();
+										}
+									}
+								}
+							}
+						}
+						
+						Set<String> dataSources = dbVariable.getDataSources();
+						if (null != dataSources && dataSources.size() > 0) {
+							long waitTime = holdTimeOut * 1000 - (System.currentTimeMillis() - startTime);
+							if (waitTime > 0) {
+								dBConnExecutorHolderUtil.commit(true);
+							} else {
+								broadcastSender.send("TRANSACTION_ROLLBACK", BaseVariable.getBaseVariable().getChainId());
+								dBConnExecutorHolderUtil.commit(false);
+							}
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			t.start();
 		}
 		if (messageType.equals("TRANSACTION_ROLLBACK")) {
-			String chainId = split[1];
-			WaitingThreadHolder.rollback(chainId);
+			Thread t = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						String chainId = split[1];
+						BaseContext applicationContext = BaseContext.CTX;
+						VariableContext variableContext = new VariableContext();
+						if (null == applicationContext.getThreadLocalUtil().getValue()) {
+							applicationContext.getThreadLocalUtil().openThreadLocal(variableContext);
+						}
+						DBConnExecutorHolderCache.initDBVariable(chainId);
+						dBConnExecutorHolderUtil.commit(false);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			t.start();
 		}
 	}
 

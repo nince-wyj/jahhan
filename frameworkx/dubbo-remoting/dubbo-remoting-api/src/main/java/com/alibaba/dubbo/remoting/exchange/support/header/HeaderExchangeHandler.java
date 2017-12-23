@@ -19,7 +19,6 @@ import java.net.InetSocketAddress;
 
 import com.alibaba.dubbo.common.Constants;
 import com.alibaba.dubbo.common.URL;
-import com.alibaba.dubbo.common.utils.AfterWriteHandlerHelper;
 import com.alibaba.dubbo.common.utils.NetUtils;
 import com.alibaba.dubbo.remoting.Channel;
 import com.alibaba.dubbo.remoting.ExecutionException;
@@ -190,7 +189,6 @@ public class HeaderExchangeHandler implements ChannelHandlerDelegate {
             }
         } finally {
         	if (message instanceof Request) {
-	        	AfterWriteHandlerHelper.getAllHandler().exec();
 	            HeaderExchangeChannel.removeChannelIfDisconnected(channel);
         	}
         }

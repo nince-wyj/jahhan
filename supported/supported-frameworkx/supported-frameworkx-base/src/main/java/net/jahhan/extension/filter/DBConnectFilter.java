@@ -25,8 +25,11 @@ import net.jahhan.exception.JahhanException;
 import net.jahhan.jdbc.annotation.DBConnect;
 import net.jahhan.jdbc.annotation.DBConnections;
 import net.jahhan.jdbc.conn.DBConnFactory;
+import net.jahhan.jdbc.constant.enumeration.DBConnectLevel;
+import net.jahhan.jdbc.constant.enumeration.DBConnectStrategy;
 import net.jahhan.jdbc.context.DBVariable;
 import net.jahhan.jdbc.dbconnexecutor.DBConnExecutorHolder;
+import net.jahhan.jdbc.globaltransaction.DBConnExecutorHolderCache;
 import net.jahhan.register.ClusterMessageHolder;
 import net.jahhan.spi.Filter;
 import net.jahhan.spi.common.BroadcastSender;
@@ -50,13 +53,22 @@ public class DBConnectFilter implements Filter {
 		DBConnections dBConnects = implMethod.getAnnotation(DBConnections.class);
 		GlobalSyncTransaction globalSyncTransaction = implMethod.getAnnotation(GlobalSyncTransaction.class);
 		BaseVariable baseVariable = BaseVariable.getBaseVariable();
+		DBVariable dbVariable = DBVariable.getDBVariable();
 		if (null != globalSyncTransaction) {
 			if (!baseVariable.isDbLazyCommit()) {
 				baseVariable.setDbLazyCommit(true);
 				baseVariable.setGlobalSyncTransactionHold(true);
 			}
 		}
-		DBVariable dbVariable = DBVariable.getDBVariable();
+		String chainId = baseVariable.getChainId();
+		if (DBConnExecutorHolderCache.initDBVariable(chainId)) {
+			baseVariable.setDbLazyCommit(true);
+			Set<String> dataSources = dbVariable.getDataSources();
+			for (String dataSource : dataSources) {
+				dbVariable.setConnectionLevel(dataSource, DBConnectLevel.WRITE);
+				dbVariable.setDBConnectStrategy(dataSource, DBConnectStrategy.UPDATA);
+			}
+		}
 		if (null != dBConnects && dBConnects.value().length > 0) {
 			for (DBConnect dBConnect : dBConnects.value()) {
 				String dataSource = dBConnect.dataSource();
@@ -84,7 +96,7 @@ public class DBConnectFilter implements Filter {
 					commit = false;
 				}
 			}
-			String chainId = BaseVariable.getBaseVariable().getChainId();
+
 			if (baseVariable.isGlobalSyncTransactionHold()) {
 				if (null != result) {
 					Throwable exception = result.getException();
@@ -101,13 +113,18 @@ public class DBConnectFilter implements Filter {
 						}
 					}
 					broadcastSender.removeChain(chainId);
-					closeAllConnection(commit);
+				} else {
+					commit = false;
+					broadcastSender.send("TRANSACTION_ROLLBACK", chainId);
 				}
+				closeAllConnection(commit);
 			} else if (baseVariable.isDbLazyCommit()) {
 				broadcastSender.setChainNode(chainId);
+				DBConnExecutorHolderCache.setDbExecutorHolders();
 			} else {
 				closeAllConnection(commit);
 			}
+			DBVariable.getDBVariable().clearLocalCache();
 		}
 		return result;
 	}

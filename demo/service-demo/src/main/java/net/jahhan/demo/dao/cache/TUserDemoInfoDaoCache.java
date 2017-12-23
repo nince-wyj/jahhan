@@ -11,7 +11,7 @@ public class TUserDemoInfoDaoCache extends TUserDemoInfoDaoImpl{
 
 	@Override
 	protected boolean isCachable() {
-		return false;
+		return true;
 	}
 
 }

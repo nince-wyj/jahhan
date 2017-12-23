@@ -23,7 +23,7 @@ import net.jahhan.content.UserOperationMessage;
 import net.jahhan.exception.JahhanException;
 import net.jahhan.spi.Filter;
 
-@Activate(group = Constants.PROVIDER, order = -9000)
+@Activate(group = Constants.PROVIDER, order = -4000)
 @Extension("apiLogRecordProvider")
 @Singleton
 public class ApiLogRecordFilter implements Filter {
