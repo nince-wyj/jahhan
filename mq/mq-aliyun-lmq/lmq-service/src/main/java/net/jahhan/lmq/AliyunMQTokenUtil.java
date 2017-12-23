@@ -1,7 +1,7 @@
 package net.jahhan.lmq;
 
 import com.alibaba.fastjson.JSONObject;
-import net.jahhan.lmq.common.define.MqToken;
+import net.jahhan.lmq.common.define.MqTokenType;
 import net.jahhan.lmq.common.define.MqTopic;
 import net.jahhan.lmq.common.define.MqTopicDefine;
 import net.jahhan.lmq.common.define.QoS;
@@ -41,7 +41,7 @@ public class AliyunMQTokenUtil {
 		paramMap.put("serviceName", "mq");
 		paramMap.put("expireTime", String.valueOf(System.currentTimeMillis() + 20*60*60*1000));
 		String signature = Tools.doHttpSignature(paramMap, MqTopicDefine.secretKey);
-		paramMap.put("proxyType", MqToken.MQTT.toString());
+		paramMap.put("proxyType", MqTokenType.MQTT.toString());
 		paramMap.put("accessKey", MqTopicDefine.accessKey);
 		paramMap.put("signature", signature);
 		JSONObject object = Tools.httpsPost(apiUrl, paramMap);

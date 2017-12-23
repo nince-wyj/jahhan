@@ -8,10 +8,10 @@ package net.jahhan.lmq.common.define;
 public class MqTopic {
 	private String topicName;
 	private QoS qos = QoS.QoS1;
-	/** token过期时间，默认两小时 */
+	/** token过期时间，默认：2小时，需要注意的是申请token时设置的时间是绝对时间戳，即到某个时间点过期，就是当前的时间戳加上这两小时的毫秒值 */
 	private long tokenExpireTime = 2 * 60 * 60 * 1000;
 	/** token类型，默认是MQTT */
-	private MqToken tokenType = MqToken.MQTT;
+	private MqTokenType tokenType = MqTokenType.MQTT;
 
 	/** token权限，默认是只读 */
 	private MqTokenPermission tokenPermission = MqTokenPermission.R;
@@ -21,8 +21,8 @@ public class MqTopic {
 		this.qos = qos;
 	}
 
-	public MqTopic(String topicName, QoS qos, MqToken tokenType, MqTokenPermission tokenPermission,
-			long tokenExpireTime) {
+	public MqTopic(String topicName, QoS qos, MqTokenType tokenType, MqTokenPermission tokenPermission,
+				   long tokenExpireTime) {
 		this(topicName, qos);
 		this.tokenType = tokenType;
 		this.tokenPermission = tokenPermission;
@@ -54,11 +54,11 @@ public class MqTopic {
 		this.tokenExpireTime = tokenExpireTime;
 	}
 
-	public MqToken getTokenType() {
+	public MqTokenType getTokenType() {
 		return tokenType;
 	}
 
-	public void setTokenType(MqToken tokenType) {
+	public void setTokenType(MqTokenType tokenType) {
 		this.tokenType = tokenType;
 	}
 
