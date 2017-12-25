@@ -27,7 +27,6 @@ public class MqTopic {
 		this.tokenType = tokenType;
 		this.tokenPermission = tokenPermission;
 		this.tokenExpireTime = tokenExpireTime;
-
 	}
 
 	public QoS getQos() {
@@ -69,4 +68,16 @@ public class MqTopic {
 	public void setTokenPermission(MqTokenPermission tokenPermission) {
 		this.tokenPermission = tokenPermission;
 	}
+
+	@Override
+	public String toString() {
+		return "MqTopic{" +
+				"topicName='" + topicName + '\'' +
+				", qos=" + qos +
+				", tokenExpireTime=" + tokenExpireTime +
+				", tokenType=" + tokenType +
+				", tokenPermission=" + tokenPermission +
+				'}';
+	}
+
 }
