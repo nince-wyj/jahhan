@@ -1,5 +1,8 @@
 package net.jahhan.common.extension.utils;
 
+import lombok.extern.slf4j.Slf4j;
+import net.jahhan.common.extension.utils.properties.PropertiesInit;
+
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -7,16 +10,12 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.Properties;
 
-import lombok.extern.slf4j.Slf4j;
-import net.jahhan.common.extension.utils.properties.PropertiesInit;
-import net.jahhan.context.BaseContext;
-
 @Slf4j
 public class PropertiesUtil {
 
 	static {
 		ClassLoader classLoader = PropertiesUtil.class.getClassLoader();
-		URL url = classLoader.getResource("/");
+		URL url = classLoader.getResource("./");
 		String resourcePath = null;
 		String osName = System.getProperty("os.name");
 		log.debug("file url：" + url);
