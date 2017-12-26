@@ -15,6 +15,7 @@ public class BeanTools {
 
 	static {
 		convertUtils.register(new DateConverter(), Date.class);
+		convertUtils.register(new DateConverter(), java.sql.Date.class);
 	}
 
 	public static <S, D> D convertType(Object obj, Class<S> srcClass, Class<D> destClass) {

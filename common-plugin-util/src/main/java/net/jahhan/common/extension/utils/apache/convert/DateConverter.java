@@ -1,9 +1,9 @@
 package net.jahhan.common.extension.utils.apache.convert;
 
+import org.apache.commons.beanutils.Converter;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import org.apache.commons.beanutils.Converter;
 
 public class DateConverter implements Converter {
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -22,6 +22,11 @@ public class DateConverter implements Converter {
 				return (T) sdf.parse(dateString);
 			} catch (Exception e) {
 			}
+		} else if (value instanceof Date && type.equals(Date.class)) {
+			return (T) new Date(((Date) value).getTime());
+
+		} else if (value instanceof Date && type.equals(java.sql.Date.class)) {
+			return (T) new java.sql.Date(((Date) value).getTime());
 		}
 		try {
 			Long dateString = (Long) value;
