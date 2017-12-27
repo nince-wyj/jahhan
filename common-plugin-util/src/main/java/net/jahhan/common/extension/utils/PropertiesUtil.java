@@ -1,19 +1,21 @@
 package net.jahhan.common.extension.utils;
 
-import lombok.extern.slf4j.Slf4j;
-import net.jahhan.common.extension.utils.properties.PropertiesInit;
-
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.Properties;
+import java.util.UUID;
+
+import lombok.extern.slf4j.Slf4j;
+import net.jahhan.common.extension.utils.properties.PropertiesInit;
 
 @Slf4j
 public class PropertiesUtil {
 
 	static {
+		System.setProperty("nodeId", UUID.randomUUID().toString());
 		ClassLoader classLoader = PropertiesUtil.class.getClassLoader();
 		URL url = classLoader.getResource("./");
 		String resourcePath = null;

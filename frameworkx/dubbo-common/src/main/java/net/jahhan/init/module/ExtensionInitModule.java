@@ -74,7 +74,8 @@ public class ExtensionInitModule extends AbstractModule {
 				log.error(e.getMessage(), e);
 			}
 		}
-		Map<Class<?>, Map<Class<?>, String>> extensionCacheClassNameMap = ExtensionUtil.getExtensionCacheClassNameMap();
+		Map<Class<?>, Map<Class<?>, String>> extensionCacheClassNameMap = ExtensionExtendUtil
+				.getExtensionCacheClassNameMap();
 		// 先加载Adaptive适配类
 		for (String className : classNameList) {
 			try {
@@ -277,7 +278,8 @@ public class ExtensionInitModule extends AbstractModule {
 	@SuppressWarnings("unchecked")
 	private <T> Class<?> createExtension(Class<T> intefaceClass, Class<? extends T> defaultClass) {
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		Map<Class<?>, Map<Class<?>, String>> extensionCacheClassNameMap = ExtensionUtil.getExtensionCacheClassNameMap();
+		Map<Class<?>, Map<Class<?>, String>> extensionCacheClassNameMap = ExtensionExtendUtil
+				.getExtensionCacheClassNameMap();
 		try {
 			Set<Class<?>> set = cachedWrapperClasses.get(intefaceClass);
 			if (null != set && set.size() > 0) {
