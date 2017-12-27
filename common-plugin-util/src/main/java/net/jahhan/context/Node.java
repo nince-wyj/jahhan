@@ -2,7 +2,6 @@ package net.jahhan.context;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import lombok.Data;
 

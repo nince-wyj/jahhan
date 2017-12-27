@@ -19,7 +19,6 @@ import com.alibaba.dubbo.common.compiler.support.JavassistCompiler;
 import com.frameworkx.annotation.Activate;
 import com.frameworkx.annotation.Adaptive;
 import com.frameworkx.common.extension.utils.ExtensionExtendUtil;
-import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 import com.google.inject.name.Names;
 
@@ -35,8 +34,8 @@ import net.jahhan.common.extension.utils.PropertiesUtil;
 import net.jahhan.init.InitAnnocation;
 
 @Slf4j
-@InitAnnocation(isLazy = false, initSequence = 4500)
-public class ExtensionInitModule extends AbstractModule {
+@InitAnnocation(isLazy = false, initSequence = 4400)
+public class ExtensionExtensionInitModule extends ExtensionInitModule {
 
 	private Map<Class<?>, Set<Class<?>>> cachedWrapperClasses = new HashMap<>();
 	private com.alibaba.dubbo.common.compiler.Compiler compiler = new JavassistCompiler();
@@ -44,6 +43,7 @@ public class ExtensionInitModule extends AbstractModule {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	protected void configure() {
+		ExtensionInitModule.needRun=false;
 		String[] packages = PackageUtil.packages("extension");
 		List<String> classNameList = new ClassScaner().parse(packages);
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
