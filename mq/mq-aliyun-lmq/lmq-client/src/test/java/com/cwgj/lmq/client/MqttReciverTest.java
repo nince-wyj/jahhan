@@ -19,7 +19,8 @@ public class MqttReciverTest {
     MqttMessageCallbackHandlerForToken callbackHandlerForToken=null;
 	@Before
 	public void init() {
-//		lmqClient = new LmqClient();
+		lmqClient = new LmqClient();
+		lmqClient.setTokenClient(false);
 		tokenClient = new LmqTokenClient(false);
 		callbackHandler = new MqttMessageCallbackHandler();
 		callbackHandlerForToken=new MqttMessageCallbackHandlerForToken();
