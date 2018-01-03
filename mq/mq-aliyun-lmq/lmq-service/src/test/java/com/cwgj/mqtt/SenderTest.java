@@ -13,6 +13,7 @@ import net.jahhan.lmq.sender.MqSendMqttSender;
 public class SenderTest {
 	String deviceId1 = "1111111111";
 	String deviceId2 = "222222222";
+	String deviceId3 = "3333333333";
 	MqSendMqttSender sender = null;
 
 	@Before
@@ -37,10 +38,10 @@ public class SenderTest {
 
 	@Test
 	public void testToken() {
-		for (int index=0;index<10;index++
-			 ) {
-			sender.send(new MqTopic(deviceId1, QoS.QoS1), "msg==》"+index,true);
-		}
+		sender.send(new MqTopic(deviceId3, QoS.QoS1), "deviceId3 msg==》3333333333333",true);
+//		for (int index=0;index<10;index++) {
+//			sender.send(new MqTopic(deviceId1, QoS.QoS1), "msg==》"+index,true);
+//		}
 
 	}
 

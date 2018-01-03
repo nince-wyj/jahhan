@@ -3,6 +3,7 @@ package net.jahhan.lmq.client;
 import net.jahhan.lmq.client.intf.IMqttCallbackHandler;
 import net.jahhan.lmq.common.define.MqTopic;
 import net.jahhan.lmq.common.define.MqTopicDefine;
+import net.jahhan.lmq.common.define.PushOrder;
 import net.jahhan.lmq.common.util.Tools;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.slf4j.Logger;
@@ -29,15 +30,29 @@ public class LmqClient extends LmqTokenClient {
 		init();
 	}
 
-	public LmqClient(boolean ssl) {
-		setSsl(ssl);
-		setTokenClient(false);
+	public LmqClient(boolean getOfflineMsgNow) {
+		setGetOfflineMsgNow(getOfflineMsgNow);
+		init();
+	}
+	public LmqClient( PushOrder pushOrder) {
+		setGetOfflineMsgNow(true);
+		setPushOrder(pushOrder);
+		init();
+	}
+	public LmqClient(int maxPushNum) {
+		this(maxPushNum,PushOrder.DESC);
+	}
+
+	public LmqClient(int maxPushNum, PushOrder pushOrder) {
+		setGetOfflineMsgNow(true);
+		setPushOrder(pushOrder);
+		setMaxPushNum(maxPushNum);
 		init();
 	}
 
 	protected void init() {
+		setTokenClient(false);
 		super.init();
-
 		accessKey = MqTopicDefine.accessKey;
 		secretKey = MqTopicDefine.secretKey;
 		try {

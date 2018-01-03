@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.jahhan.lmq.common.define.MqTokenType;
 import net.jahhan.lmq.common.define.MqTopic;
 import net.jahhan.lmq.common.define.MqTopicDefine;
+import net.jahhan.lmq.common.define.QoS;
 import net.jahhan.lmq.common.util.Tools;
 
 import java.io.IOException;
@@ -107,8 +108,8 @@ public class AliyunMQTokenUtil {
 	}
 
 	public static void main(String[] args) throws UnrecoverableKeyException, NoSuchAlgorithmException, KeyManagementException, KeyStoreException, InvalidKeyException, IOException {
-//	String token=	AliyunMQTokenUtil.applyToken(MqTopicDefine.parentTopic,new MqTopic(MqTopicDefine.parentTopic.getTopicName()+"/1111111111", QoS.QoS1),new MqTopic(MqTopicDefine.parentTopic.getTopicName()+"/0591", QoS.QoS1));
+	String token=	AliyunMQTokenUtil.applyToken(MqTopicDefine.parentTopic,new MqTopic(MqTopicDefine.parentTopic.getTopicName()+"/3333333333", QoS.QoS1));
 //		AliyunMQTokenUtil.revokeToken("LzMT+XLFl5uQ6bDU0o4vUiD1tyZUuRMsRtiCs0jC/89YfYNDKkKbsD8SHE+oBvCx+rR6voF7GWM55H57d740BtZQqbGMBT1BOKHdGDbP3MVCvKP80Xo0WTyueZHxmSH3RFhfnieKruPKbKeh+/kYqXEJ2FHc7ldOM536K4f+b6h0zQbn/x8h7uBOALgUzpoVsGBb81BRxGSfBfMN2oDZc/Wl/2390vCnZpZTFyqqueze3810hZnBRhm/nWfdML8gvJ4KOmSv4DAr9AveBwlpG2JVRASkYonJ+Ct6Bp11Tmg=");
-		AliyunMQTokenUtil.queryToken("LzMT+XLFl5uQ6bDU0o4vUiD1tyZUuRMsRtiCs0jC/89YfYNDKkKbsD8SHE+oBvCx+rR6voF7GWM55H57d740BleFl1Mz7xXC4tSxMok17I1CvKP80Xo0WTyueZHxmSH3RFhfnieKruPKbKeh+/kYqXEJ2FHc7ldOM536K4f+b6h0zQbn/x8h7uBOALgUzpoVsGBb81BRxGSfBfMN2oDZc/Wl/2390vCnZpZTFyqqueze3810hZnBRjicT9hkYUXxvRM5TsSLVpAnvTFkK6hsfc/IDDpDA7k8+Ct6Bp11Tmgcccccc=");
+//		AliyunMQTokenUtil.queryToken("LzMT+XLFl5uQ6bDU0o4vUiD1tyZUuRMsRtiCs0jC/89YfYNDKkKbsD8SHE+oBvCx+rR6voF7GWM55H57d740BleFl1Mz7xXC4tSxMok17I1CvKP80Xo0WTyueZHxmSH3RFhfnieKruPKbKeh+/kYqXEJ2FHc7ldOM536K4f+b6h0zQbn/x8h7uBOALgUzpoVsGBb81BRxGSfBfMN2oDZc/Wl/2390vCnZpZTFyqqueze3810hZnBRjicT9hkYUXxvRM5TsSLVpAnvTFkK6hsfc/IDDpDA7k8+Ct6Bp11Tmgcccccc=");
 	}
 }
