@@ -14,7 +14,7 @@ public class CwgjLmqToken implements ILmqToken{
      */
     @Override
     public String applyToken(List<MqTopic> topicsList) {
-        return "LzMT+XLFl5uQ6bDU0o4vUiD1tyZUuRMsRtiCs0jC/89YfYNDKkKbsD8SHE+oBvCx+rR6voF7GWM55H57d740BvTQ69MbuN0V3UPs/qdT5CVCvKP80Xo0WTyueZHxmSH3RFhfnieKruPKbKeh+/kYqXEJ2FHc7ldOM536K4f+b6h0zQbn/x8h7uBOALgUzpoVsGBb81BRxGSfBfMN2oDZc/Wl/2390vCnZpZTFyqqueze3810hZnBRp6k8thfY/w9GYV2gBJugDi0FLJU0VC/YGTq0wBOf3y7+Ct6Bp11Tmg=";
+        return "LzMT+XLFl5uQ6bDU0o4vUiD1tyZUuRMsRtiCs0jC/89YfYNDKkKbsD8SHE+oBvCx+rR6voF7GWM55H57d740BlPOPRHFv12DaNPMNkLZ5JJCvKP80Xo0WTyueZHxmSH3RFhfnieKruPKbKeh+/kYqXEJ2FHc7ldOZl0a0KjmoLulztYlyCwpXZlCt6GFmJgm2JFY7PJwf/7OOSmUYIYFs9106wCS/4W9rwYT3hmQrXDOByS59CZxq3b6DZfVBcZSUMUnKM6C8UQ=";
     }
 
     /**
@@ -22,6 +22,6 @@ public class CwgjLmqToken implements ILmqToken{
      */
     @Override
     public String getLocalToken() {
-        return "LzMT+XLFl5uQ6bDU0o4vUiD1tyZUuRMsRtiCs0jC/89YfYNDKkKbsD8SHE+oBvCx+rR6voF7GWM55H57d740BvTQ69MbuN0V3UPs/qdT5CVCvKP80Xo0WTyueZHxmSH3RFhfnieKruPKbKeh+/kYqXEJ2FHc7ldOM536K4f+b6h0zQbn/x8h7uBOALgUzpoVsGBb81BRxGSfBfMN2oDZc/Wl/2390vCnZpZTFyqqueze3810hZnBRp6k8thfY/w9GYV2gBJugDi0FLJU0VC/YGTq0wBOf3y7+Ct6Bp11Tmg=";
+        return "LzMT+XLFl5uQ6bDU0o4vUiD1tyZUuRMsRtiCs0jC/89YfYNDKkKbsD8SHE+oBvCx+rR6voF7GWM55H57d740BlPOPRHFv12DaNPMNkLZ5JJCvKP80Xo0WTyueZHxmSH3RFhfnieKruPKbKeh+/kYqXEJ2FHc7ldOZl0a0KjmoLulztYlyCwpXZlCt6GFmJgm2JFY7PJwf/7OOSmUYIYFs9106wCS/4W9rwYT3hmQrXDOByS59CZxq3b6DZfVBcZSUMUnKM6C8UQ=";
     }
 }

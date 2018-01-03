@@ -11,50 +11,52 @@ import org.junit.Test;
  * Created by linwb on 2017/12/14 0014.
  */
 public class MqttReciverTest {
-	String deviceId1 = "1111111111";
-	String deviceId2 = "222222222";
-	LmqClient lmqClient = null;
-	LmqTokenClient tokenClient = null;
-	MqttMessageCallbackHandler callbackHandler = null;
-    MqttMessageCallbackHandlerForToken callbackHandlerForToken=null;
-	@Before
-	public void init() {
-		lmqClient = new LmqClient();
-		lmqClient.setTokenClient(false);
-		tokenClient = new LmqTokenClient(false);
-		callbackHandler = new MqttMessageCallbackHandler();
-		callbackHandlerForToken=new MqttMessageCallbackHandlerForToken();
-	}
+    String deviceId1 = "1111111111";
+    String deviceId2 = "222222222";
+    String deviceId3 = "3333333333";
+    LmqClient lmqClient = null;
+    LmqTokenClient tokenClient = null;
+    MqttMessageCallbackHandler callbackHandler = null;
+    MqttMessageCallbackHandlerForToken callbackHandlerForToken = null;
 
-	@Test
-	public void test1() {
-		lmqClient.start(deviceId1, callbackHandler);
-		try {
-			Thread.sleep(Long.MAX_VALUE);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
+    @Before
+    public void init() {
+        lmqClient = new LmqClient(true);
+        tokenClient = new LmqTokenClient(true);
+        callbackHandler = new MqttMessageCallbackHandler();
+        callbackHandlerForToken = new MqttMessageCallbackHandlerForToken();
+    }
 
-	@Test
-	public void test2() throws Exception {
-		lmqClient.start(deviceId2, callbackHandler, new MqTopic("0591", QoS.QoS1));
-		lmqClient.publish(new MqTopic(deviceId1,QoS.QoS1),"come from deviceId2!!!");
-		try {
-			Thread.sleep(Long.MAX_VALUE);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
+    @Test
+    public void test1() {
+        lmqClient.start(deviceId1, callbackHandler);
+        try {
+            Thread.sleep(Long.MAX_VALUE);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
-	@Test
-	public void testToken() throws Exception {
-		tokenClient.start(deviceId1,new CwgjLmqToken(), callbackHandlerForToken, new MqTopic("0591", QoS.QoS1));
+    @Test
+    public void test2() throws Exception {
+        lmqClient.start(deviceId2, callbackHandler, new MqTopic("0591", QoS.QoS1));
+        lmqClient.publish(new MqTopic(deviceId1, QoS.QoS1), "come from deviceId2!!!");
+        try {
+            Thread.sleep(Long.MAX_VALUE);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testToken() throws Exception {
+//		tokenClient.start(deviceId1,new CwgjLmqToken(), callbackHandlerForToken, new MqTopic("0591", QoS.QoS1));
 //		tokenClient.publish(new MqTopic(deviceId1,QoS.QoS1),"======come from token test!!!=======");
-		try {
-			Thread.sleep(Long.MAX_VALUE);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
+        tokenClient.start(deviceId3, new CwgjLmqToken(), callbackHandlerForToken);
+        try {
+            Thread.sleep(Long.MAX_VALUE);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
