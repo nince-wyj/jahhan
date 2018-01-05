@@ -8,6 +8,8 @@ import org.apache.commons.beanutils.Converter;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 
 public class BeanTools {
@@ -28,20 +30,27 @@ public class BeanTools {
 
     public static Map<String, Object> toMap(Object model) {
         Map m = new LinkedHashMap();
-        Field[] fields = model.getClass().getDeclaredFields();
-        List<Field> fieldList = Arrays.asList(fields);
-        fieldList.addAll(getSuperClassField(model.getClass()));
-
+        List<Field> fieldList = getAllClassField(model.getClass());
         copyFieldValueToMap(m, model, fieldList);
 
         return m;
     }
 
-    private static void copyFieldValueToMap(Map destMap, Object src, List<Field> fieldList) {
-        for (Field field : fieldList) {
+    private static void copyFieldValueToMap(Map destMap, Object src, List<Field> fields) {
+        Method getMethod = null;
+        for (Field field : fields) {
+            if (java.lang.reflect.Modifier.isFinal(field.getModifiers())) {// 跳过final属性不能赋值
+                continue;
+            }
             try {
                 field.setAccessible(true);
-                destMap.put(field.getName(), field.get(src));
+                getMethod = getGetMethod(src.getClass(), field.getName());
+                if (getMethod == null) {// 有get方法优先调用get方法获取值，防止方法重写取不到正确的值
+                    destMap.put(field.getName(), field.get(src));
+                } else {
+                    destMap.put(field.getName(), getMethod.invoke(src));
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -50,35 +59,81 @@ public class BeanTools {
 
     @SuppressWarnings("rawtypes")
     public static void copyFromMap(Object dest, Map src) {
-        Field[] fields = dest.getClass().getDeclaredFields();
-        List<Field> fieldList = Arrays.asList(fields);
-        fieldList.addAll(getSuperClassField(dest.getClass()));
+        List<Field> fieldList = getAllClassField(dest.getClass());
         setFieldValueFromMap(dest, fieldList, src);
     }
 
-    private static void setFieldValueFromMap(Object dest, List<Field> fieldList, Map src) {
-        for (Field field : fieldList) {
+    private static void setFieldValueFromMap(Object dest, List<Field> fields, Map src) {
+        Method setMethod = null;
+        Object data = null;
+        Map tempMap = null;
+        try {
+            tempMap = src.getClass().newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        tempMap.putAll(src);
+        for (Field field : fields) {
             try {
                 field.setAccessible(true);
                 String name = field.getName();
                 Object value = src.get(name);
-                if (value != null && !name.equals("serialVersionUID")) {
-                    field.set(dest, convertType(value, value.getClass(), field.getType()));
+                if (value != null && !java.lang.reflect.Modifier.isFinal(field.getModifiers())) {
+                    setMethod = getSetMethod(dest.getClass(), name);
+                    data = convertType(value, value.getClass(), field.getType());
+                    if (setMethod == null) {
+                        field.set(dest, data);
+                    } else {
+                        setMethod.invoke(dest, data);
+                    }
+                    tempMap.remove(name);
                 }
             } catch (Exception e) {
             }
         }
+
+        if (tempMap != null) {// 处理目标类没有字段，只有set的方法的问题
+            Set<Map.Entry> set = tempMap.entrySet();
+            String name = null;
+            for (Map.Entry entry : set) {
+                name = (String) entry.getKey();
+                setMethod = getSetMethod(dest.getClass(), name);
+                if (setMethod != null) {
+                    Class[] ptypes = setMethod.getParameterTypes();
+                    if (ptypes != null && ptypes.length == 1) {// 说明是set属性值得方法
+                        data = convertType(entry.getValue(), entry.getValue().getClass(), ptypes[0]);
+                        try {
+                            setMethod.invoke(dest, data);
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        } catch (InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+            }
+        }
     }
 
-    private static List<Field> getSuperClassField(Class<?> clazz) {
-        Class<?> superclass = clazz.getSuperclass();
-        List<Field> fields = new ArrayList<>();
-        if (null != superclass) {
-            fields.addAll(getSuperClassField(superclass));
+    /**
+     * 获取类所有字段（包括父类）
+     *
+     * @param clazz
+     * @return
+     */
+    public static List<Field> getAllClassField(Class<?> clazz) {
+        List<Field> fieldList = new ArrayList<>();
+        fieldList.addAll(Arrays.asList(clazz.getDeclaredFields()));
+        Class superClazz = clazz.getSuperclass();
+        while (superClazz != null) {
+            fieldList.addAll(Arrays.asList(superClazz.getDeclaredFields()));
+            superClazz = superClazz.getSuperclass();
         }
-        Field[] declaredFields = clazz.getDeclaredFields();
-        fields.addAll(Arrays.asList(declaredFields));
-        return fields;
+
+        return fieldList;
     }
 
     @SuppressWarnings("rawtypes")
@@ -118,5 +173,90 @@ public class BeanTools {
 
     public static String getUuid() {
         return UUID.randomUUID().toString().replace("-", "");
+    }
+
+
+    /**
+     * java反射bean的get方法
+     *
+     * @param objectClass
+     * @param fieldName
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public static Method getGetMethod(Class objectClass, String fieldName) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("get");
+        sb.append(fieldName.substring(0, 1).toUpperCase());
+        sb.append(fieldName.substring(1));
+        try {
+            return objectClass.getMethod(sb.toString());
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    /**
+     * java反射bean的set方法
+     *
+     * @param objectClass
+     * @param fieldName
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public static Method getSetMethod(Class objectClass, String fieldName) {
+        try {
+            Method getMethod = getGetMethod(objectClass, fieldName);
+            Class[] parameterTypes = new Class[1];
+            if (getMethod != null) {// 不一定有字段，可能只有set和get方法
+                // Class returnType= getMethod.getReturnType();
+                parameterTypes[0] = getMethod.getReturnType();
+            } else {
+                Field field = objectClass.getDeclaredField(fieldName);
+                parameterTypes[0] = field.getType();
+            }
+
+            StringBuffer sb = new StringBuffer();
+            sb.append("set");
+            sb.append(fieldName.substring(0, 1).toUpperCase());
+            sb.append(fieldName.substring(1));
+            Method method = objectClass.getMethod(sb.toString(), parameterTypes);
+            return method;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 执行set方法
+     *
+     * @param o         执行对象
+     * @param fieldName 属性
+     * @param value     值
+     */
+    public static void invokeSet(Object o, String fieldName, Object value) {
+        Method method = getSetMethod(o.getClass(), fieldName);
+        try {
+            method.invoke(o, new Object[]{value});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 执行get方法
+     *
+     * @param o         执行对象
+     * @param fieldName 属性
+     */
+    public static Object invokeGet(Object o, String fieldName) {
+        Method method = getGetMethod(o.getClass(), fieldName);
+        try {
+            return method.invoke(o, new Object[0]);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
