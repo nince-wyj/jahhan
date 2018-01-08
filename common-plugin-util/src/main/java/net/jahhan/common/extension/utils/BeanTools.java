@@ -81,8 +81,12 @@ public class BeanTools {
                 String name = field.getName();
                 Object value = src.get(name);
                 if (value != null && !java.lang.reflect.Modifier.isFinal(field.getModifiers())) {
-                    setMethod = getSetMethod(dest.getClass(), name);
-                    data = convertType(value, value.getClass(), field.getType());
+                    setMethod = getSetMethod(dest.getClass(), name, value.getClass());
+                    data = null;
+                    if (value != null) {
+                        data = convertType(value, value.getClass(), field.getType());
+                    }
+
                     if (setMethod == null) {
                         field.set(dest, data);
                     } else {
@@ -99,11 +103,16 @@ public class BeanTools {
             String name = null;
             for (Map.Entry entry : set) {
                 name = (String) entry.getKey();
-                setMethod = getSetMethod(dest.getClass(), name);
+                setMethod = getSetMethod(dest.getClass(), name,
+                        entry.getValue() == null ? null : entry.getValue().getClass());
                 if (setMethod != null) {
                     Class[] ptypes = setMethod.getParameterTypes();
                     if (ptypes != null && ptypes.length == 1) {// 说明是set属性值得方法
-                        data = convertType(entry.getValue(), entry.getValue().getClass(), ptypes[0]);
+                        data = null;
+                        if (entry.getValue() != null) {
+                            data = convertType(entry.getValue(), entry.getValue().getClass(), ptypes[0]);
+                        }
+
                         try {
                             setMethod.invoke(dest, data);
                         } catch (IllegalAccessException e) {
@@ -204,28 +213,61 @@ public class BeanTools {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static Method getSetMethod(Class objectClass, String fieldName) {
-        try {
-            Method getMethod = getGetMethod(objectClass, fieldName);
-            Class[] parameterTypes = new Class[1];
-            if (getMethod != null) {// 不一定有字段，可能只有set和get方法
-                // Class returnType= getMethod.getReturnType();
-                parameterTypes[0] = getMethod.getReturnType();
-            } else {
-                Field field = objectClass.getDeclaredField(fieldName);
-                parameterTypes[0] = field.getType();
-            }
+    public static Method getSetMethod(Class objectClass, String fieldName, Class valueType) {
+        Method method = null;
+        StringBuffer sb = new StringBuffer();
+        sb.append("set");
+        sb.append(fieldName.substring(0, 1).toUpperCase());
+        sb.append(fieldName.substring(1));
 
-            StringBuffer sb = new StringBuffer();
-            sb.append("set");
-            sb.append(fieldName.substring(0, 1).toUpperCase());
-            sb.append(fieldName.substring(1));
-            Method method = objectClass.getMethod(sb.toString(), parameterTypes);
+        try {
+            Class[] parameterTypes = new Class[]{valueType};
+            if (valueType == null) {// 不知道值是什么类型的话，看看没有相应的字段的类型或相应get的方法的类型
+                try {
+                    Field field = objectClass.getDeclaredField(fieldName);
+                    parameterTypes[0] = field.getType();
+                } catch (NoSuchFieldException e) {
+                    Method getMethod = getGetMethod(objectClass, fieldName);
+                    if (getMethod != null) {// 不一定有字段，可能只有set和get方法
+                        parameterTypes[0] = getMethod.getReturnType();
+                    } else {// 没有相应的字段，又没有相应的get方法
+                        throw e;
+                    }
+                }
+            }
+            method = objectClass.getMethod(sb.toString(), parameterTypes);
+
             return method;
-        } catch (Exception e) {
-            e.printStackTrace();
+
+        } catch (NoSuchMethodException me) {
+        } catch (NoSuchFieldException me) {
         }
-        return null;
+
+        if (method == null && valueType != null && isWrapClass(valueType)) {
+            try {
+                if (valueType.equals(Integer.class)) {
+                    method = objectClass.getMethod(sb.toString(), int.class);
+                } else if (valueType.equals(Long.class)) {
+                    method = objectClass.getMethod(sb.toString(), long.class);
+                } else if (valueType.equals(Double.class)) {
+                    method = objectClass.getMethod(sb.toString(), double.class);
+                } else if (valueType.equals(Float.class)) {
+                    method = objectClass.getMethod(sb.toString(), float.class);
+                } else if (valueType.equals(Boolean.class)) {
+                    method = objectClass.getMethod(sb.toString(), boolean.class);
+                } else if (valueType.equals(Character.class)) {
+                    method = objectClass.getMethod(sb.toString(), char.class);
+                } else if (valueType.equals(Byte.class)) {
+                    method = objectClass.getMethod(sb.toString(), byte.class);
+                } else if (valueType.equals(Short.class)) {
+                    method = objectClass.getMethod(sb.toString(), short.class);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return method;
     }
 
     /**
@@ -236,7 +278,7 @@ public class BeanTools {
      * @param value     值
      */
     public static void invokeSet(Object o, String fieldName, Object value) {
-        Method method = getSetMethod(o.getClass(), fieldName);
+        Method method = getSetMethod(o.getClass(), fieldName, value == null ? null : value.getClass());
         try {
             method.invoke(o, new Object[]{value});
         } catch (Exception e) {
@@ -258,5 +300,16 @@ public class BeanTools {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 是否是基本类型的包装类型
+     */
+    public static boolean isWrapClass(Class clz) {
+        try {
+            return ((Class) clz.getField("TYPE").get(null)).isPrimitive();
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
