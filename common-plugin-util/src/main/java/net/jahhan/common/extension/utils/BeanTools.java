@@ -263,7 +263,7 @@ public class BeanTools {
                     method = objectClass.getMethod(sb.toString(), short.class);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
             }
         }
 

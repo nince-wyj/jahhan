@@ -47,4 +47,8 @@ public interface DemoIntf {
 	@ApiOperation(value = "查询")
 	public UserOVO getUser(
 			@QueryParam(value = "user_id") @NotNull(message = "user_id不能为空") @ApiParam(value = "user_id") Long userId);
+	@GET
+	@Path("info")
+	@ApiOperation(value = "查询")
+	public UserOVO getUser(@NotNull(message = "用户信息不能为空")UserNameIVO userNameIVO);
 }
