@@ -45,7 +45,7 @@ public class InterfaceCacheFilter implements Filter {
         if (cache.isCustomCacheKey()) {
             Class createrClass = cache.customCacheKeyCreaterClass();
             CustomCacheKeyCreater keyCreater = null;
-            if (createrClass != null && createrClass != void.class) {
+            if (createrClass != null && !void.class.equals(createrClass)) {
                 if (CustomCacheKeyCreater.class.isAssignableFrom(createrClass)) {
                     try {
                         keyCreater = (CustomCacheKeyCreater) createrClass.newInstance();
