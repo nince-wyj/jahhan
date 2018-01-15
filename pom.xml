@@ -29,18 +29,15 @@
 
 	<modules>
 		<module>common-plugin-util</module>
-
 		<module>jdbc</module>
 		<module>cache</module>
 		<module>apidoc</module>
 		<module>logappend</module>
 		<module>register</module>
-
 		<module>frameworkx</module>
 		<module>package</module>
 		<module>sdk</module>
 		<module>supported</module>
-
 		<module>dependency</module>
 		<module>mq</module>
 		<module>demo</module>

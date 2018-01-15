@@ -9,7 +9,7 @@
     <artifactId>package-frameworkx-base</artifactId>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
-    <description>The all in one project of common</description>
+    <description>The all in one project of common,cache-redis-sentinel</description>
     <properties>
         <skip_maven_deploy>false</skip_maven_deploy>
     </properties>
