@@ -18,13 +18,13 @@ import java.lang.annotation.*;
  *
  * @apiExample
  * 简单用法：
- *     @StringIn(valueIn = {"男","女"},message = "age 值不为："男","女"中的值")
+ *     @StringIn(valueIn = {"男","女"},message = "sex 值不为："男","女"中的值")
  *     private String sex;
  *
  * 高级用法，采用不同分组的验证不同值的用法：
  *      @StringIn.List({
  *         @StringIn(valueIn = {"男","女"},groups = {GroupA.class},message = "sex 值不为："男","女"中的值"),
- *         @StringIn(valueIn = {"男","女","人妖","未知"},groups = {GroupB.class},message = "age 值不为："男","女","人妖","未知"中的值")
+ *         @StringIn(valueIn = {"男","女","人妖","未知"},groups = {GroupB.class},message = "sex 值不为："男","女","人妖","未知"中的值")
  *     })
  *     private String sex;
  */
