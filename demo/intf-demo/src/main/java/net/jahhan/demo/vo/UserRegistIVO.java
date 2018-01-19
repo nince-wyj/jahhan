@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import net.jahhan.validation.annotation.StringIn;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 
@@ -34,7 +35,8 @@ public class UserRegistIVO implements Serializable {
 
 	@NotNull(message = "gender不能为空")
 	@ApiModelProperty(value = "性别")
-	@Pattern(regexp = "男|女", message = "输入值必须为男或女")
+//	@Pattern(regexp = "男|女", message = "输入值必须为男或女")
+	@StringIn(valueIn = {"男","女"}, message = "输入值必须为男或女")
 	@Length(min = 0, max = 4, message = "gender字符串长度需小于4")
 	private String gender;
 
