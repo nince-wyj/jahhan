@@ -6,7 +6,9 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
+ * 验证注解@NumberIn功能实现类
  * Created by linwb on 2018/1/18 0018.
+ * @author linweibin
  */
 public class NumberInValidatiorImpl implements ConstraintValidator<NumberIn, Number> {
 

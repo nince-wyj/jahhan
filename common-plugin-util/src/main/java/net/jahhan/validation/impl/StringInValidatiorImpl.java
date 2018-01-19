@@ -7,7 +7,9 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
+ * 验证注解@StringIn功能实现类
  * Created by linwb on 2018/1/18 0018.
+ * @author linweibin
  */
 public class StringInValidatiorImpl implements ConstraintValidator<StringIn, String> {
 
