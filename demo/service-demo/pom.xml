@@ -1,23 +1,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.jahhan.demo</groupId>
+	<groupId>net.jahhan.demo</groupId>
 	<artifactId>service-demo</artifactId>
 	<packaging>war</packaging>
 	<version>1.0.0</version>
 	<description>The demo project</description>
 	<repositories>
 		<repository>
-			<id>frameworkx</id>
-			<url>http://123.206.186.31:8081/nexus/content/repositories/frameworkx</url>
+			<id>jahhan</id>
+			<url>http://47.100.61.97:8081/nexus/content/repositories/jahhan</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
 		<repository>
-			<id>nexus</id>
+			<id>central</id>
 			<name>Team Nexus Repository</name>
-			<url>http://123.206.186.31:8081/nexus/content/groups/public</url>
+			<url>http://47.100.61.97:8081/nexus/content/repositories/central</url>
 		</repository>
 	</repositories>
 	<properties>
@@ -43,12 +43,12 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.jahhan</groupId>
-			<artifactId>dependency-frameworkx-common</artifactId>
+			<groupId>net.jahhan</groupId>
+			<artifactId>dependency-dubbo-base</artifactId>
 			<version>${framework.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.jahhan.demo</groupId>
+			<groupId>net.jahhan.demo</groupId>
 			<artifactId>intf-demo</artifactId>
 			<version>${cwgj.version}</version>
 		</dependency>

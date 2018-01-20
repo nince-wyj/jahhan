@@ -3,6 +3,7 @@ package net.jahhan.spi;
 import java.util.EventObject;
 
 public interface DBEventListener {
+	int getExistSecond();
     /**
      * 是否接受当前的事件
      * 

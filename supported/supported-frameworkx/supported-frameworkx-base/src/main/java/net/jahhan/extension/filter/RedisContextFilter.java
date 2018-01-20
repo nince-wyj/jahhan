@@ -59,8 +59,7 @@ public class RedisContextFilter implements Filter {
 			String methodName = invocation.getMethodName();
 			Method method = null;
 			try {
-				method = Class.forName(implClassName).getDeclaredMethod(methodName,
-						invocation.getParameterTypes());
+				method = Class.forName(implClassName).getDeclaredMethod(methodName, invocation.getParameterTypes());
 			} catch (NoSuchMethodException | SecurityException e) {
 				throw new JahhanException(JahhanErrorCode.UNKNOW_ERROR, "未知错误", e);
 			}
@@ -84,11 +83,12 @@ public class RedisContextFilter implements Filter {
 				}
 				RpcContext.getContext().setAttachment("global_locks",
 						JsonUtil.toJson(globalLockLevelMap).replace(",", "$|"));
+				Throwable exception = invoke.getException();
+				if (null != exception && globalLockMap.size() > 0) {
+					GlobalReentrantLockUtil.releaseChainLock();
+				}
 			}
-			Throwable exception = invoke.getException();
-			if (null != exception) {
-				GlobalReentrantLockUtil.releaseChainLock();
-			}
+
 		} catch (Exception e) {
 			invoke = new RpcResult(e);
 		}

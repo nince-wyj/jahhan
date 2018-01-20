@@ -36,6 +36,11 @@
 		</dependency>
 		<dependency>
 			<groupId>net.jahhan</groupId>
+			<artifactId>cache-ehcache</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.jahhan</groupId>
 			<artifactId>cache-api</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>

@@ -13,7 +13,7 @@ import net.jahhan.init.BootstrapInit;
 import net.jahhan.init.InitAnnocation;
 
 @InitAnnocation(isLazy = false, initSequence = 1000)
-public class CacheIniter implements BootstrapInit {
+public class RedisCacheIniter implements BootstrapInit {
 
 	@Override
 	public void execute() {

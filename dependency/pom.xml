@@ -13,5 +13,8 @@
 	<modules>
 		<module>package-frameworkx</module>
 		<module>dependency-frameworkx</module>
+		
+		<module>package-dubbo</module>
+		<module>dependency-dubbo</module>
 	</modules>
 </project>

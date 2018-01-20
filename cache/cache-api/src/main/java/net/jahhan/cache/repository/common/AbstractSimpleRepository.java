@@ -22,7 +22,7 @@ public abstract class AbstractSimpleRepository {
 	 * 
 	 * @return
 	 */
-	protected int getExistSecond() {
+	public int getExistSecond() {
 		return BaseConfiguration.GLOBAL_EXPIRE_SECOND;
 	}
 

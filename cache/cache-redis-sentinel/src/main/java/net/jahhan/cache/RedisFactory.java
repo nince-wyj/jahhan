@@ -6,8 +6,6 @@ import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import lombok.extern.slf4j.Slf4j;
 import net.jahhan.cache.constants.RedisConstants;
@@ -21,8 +19,6 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 @Slf4j
 public class RedisFactory {
-
-	protected static Logger logger = LoggerFactory.getLogger(RedisFactory.class);
 
 	private final static String MAXACTIVE = "1000"; // 一个pool的最大并发数
 
@@ -60,7 +56,7 @@ public class RedisFactory {
 				Redis redis = create(is, database);
 				poolMap.put(database, redis);
 			}
-			logger.info("redis连接池初始化完毕!!!");
+			log.info("redis连接池初始化完毕!!!");
 		} catch (Exception e) {
 			LogUtil.error("redis连接池初始化失败。" + e.getMessage(), e);
 			throw new RuntimeException("redis 启动失败");
@@ -106,8 +102,8 @@ public class RedisFactory {
 			JedisSentinelPoolExt pool = new JedisSentinelPoolExt(masterName, host, config, password, timeout, 5, true);
 			Redis r = new Redis(pool);
 			r.ping();
-			if (logger.isInfoEnabled()) {
-				logger.info("redis(" + database + "):" + "{host:" + host + ",maxActive:" + config.getMaxTotal()
+			if (log.isInfoEnabled()) {
+				log.info("redis(" + database + "):" + "{host:" + host + ",maxActive:" + config.getMaxTotal()
 						+ ",maxIdle:" + config.getMaxIdle() + ",maxWaitMS:" + config.getMaxWaitMillis() + ",timeout:"
 						+ timeout + ",database:" + redisDatabase + "}");
 			}

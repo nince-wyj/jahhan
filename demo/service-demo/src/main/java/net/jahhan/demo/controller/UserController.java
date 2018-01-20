@@ -4,12 +4,12 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.frameworkx.annotation.Controller;
-import com.frameworkx.annotation.Reference;
 
 import lombok.extern.slf4j.Slf4j;
-import net.jahhan.authenticationcenter.intf.UserIntf;
-import net.jahhan.authenticationcenter.vo.UserAuthenticationOVO;
+//import net.jahhan.authenticationcenter.intf.UserIntf;
+//import net.jahhan.authenticationcenter.vo.UserAuthenticationOVO;
 import net.jahhan.cache.annotation.Cache;
 import net.jahhan.common.extension.annotation.GlobalSyncTransaction;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
@@ -36,8 +36,8 @@ public class UserController implements DemoIntf {
 	private TUserDemoInfoDao tUserInfoDao;
 	@Reference
 	private TestService testService;
-	@Reference
-	private UserIntf userIntf;
+//	@Reference
+//	private UserIntf userIntf;
 
 	@Override
 	@GlobalSyncTransaction
@@ -47,11 +47,11 @@ public class UserController implements DemoIntf {
 					"性别为女时名称不能以test开头！");
 		}
 		// testService.excuteOptimization();
-		net.jahhan.authenticationcenter.vo.UserRegistIVO r = new net.jahhan.authenticationcenter.vo.UserRegistIVO();
-		r.setEmail(System.currentTimeMillis() + "aaa@bbb.com");
-		r.setPassword("123456");
-		net.jahhan.authenticationcenter.vo.UserRegistOVO register = userIntf.register(r);
-		UserAuthenticationOVO user = userIntf.getUser(register.getUserId());
+//		net.jahhan.authenticationcenter.vo.UserRegistIVO r = new net.jahhan.authenticationcenter.vo.UserRegistIVO();
+//		r.setEmail(System.currentTimeMillis() + "aaa@bbb.com");
+//		r.setPassword("123456");
+//		net.jahhan.authenticationcenter.vo.UserRegistOVO register = userIntf.register(r);
+//		UserAuthenticationOVO user = userIntf.getUser(register.getUserId());
 		return userService.register(userRegistIVO);
 	}
 

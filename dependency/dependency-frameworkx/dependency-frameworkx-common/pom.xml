@@ -9,8 +9,8 @@
 	<description>The all in one project of common</description>
 	<distributionManagement>
 		<snapshotRepository>
-			<id>frameworkx</id>
-			<url>http://123.206.186.31:8081/nexus/content/repositories/frameworkx</url>
+			<id>jahhan</id>
+			<url>http://47.100.61.97:8081/nexus/content/repositories/jahhan</url>
 		</snapshotRepository>
 	</distributionManagement>
 	<properties>

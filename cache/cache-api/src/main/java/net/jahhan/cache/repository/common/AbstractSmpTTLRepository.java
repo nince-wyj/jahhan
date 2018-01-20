@@ -21,7 +21,7 @@ public abstract class AbstractSmpTTLRepository extends AbstractSimpleRepository 
 	 * 
 	 * @return
 	 */
-	protected int getExistSecond() {
+	public int getExistSecond() {
 		return BaseConfiguration.GLOBAL_EXPIRE_SECOND;
 	}
 

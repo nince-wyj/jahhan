@@ -17,6 +17,18 @@
 	<dependencies>
 		<dependency>
 			<groupId>net.jahhan</groupId>
+			<artifactId>common-plugin-util</artifactId>
+			<version>${project.parent.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.jahhan</groupId>
+			<artifactId>jdbc-api</artifactId>
+			<version>${project.parent.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.jahhan</groupId>
 			<artifactId>cache-api</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
@@ -25,5 +37,11 @@
 			<artifactId>slf4j-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+		</dependency>
+
 	</dependencies>
 </project>
