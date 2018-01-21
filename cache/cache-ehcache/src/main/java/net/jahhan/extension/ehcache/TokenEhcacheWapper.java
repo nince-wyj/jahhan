@@ -22,7 +22,7 @@ public class TokenEhcacheWapper implements TokenCache {
 		String[] keySplit = strKey.split("_");
 		Assert.isTrue(keySplit.length > 2, "key错误", JahhanErrorCode.UNKNOW_ERROR);
 		Cache cache = cacheManager.getCache(keySplit[1]);
-		Element element = new Element(keySplit[2], new String(value));
+		Element element = new Element(keySplit[2], value);
 		cache.put(element);
 	}
 
@@ -49,7 +49,7 @@ public class TokenEhcacheWapper implements TokenCache {
 		Assert.isTrue(keySplit.length > 2, "key错误", JahhanErrorCode.UNKNOW_ERROR);
 		Cache cache = cacheManager.getCache(keySplit[1]);
 		Element element = cache.get(keySplit[2]);
-		return (String) element.getObjectValue();
+		return null == element ? null : (String) element.getObjectValue();
 	}
 
 	@Override
@@ -59,8 +59,7 @@ public class TokenEhcacheWapper implements TokenCache {
 		Assert.isTrue(keySplit.length > 2, "key错误", JahhanErrorCode.UNKNOW_ERROR);
 		Cache cache = cacheManager.getCache(keySplit[1]);
 		Element element = cache.get(keySplit[2]);
-		String value = (String) element.getObjectValue();
-		return value.getBytes();
+		return null == element ? null : (byte[]) element.getObjectValue();
 	}
 
 	@Override
@@ -69,7 +68,7 @@ public class TokenEhcacheWapper implements TokenCache {
 		String[] keySplit = strKey.split("_");
 		Assert.isTrue(keySplit.length > 2, "key错误", JahhanErrorCode.UNKNOW_ERROR);
 		Cache cache = cacheManager.getCache(keySplit[1]);
-		Element element = new Element(keySplit[2], new String(value));
+		Element element = new Element(keySplit[2], value);
 		cache.put(element);
 		return "OK";
 	}
@@ -97,8 +96,9 @@ public class TokenEhcacheWapper implements TokenCache {
 				Assert.isTrue(keySplit.length > 2, "key错误", JahhanErrorCode.UNKNOW_ERROR);
 				Cache cache = cacheManager.getCache(keySplit[1]);
 				Element element = cache.get(keySplit[2]);
-				String value = (String) element.getObjectValue();
-				resultList.add(value);
+				if (null != element) {
+					resultList.add((String) element.getObjectValue());
+				}
 			} catch (Exception e) {
 
 			}
@@ -116,8 +116,9 @@ public class TokenEhcacheWapper implements TokenCache {
 				Assert.isTrue(keySplit.length > 2, "key错误", JahhanErrorCode.UNKNOW_ERROR);
 				Cache cache = cacheManager.getCache(keySplit[1]);
 				Element element = cache.get(keySplit[2]);
-				String value = (String) element.getObjectValue();
-				resultList.add(value.getBytes());
+				if (null != element) {
+					resultList.add((byte[]) element.getObjectValue());
+				}
 			} catch (Exception e) {
 
 			}

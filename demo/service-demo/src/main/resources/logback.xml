@@ -95,7 +95,9 @@
 	<logger name="org.reflections.Reflections" level="ERROR" />
 	<logger name="org.apache.kafka" level="ERROR" />
 	<logger name="net.jahhan.extension.filter" level="TRACE" />
-
+	<logger name="net.sf.ehcache.statistics.extended" level="ERROR" />
+	<logger name="net.jahhan.init.module" level="ERROR" />
+	
 	<logger name="com.request.log" additivity="true" level="INFO">
 		<appender-ref ref="REQLOG" />
 	</logger>
