@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.StringUtils;
 
+import net.jahhan.cache.constants.RedisConnectType;
 import net.jahhan.cache.constants.RedisConstants;
 import net.jahhan.common.extension.utils.JsonUtil;
 import net.jahhan.spi.DBCache;
@@ -23,16 +24,18 @@ import redis.clients.util.SafeEncoder;
 
 public class Redis implements DBCache {
 
-	public Redis(Pool<Jedis> jedisPool) {
+	public Redis(Pool<Jedis> jedisPool, RedisConnectType redisConnectType) {
 		super();
 		this.jedisPool = jedisPool;
+		this.redisConnectType = redisConnectType;
 	}
 
 	private Pool<Jedis> jedisPool;
+	private RedisConnectType redisConnectType;
 
 	public JedisTemplate getTemplate() {
 		if (RedisConstants.isInUse()) {
-			return new JedisTemplate(jedisPool);
+			return new JedisTemplate(jedisPool,redisConnectType);
 		} else {
 			return null;
 		}
@@ -578,6 +581,7 @@ public class Redis implements DBCache {
 			return null;
 		}
 	}
+
 	/**
 	 * 当key不存在的时候，就设置它，并且设置它的过期时间
 	 *
@@ -587,17 +591,18 @@ public class Redis implements DBCache {
 	 *            值
 	 * @param ttl
 	 *            过期的时间数
-	 * @param timeUnit 时间单位
+	 * @param timeUnit
+	 *            时间单位
 	 * @return Status code reply
 	 * @author nince
 	 */
-	public String setNxTTL(final String key, final String value, final long ttl,final TimeUnit timeUnit) {
+	public String setNxTTL(final String key, final String value, final long ttl, final TimeUnit timeUnit) {
 		if (RedisConstants.isInUse()) {
 			return getTemplate().executeWrite(new JedisCallBackHandler<String>() {
 				public String invoke(Jedis jedis) {
-					long tempttl=ttl;
-					if(!timeUnit.equals(TimeUnit.MILLISECONDS)){
-						tempttl=timeUnit.toMillis(ttl);
+					long tempttl = ttl;
+					if (!timeUnit.equals(TimeUnit.MILLISECONDS)) {
+						tempttl = timeUnit.toMillis(ttl);
 					}
 					return jedis.set(key, value, "NX", "PX", tempttl);
 				}
@@ -618,13 +623,14 @@ public class Redis implements DBCache {
 			return null;
 		}
 	}
-	public String setNxTTL(final byte[] key, final byte[] value, final long ttl,final TimeUnit timeUnit) {
+
+	public String setNxTTL(final byte[] key, final byte[] value, final long ttl, final TimeUnit timeUnit) {
 		if (RedisConstants.isInUse()) {
 			return getTemplate().executeWrite(new JedisCallBackHandler<String>() {
 				public String invoke(Jedis jedis) {
-					long tempttl=ttl;
-					if(!timeUnit.equals(TimeUnit.MILLISECONDS)){
-						tempttl=timeUnit.toMillis(ttl);
+					long tempttl = ttl;
+					if (!timeUnit.equals(TimeUnit.MILLISECONDS)) {
+						tempttl = timeUnit.toMillis(ttl);
 					}
 					return jedis.set(key, value, "NX".getBytes(), "PX".getBytes(), tempttl);
 				}
@@ -1269,7 +1275,7 @@ public class Redis implements DBCache {
 			return null;
 		}
 	}
-	
+
 	public Long srem(final String key, final String member) {
 		if (RedisConstants.isInUse()) {
 			return getTemplate().executeWrite(new JedisCallBackHandler<Long>() {

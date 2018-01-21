@@ -8,11 +8,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
 import lombok.extern.slf4j.Slf4j;
+import net.jahhan.cache.constants.RedisConnectType;
 import net.jahhan.cache.constants.RedisConstants;
 import net.jahhan.common.extension.utils.LogUtil;
 import net.jahhan.common.extension.utils.PropertiesUtil;
 import net.jahhan.jedis.JedisSentinelPoolExt;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.util.Pool;
 
 /*
  * 使用前需要调用init方法
@@ -41,7 +45,7 @@ public class RedisFactory {
 			}
 			return redis;
 		} else {
-			return new Redis(null);
+			return new Redis(null,null);
 		}
 	}
 
@@ -96,16 +100,31 @@ public class RedisFactory {
 			// 在borrow一个jedis实例时，是否提前进行validate操作；如果为true，则得到的jedis实例均是可用的；
 			int timeout = Integer.parseInt(is.getProperty(database + ".timeout", TIMEOUT));
 			String password = is.getProperty(database + ".password", null);
-			int redisDatabase = Integer.parseInt(is.getProperty(database + ".database", "0"));
 			// config.setTestOnBorrow(configurationManager.getRedisTestOnBorrow());
-			String masterName = is.getProperty(database + ".masterName", "mymaster");
-			JedisSentinelPoolExt pool = new JedisSentinelPoolExt(masterName, host, config, password, timeout, 5, true);
-			Redis r = new Redis(pool);
+			String type = is.getProperty(database + ".type", RedisConnectType.Sentinel.toString());
+			RedisConnectType redisConnectType = RedisConnectType.valueOf(type);
+			Pool<Jedis> pool = null;
+			switch (redisConnectType) {
+			case Sentinel: {
+				String masterName = is.getProperty(database + ".masterName", "mymaster");
+				pool = new JedisSentinelPoolExt(masterName, host, config, password, timeout, 5, true);
+				break;
+			}
+			case Simple: {
+				int port = Integer.parseInt(is.getProperty(database + ".port"));
+				int redisDatabase = Integer.parseInt(is.getProperty(database + ".database", "0"));
+				pool = new JedisPool(config, host, port, timeout, password, redisDatabase);
+				break;
+			}
+			default:
+				break;
+			}
+			Redis r = new Redis(pool, redisConnectType);
 			r.ping();
 			if (log.isInfoEnabled()) {
 				log.info("redis(" + database + "):" + "{host:" + host + ",maxActive:" + config.getMaxTotal()
 						+ ",maxIdle:" + config.getMaxIdle() + ",maxWaitMS:" + config.getMaxWaitMillis() + ",timeout:"
-						+ timeout + ",database:" + redisDatabase + "}");
+						+ timeout + ",type:" + type + "}");
 			}
 			return r;
 		}

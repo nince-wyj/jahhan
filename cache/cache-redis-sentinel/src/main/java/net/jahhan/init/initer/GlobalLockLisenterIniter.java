@@ -11,6 +11,7 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
 import lombok.extern.slf4j.Slf4j;
 import net.jahhan.cache.Redis;
+import net.jahhan.cache.constants.RedisConnectType;
 import net.jahhan.cache.constants.RedisConstants;
 import net.jahhan.common.extension.utils.PropertiesUtil;
 import net.jahhan.context.BaseContext;
@@ -28,9 +29,11 @@ import net.jahhan.lock.communication.LockWaitingThreadHolder;
 import net.jahhan.spi.common.BroadcastSender;
 import redis.clients.jedis.Client;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisPubSub;
 import redis.clients.jedis.exceptions.JedisConnectionException;
+import redis.clients.util.Pool;
 
 @InitAnnocation(initOverWait = false)
 @Slf4j
@@ -69,9 +72,25 @@ public class GlobalLockLisenterIniter extends JedisPubSub implements BootstrapIn
 		// 在borrow一个jedis实例时，是否提前进行validate操作；如果为true，则得到的jedis实例均是可用的；
 		String password = is.getProperty(database + ".password", null);
 		// config.setTestOnBorrow(configurationManager.getRedisTestOnBorrow());
-		String masterName = is.getProperty(database + ".masterName", "mymaster");
-		JedisSentinelPoolExt pool = new JedisSentinelPoolExt(masterName, host, config, password, TIMEOUT, 3, true);
-		Redis jedis = new Redis(pool);
+		String type = is.getProperty(database + ".type", RedisConnectType.Sentinel.toString());
+		RedisConnectType redisConnectType = RedisConnectType.valueOf(type);
+		Pool<Jedis> pool = null;
+		switch (redisConnectType) {
+		case Sentinel: {
+			String masterName = is.getProperty(database + ".masterName", "mymaster");
+			pool = new JedisSentinelPoolExt(masterName, host, config, password, TIMEOUT, 5, true);
+			break;
+		}
+		case Simple: {
+			int port = Integer.parseInt(is.getProperty(database + ".port"));
+			int redisDatabase = Integer.parseInt(is.getProperty(database + ".database", "0"));
+			pool = new JedisPool(config, host, port, TIMEOUT, password, redisDatabase);
+			break;
+		}
+		default:
+			break;
+		}
+		Redis jedis = new Redis(pool, redisConnectType);
 		while (true) {
 			try {
 				Jedis writeJedis = jedis.getTemplate().getWriteJedis();
@@ -124,12 +143,13 @@ public class GlobalLockLisenterIniter extends JedisPubSub implements BootstrapIn
 						}
 						DBVariable dbVariable = DBVariable.getDBVariable();
 						long holdTimeOut = JDBCConstants.getHoldTimeOut();
-						Map<String, List<DBConnExecutorHolder>> dbExecutorHolders = DBConnExecutorHolderCache.getDbExecutorHolders(chainId);
+						Map<String, List<DBConnExecutorHolder>> dbExecutorHolders = DBConnExecutorHolderCache
+								.getDbExecutorHolders(chainId);
 						long startTime = System.currentTimeMillis();
 						if (null != dbExecutorHolders) {
-							
+
 							Set<String> dataSourceSet = dbExecutorHolders.keySet();
-							
+
 							for (String dataSource : dataSourceSet) {
 								dbVariable.initConnectionData(dataSource);
 								List<DBConnExecutorHolder> dBConnExecutorHolderlist = dbExecutorHolders.get(dataSource);
@@ -143,14 +163,15 @@ public class GlobalLockLisenterIniter extends JedisPubSub implements BootstrapIn
 								}
 							}
 						}
-						
+
 						Set<String> dataSources = dbVariable.getDataSources();
 						if (null != dataSources && dataSources.size() > 0) {
 							long waitTime = holdTimeOut * 1000 - (System.currentTimeMillis() - startTime);
 							if (waitTime > 0) {
 								dBConnExecutorHolderUtil.commit(true);
 							} else {
-								broadcastSender.send("TRANSACTION_ROLLBACK", BaseVariable.getBaseVariable().getChainId());
+								broadcastSender.send("TRANSACTION_ROLLBACK",
+										BaseVariable.getBaseVariable().getChainId());
 								dBConnExecutorHolderUtil.commit(false);
 							}
 						}

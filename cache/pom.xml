@@ -23,7 +23,6 @@
 	</properties>
 	<modules>
 		<module>cache-api</module>
-		<module>cache-redis</module>
 		<module>cache-redis-sentinel</module>
 		<module>cache-ehcache</module>
 	</modules>
