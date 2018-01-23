@@ -25,9 +25,8 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.alibaba.dubbo.common.io.UnsafeStringWriter;
-
 import lombok.extern.slf4j.Slf4j;
+import net.jahhan.com.alibaba.dubbo.common.io.UnsafeStringWriter;
 
 /**
  * StringUtils

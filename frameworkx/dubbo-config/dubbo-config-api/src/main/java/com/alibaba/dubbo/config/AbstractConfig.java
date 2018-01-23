@@ -27,11 +27,11 @@ import com.alibaba.dubbo.common.Constants;
 import com.alibaba.dubbo.common.URL;
 import com.alibaba.dubbo.common.utils.CollectionUtils;
 import com.alibaba.dubbo.common.utils.ConfigUtils;
-import com.alibaba.dubbo.common.utils.ReflectUtils;
 import com.alibaba.dubbo.config.support.Parameter;
 import com.frameworkx.common.extension.utils.ExtensionExtendUtil;
 
 import lombok.extern.slf4j.Slf4j;
+import net.jahhan.com.alibaba.dubbo.common.utils.ReflectUtils;
 import net.jahhan.common.extension.utils.StringUtils;
 
 /**

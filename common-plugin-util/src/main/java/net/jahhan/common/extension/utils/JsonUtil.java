@@ -5,9 +5,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Map;
 
-import com.alibaba.dubbo.common.serialize.ObjectInput;
-import com.alibaba.dubbo.common.serialize.ObjectOutput;
-
+import net.jahhan.com.alibaba.dubbo.common.serialize.ObjectInput;
+import net.jahhan.com.alibaba.dubbo.common.serialize.ObjectOutput;
 import net.jahhan.spi.common.Serialization;
 
 public class JsonUtil {

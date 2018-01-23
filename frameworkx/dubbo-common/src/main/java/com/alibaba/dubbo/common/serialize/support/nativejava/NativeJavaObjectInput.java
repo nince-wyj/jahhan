@@ -21,8 +21,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.lang.reflect.Type;
 
-import com.alibaba.dubbo.common.serialize.ObjectInput;
-
+import net.jahhan.com.alibaba.dubbo.common.serialize.ObjectInput;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.common.extension.utils.Assert;
 

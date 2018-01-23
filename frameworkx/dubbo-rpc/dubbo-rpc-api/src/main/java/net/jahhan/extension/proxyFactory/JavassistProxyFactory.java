@@ -18,13 +18,13 @@ package net.jahhan.extension.proxyFactory;
 import javax.inject.Singleton;
 
 import com.alibaba.dubbo.common.URL;
-import com.alibaba.dubbo.common.bytecode.Proxy;
-import com.alibaba.dubbo.common.bytecode.Wrapper;
 import com.alibaba.dubbo.rpc.Invoker;
 import com.alibaba.dubbo.rpc.proxy.AbstractProxyFactory;
 import com.alibaba.dubbo.rpc.proxy.AbstractProxyInvoker;
 import com.alibaba.dubbo.rpc.proxy.InvokerInvocationHandler;
 
+import net.jahhan.com.alibaba.dubbo.common.bytecode.Proxy;
+import net.jahhan.com.alibaba.dubbo.common.bytecode.Wrapper;
 import net.jahhan.common.extension.annotation.Extension;
 
 /**

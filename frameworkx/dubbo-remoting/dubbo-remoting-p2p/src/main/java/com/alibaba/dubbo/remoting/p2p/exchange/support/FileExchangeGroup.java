@@ -26,7 +26,6 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import com.alibaba.dubbo.common.URL;
-import com.alibaba.dubbo.common.utils.IOUtils;
 import com.alibaba.dubbo.common.utils.NamedThreadFactory;
 import com.alibaba.dubbo.common.utils.NetUtils;
 import com.alibaba.dubbo.remoting.RemotingException;
@@ -34,6 +33,7 @@ import com.alibaba.dubbo.remoting.exchange.ExchangeHandler;
 import com.alibaba.dubbo.remoting.p2p.exchange.ExchangePeer;
 
 import lombok.extern.slf4j.Slf4j;
+import net.jahhan.com.alibaba.dubbo.common.utils.IOUtils;
 
 /**
  * FileGroup

@@ -11,13 +11,13 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import com.alibaba.dubbo.common.compiler.support.JavassistCompiler;
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 import com.google.inject.name.Names;
 
 import lombok.extern.slf4j.Slf4j;
 import net.jahhan.api.Wrapper;
+import net.jahhan.com.alibaba.dubbo.common.compiler.support.JavassistCompiler;
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.annotation.SPI;
 import net.jahhan.common.extension.utils.ClassScaner;
@@ -32,7 +32,7 @@ import net.jahhan.init.InitAnnocation;
 public class ExtensionInitModule extends AbstractModule {
 	
 	private Map<Class<?>, Set<Class<?>>> cachedWrapperClasses = new HashMap<>();
-	private com.alibaba.dubbo.common.compiler.Compiler compiler = new JavassistCompiler();
+	private net.jahhan.com.alibaba.dubbo.common.compiler.Compiler compiler = new JavassistCompiler();
 	public static boolean needRun = true;
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

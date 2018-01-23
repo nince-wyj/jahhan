@@ -23,8 +23,6 @@ import java.util.Map;
 import javax.inject.Singleton;
 
 import com.alibaba.dubbo.common.json.JSON;
-import com.alibaba.dubbo.common.utils.PojoUtils;
-import com.alibaba.dubbo.common.utils.ReflectUtils;
 import com.alibaba.dubbo.remoting.Channel;
 import com.alibaba.dubbo.remoting.telnet.support.Help;
 import com.alibaba.dubbo.rpc.Exporter;
@@ -33,6 +31,8 @@ import com.alibaba.dubbo.rpc.RpcContext;
 import com.alibaba.dubbo.rpc.RpcInvocation;
 import com.frameworkx.annotation.Activate;
 
+import net.jahhan.com.alibaba.dubbo.common.utils.PojoUtils;
+import net.jahhan.com.alibaba.dubbo.common.utils.ReflectUtils;
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.utils.StringUtils;
 import net.jahhan.extension.protocol.DubboProtocol;

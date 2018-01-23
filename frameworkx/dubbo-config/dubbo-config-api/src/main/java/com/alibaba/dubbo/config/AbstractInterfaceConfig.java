@@ -25,7 +25,6 @@ import com.alibaba.dubbo.common.URL;
 import com.alibaba.dubbo.common.Version;
 import com.alibaba.dubbo.common.utils.ConfigUtils;
 import com.alibaba.dubbo.common.utils.NetUtils;
-import com.alibaba.dubbo.common.utils.ReflectUtils;
 import com.alibaba.dubbo.common.utils.UrlUtils;
 import com.alibaba.dubbo.config.support.Parameter;
 import com.alibaba.dubbo.monitor.MonitorService;
@@ -33,6 +32,7 @@ import com.alibaba.dubbo.registry.RegistryService;
 import com.alibaba.dubbo.rpc.support.MockInvoker;
 import com.frameworkx.common.extension.utils.ExtensionExtendUtil;
 
+import net.jahhan.com.alibaba.dubbo.common.utils.ReflectUtils;
 import net.jahhan.common.extension.constant.BaseConfiguration;
 import net.jahhan.common.extension.utils.StringUtils;
 import net.jahhan.context.BaseContext;

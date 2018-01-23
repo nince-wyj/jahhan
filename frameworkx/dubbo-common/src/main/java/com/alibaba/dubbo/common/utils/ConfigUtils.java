@@ -28,6 +28,7 @@ import java.util.regex.Pattern;
 import com.alibaba.dubbo.common.Constants;
 
 import lombok.extern.slf4j.Slf4j;
+import net.jahhan.com.alibaba.dubbo.common.utils.ClassHelper;
 
 /**
  * @author ding.lid

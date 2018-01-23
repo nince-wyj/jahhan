@@ -22,7 +22,8 @@ import java.io.PrintWriter;
 import java.io.Writer;
 
 import com.alibaba.dubbo.common.json.JSON;
-import com.alibaba.dubbo.common.serialize.ObjectOutput;
+
+import net.jahhan.com.alibaba.dubbo.common.serialize.ObjectOutput;
 
 /**
  * JsonObjectOutput

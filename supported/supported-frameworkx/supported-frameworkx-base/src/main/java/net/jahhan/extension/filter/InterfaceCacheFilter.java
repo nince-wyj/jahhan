@@ -10,6 +10,7 @@ import net.jahhan.cache.CustomCacheKeyCreater;
 import net.jahhan.cache.Redis;
 import net.jahhan.cache.RedisFactory;
 import net.jahhan.cache.annotation.Cache;
+import net.jahhan.cache.constants.RedisConstants;
 import net.jahhan.cache.util.SerializerUtil;
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
@@ -101,78 +102,81 @@ public class InterfaceCacheFilter implements Filter {
 	}
 
 	public Result invoke(Invoker<?> invoker, Invocation invocation) throws JahhanException {
-		String interfaceClassName = invoker.getUrl().getParameter("interface");
-		String implClassName = invoker.getUrl().getParameter("class");
-		String methodName = invocation.getMethodName();
-
-		Method implMethod = null;
-		try {
-			implMethod = Class.forName(implClassName).getDeclaredMethod(methodName,
-					invocation.getParameterTypes());
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException e) {
-			throw new JahhanException(JahhanErrorCode.UNKNOW_ERROR, "未知错误", e);
-		}
-		Cache cache = implMethod.getAnnotation(Cache.class);
 		Result invoke = null;
-		if (null == cache || cache.blockTime() < 1) {
-			return invoker.invoke(invocation);
-		} else {
-			String key = "";
-			switch (cache.fastBackType()) {
+		if (RedisConstants.isInUse()) {
+			String interfaceClassName = invoker.getUrl().getParameter("interface");
+			String implClassName = invoker.getUrl().getParameter("class");
+			String methodName = invocation.getMethodName();
 
-			case USERID:
-				User user = AuthenticationVariable.getAuthenticationVariable().getUser();
-				Assert.notNull(user, "无用户信息", JahhanErrorCode.NO_AUTHORITY);
-				key = createrCacheKey(cache, interfaceClassName, implMethod, invocation) + "_"
-						+ user.getUserId();
-				break;
-			case ALL:
-				key = createrCacheKey(cache, interfaceClassName, implMethod, invocation);
-				break;
-			default:
-				break;
-
+			Method implMethod = null;
+			try {
+				implMethod = Class.forName(implClassName).getDeclaredMethod(methodName, invocation.getParameterTypes());
+			} catch (NoSuchMethodException | SecurityException | ClassNotFoundException e) {
+				throw new JahhanException(JahhanErrorCode.UNKNOW_ERROR, "未知错误", e);
 			}
-			log.trace("##cache key:{}", key);
-			byte[] bytes = redis.getBinary(key.getBytes());
-			if (bytes != null) {
-				if (cache.fastBackFail()) {
-					throw new JahhanException(JahhanErrorCode.FAST_RESPONSE_ERROR, cache.fastBackFailMessage());
+			Cache cache = implMethod.getAnnotation(Cache.class);
+
+			if (null == cache || cache.blockTime() < 1) {
+				return invoker.invoke(invocation);
+			} else {
+				String key = "";
+				switch (cache.fastBackType()) {
+
+				case USERID:
+					User user = AuthenticationVariable.getAuthenticationVariable().getUser();
+					Assert.notNull(user, "无用户信息", JahhanErrorCode.NO_AUTHORITY);
+					key = createrCacheKey(cache, interfaceClassName, implMethod, invocation) + "_" + user.getUserId();
+					break;
+				case ALL:
+					key = createrCacheKey(cache, interfaceClassName, implMethod, invocation);
+					break;
+				default:
+					break;
+
 				}
-				Result deserialize = SerializerUtil.deserialize(bytes, Result.class);
-				log.debug("快速返回：" + interfaceClassName + "." + implMethod);
-				return deserialize;
-			}
-			String ret = "";
-			TimeUnit blockTimeUnit = cache.blockTimeUnit();
-			try (DistributedLock lock = ServiceReentrantLockUtil.lock(LOCK_PRE + interfaceClassName + "." + implMethod,
-					cache.blockTime(), blockTimeUnit)) {
-				bytes = redis.getBinary(key.getBytes());
+				log.trace("##cache key:{}", key);
+				byte[] bytes = redis.getBinary(key.getBytes());
 				if (bytes != null) {
-					if (cache.fastBackFail()) { // fastBackFail=true 快速失败 ,
-						// fastBackFail=false 快速返回
+					if (cache.fastBackFail()) {
 						throw new JahhanException(JahhanErrorCode.FAST_RESPONSE_ERROR, cache.fastBackFailMessage());
 					}
 					Result deserialize = SerializerUtil.deserialize(bytes, Result.class);
 					log.debug("快速返回：" + interfaceClassName + "." + implMethod);
 					return deserialize;
 				}
-				invoke = invoker.invoke(invocation);
-				ret = redis.setNxTTL(key.getBytes(), SerializerUtil.serializeFrom(invoke), cache.blockTime(),
-						blockTimeUnit);
-			} catch (Exception e) {
-				log.error("错误", e);
-				if (!(e instanceof JahhanException
-						&& JahhanErrorCode.LOCK_OVERTIME == ((JahhanException) e).getCode())) {
-					throw new JahhanException(e);
+				String ret = "";
+				TimeUnit blockTimeUnit = cache.blockTimeUnit();
+				try (DistributedLock lock = ServiceReentrantLockUtil
+						.lock(LOCK_PRE + interfaceClassName + "." + implMethod, cache.blockTime(), blockTimeUnit)) {
+					bytes = redis.getBinary(key.getBytes());
+					if (bytes != null) {
+						if (cache.fastBackFail()) { // fastBackFail=true 快速失败 ,
+							// fastBackFail=false 快速返回
+							throw new JahhanException(JahhanErrorCode.FAST_RESPONSE_ERROR, cache.fastBackFailMessage());
+						}
+						Result deserialize = SerializerUtil.deserialize(bytes, Result.class);
+						log.debug("快速返回：" + interfaceClassName + "." + implMethod);
+						return deserialize;
+					}
+					invoke = invoker.invoke(invocation);
+					ret = redis.setNxTTL(key.getBytes(), SerializerUtil.serializeFrom(invoke), cache.blockTime(),
+							blockTimeUnit);
+				} catch (Exception e) {
+					log.error("错误", e);
+					if (!(e instanceof JahhanException
+							&& JahhanErrorCode.LOCK_OVERTIME == ((JahhanException) e).getCode())) {
+						throw new JahhanException(e);
+					}
+				}
+				if (cache.fastBackFail() && (null == ret || !ret.equals("OK"))) {
+					// 缓存设置不成功，但是数据库查询都能查询到数据，不要抛异常导致业务功能异常,只记录异常情况
+					log.error("保存至redis错误，key:{}  value:{}", key, invoke);
+					// throw new JahhanException(JahhanErrorCode.LOCK_ERROE,
+					// "快速返回失败错误");
 				}
 			}
-			if (cache.fastBackFail() && (null == ret || !ret.equals("OK"))) {
-				// 缓存设置不成功，但是数据库查询都能查询到数据，不要抛异常导致业务功能异常,只记录异常情况
-				log.error("保存至redis错误，key:{}  value:{}", key, invoke);
-				// throw new JahhanException(JahhanErrorCode.LOCK_ERROE,
-				// "快速返回失败错误");
-			}
+		} else {
+			invoke = invoker.invoke(invocation);
 		}
 		return invoke;
 	}

@@ -28,8 +28,8 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
-import com.alibaba.dubbo.common.bytecode.Wrapper;
-import com.alibaba.dubbo.common.io.Bytes;
+import net.jahhan.com.alibaba.dubbo.common.bytecode.Wrapper;
+import net.jahhan.com.alibaba.dubbo.common.io.Bytes;
 
 public class GenericJSONConverter implements JSONConverter {
 	private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";

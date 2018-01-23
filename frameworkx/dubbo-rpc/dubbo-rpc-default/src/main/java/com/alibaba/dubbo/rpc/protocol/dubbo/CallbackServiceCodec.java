@@ -22,7 +22,6 @@ import java.util.Set;
 
 import com.alibaba.dubbo.common.Constants;
 import com.alibaba.dubbo.common.URL;
-import com.alibaba.dubbo.common.bytecode.Wrapper;
 import com.alibaba.dubbo.common.utils.ConcurrentHashSet;
 import com.alibaba.dubbo.remoting.Channel;
 import com.alibaba.dubbo.remoting.RemotingException;
@@ -33,6 +32,7 @@ import com.alibaba.dubbo.rpc.RpcInvocation;
 import com.frameworkx.common.extension.utils.ExtensionExtendUtil;
 
 import lombok.extern.slf4j.Slf4j;
+import net.jahhan.com.alibaba.dubbo.common.bytecode.Wrapper;
 import net.jahhan.common.extension.utils.StringUtils;
 import net.jahhan.extension.protocol.DubboProtocol;
 import net.jahhan.spi.ProxyFactory;

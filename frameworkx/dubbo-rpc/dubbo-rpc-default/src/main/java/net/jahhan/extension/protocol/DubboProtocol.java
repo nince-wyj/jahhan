@@ -29,8 +29,6 @@ import javax.inject.Singleton;
 import com.alibaba.dubbo.common.Constants;
 import com.alibaba.dubbo.common.URL;
 import com.alibaba.dubbo.common.Version;
-import com.alibaba.dubbo.common.serialize.support.SerializableClassRegistry;
-import com.alibaba.dubbo.common.serialize.support.SerializationOptimizer;
 import com.alibaba.dubbo.common.utils.ConcurrentHashSet;
 import com.alibaba.dubbo.common.utils.NetUtils;
 import com.alibaba.dubbo.remoting.Channel;
@@ -53,6 +51,8 @@ import com.alibaba.dubbo.rpc.protocol.dubbo.DubboInvoker;
 import com.frameworkx.common.extension.utils.ExtensionExtendUtil;
 
 import lombok.extern.slf4j.Slf4j;
+import net.jahhan.com.alibaba.dubbo.common.serialize.support.SerializableClassRegistry;
+import net.jahhan.com.alibaba.dubbo.common.serialize.support.SerializationOptimizer;
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.utils.StringUtils;
 import net.jahhan.exception.JahhanException;

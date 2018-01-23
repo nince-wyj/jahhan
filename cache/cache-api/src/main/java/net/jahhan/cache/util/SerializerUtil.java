@@ -4,9 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import com.alibaba.dubbo.common.serialize.ObjectInput;
-import com.alibaba.dubbo.common.serialize.ObjectOutput;
-
+import net.jahhan.com.alibaba.dubbo.common.serialize.ObjectInput;
+import net.jahhan.com.alibaba.dubbo.common.serialize.ObjectOutput;
 import net.jahhan.common.extension.utils.LogUtil;
 import net.jahhan.context.BaseContext;
 import net.jahhan.spi.common.Serialization;

@@ -21,9 +21,8 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.alibaba.dubbo.common.utils.ClassHelper;
-
 import lombok.extern.slf4j.Slf4j;
+import net.jahhan.com.alibaba.dubbo.common.utils.ClassHelper;
 
 /**
  * Version

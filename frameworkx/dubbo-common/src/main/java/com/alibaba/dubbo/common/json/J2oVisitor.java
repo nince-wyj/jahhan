@@ -27,9 +27,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import com.alibaba.dubbo.common.bytecode.Wrapper;
-import com.alibaba.dubbo.common.utils.Stack;
-
+import net.jahhan.com.alibaba.dubbo.common.bytecode.Wrapper;
+import net.jahhan.com.alibaba.dubbo.common.utils.Stack;
 import net.jahhan.common.extension.utils.StringUtils;
 
 /**

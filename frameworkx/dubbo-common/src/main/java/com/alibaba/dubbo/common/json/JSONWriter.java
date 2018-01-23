@@ -21,7 +21,7 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
-import com.alibaba.dubbo.common.utils.Stack;
+import net.jahhan.com.alibaba.dubbo.common.utils.Stack;
 
 /**
  * JSON Writer.

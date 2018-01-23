@@ -18,11 +18,11 @@ package com.alibaba.dubbo.remoting.transport.codec;
 
 import java.io.IOException;
 
-import com.alibaba.dubbo.common.io.UnsafeByteArrayInputStream;
-import com.alibaba.dubbo.common.io.UnsafeByteArrayOutputStream;
 import com.alibaba.dubbo.remoting.Channel;
 import com.alibaba.dubbo.remoting.buffer.ChannelBuffer;
 
+import net.jahhan.com.alibaba.dubbo.common.io.UnsafeByteArrayInputStream;
+import net.jahhan.com.alibaba.dubbo.common.io.UnsafeByteArrayOutputStream;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.common.extension.utils.Assert;
 import net.jahhan.spi.Codec;

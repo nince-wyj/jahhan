@@ -16,10 +16,10 @@
 package com.alibaba.dubbo.rpc.proxy;
 
 import com.alibaba.dubbo.common.Constants;
-import com.alibaba.dubbo.common.utils.ReflectUtils;
 import com.alibaba.dubbo.rpc.Invoker;
 import com.alibaba.dubbo.rpc.service.EchoService;
 
+import net.jahhan.com.alibaba.dubbo.common.utils.ReflectUtils;
 import net.jahhan.exception.JahhanException;
 import net.jahhan.spi.ProxyFactory;
 

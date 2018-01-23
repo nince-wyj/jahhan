@@ -20,10 +20,12 @@ import javax.management.ReflectionException;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.annotation.WebListener;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
 
-import lombok.extern.slf4j.Slf4j;
 import net.jahhan.common.extension.utils.NamedThreadFactory;
 import net.jahhan.common.extension.utils.PropertiesUtil;
 import net.jahhan.context.BaseContext;
@@ -31,12 +33,12 @@ import net.jahhan.context.Node;
 import net.jahhan.init.InitMethod;
 
 @WebListener
-@Slf4j(topic = "message.start.info")
 public class ApplicationContextListener extends GuiceServletContextListener {
 	protected static InitMethod initMethod;
 	public static Injector injector;
 
 	public void contextInitialized(ServletContextEvent sce) {
+		Node node = Node.getInstance();
 		String threadNum = PropertiesUtil.get("base", "syncServlet.thread");
 		// 创建线程池
 		ExecutorService executor = Executors.newFixedThreadPool(null == threadNum || threadNum.equals("")
@@ -45,14 +47,14 @@ public class ApplicationContextListener extends GuiceServletContextListener {
 		sce.getServletContext().setAttribute("executor", executor);
 		if (!InitMethod.init) {
 			long startTime = System.currentTimeMillis();
+			appInfoInit();
+			Map<String, Integer> ports = node.getPorts();
+			node.addServletContext(ports.get("http"), sce.getServletContext());
 			initMethod = new InitMethod(true);
 			super.contextInitialized(sce);
 			injector.getInstance(BaseContext.class);
-			appInfoInit();
-			Node node = BaseContext.CTX.getNode();
-			Map<String, Integer> ports = node.getPorts();
-			BaseContext.CTX.addServletContext(ports.get("http"), sce.getServletContext());
 			init();
+			Logger log = LoggerFactory.getLogger("message.start.info");
 			log.debug("start cost:{}ms", System.currentTimeMillis() - startTime);
 		}
 	}
@@ -71,7 +73,7 @@ public class ApplicationContextListener extends GuiceServletContextListener {
 		String name = runtimeMXBean.getName();
         Integer pid = Integer.parseInt(name.substring(0, name.indexOf('@')));
 		System.setProperty("pid", pid.toString());
-		Node node = BaseContext.CTX.getNode();
+		Node node = Node.getInstance();
 		node.setPid(pid);
 		MBeanServer mBeanServer = null;
 		ArrayList<MBeanServer> mBeanServers = MBeanServerFactory.findMBeanServer(null);

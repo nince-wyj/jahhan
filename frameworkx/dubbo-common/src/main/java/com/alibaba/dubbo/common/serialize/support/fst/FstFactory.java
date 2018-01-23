@@ -15,13 +15,13 @@
  */
 package com.alibaba.dubbo.common.serialize.support.fst;
 
-import com.alibaba.dubbo.common.serialize.support.SerializableClassRegistry;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import de.ruedigermoeller.serialization.FSTConfiguration;
 import de.ruedigermoeller.serialization.FSTObjectInput;
 import de.ruedigermoeller.serialization.FSTObjectOutput;
-
-import java.io.InputStream;
-import java.io.OutputStream;
+import net.jahhan.com.alibaba.dubbo.common.serialize.support.SerializableClassRegistry;
 
 /**
  * @author lishen

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -22,9 +21,6 @@ import net.jahhan.common.extension.utils.LogUtil;
 import net.jahhan.common.extension.utils.PackageUtil;
 import net.jahhan.context.BaseContext;
 import net.jahhan.exception.JahhanException;
-import net.jahhan.init.BootstrapInit;
-import net.jahhan.init.InitAnnocation;
-import net.jahhan.init.WorkHandler;
 
 public class InitMethod {
 	public static boolean init = false;
@@ -45,7 +41,7 @@ public class InitMethod {
 		InitMethod.init = true;
 		Map<Integer, WorkHandler> workHandlerMap = new TreeMap<>();
 		Set<WorkHandler> lazyWorkHandlerSet = new HashSet<>();
-		BaseContext instance = injector.getInstance(BaseContext.class);
+		injector.getInstance(BaseContext.class);
 		try {
 			String[] packages = PackageUtil.packages("init.initer");
 			List<String> classNameList = new ClassScaner().parse(packages);
@@ -145,7 +141,7 @@ public class InitMethod {
 					}
 				}
 			}
-			ArrayList<Module> moduleList = new ArrayList<>();
+			List<Module> moduleList = new ArrayList<>();
 			Iterator<Integer> workHandlerIt = moduleMap.keySet().iterator();
 			while (workHandlerIt.hasNext()) {
 				Module module = moduleMap.get(workHandlerIt.next());

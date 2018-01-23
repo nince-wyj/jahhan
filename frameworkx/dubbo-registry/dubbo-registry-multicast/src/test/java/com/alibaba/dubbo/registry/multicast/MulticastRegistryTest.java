@@ -25,7 +25,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 import junit.framework.Assert;
-import net.jahhan.extension.registryFactory.MulticastRegistry;
+import net.jahhan.registry.multicast.MulticastRegistry;
 
 import org.junit.Before;
 import org.junit.BeforeClass;

@@ -27,10 +27,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.alibaba.dubbo.common.Constants;
-import com.alibaba.dubbo.common.io.UnsafeStringWriter;
 import com.alibaba.dubbo.common.json.JSON;
 
 import lombok.extern.slf4j.Slf4j;
+import net.jahhan.com.alibaba.dubbo.common.io.UnsafeStringWriter;
+import net.jahhan.com.alibaba.dubbo.common.utils.ReflectUtils;
 
 /**
  * StringUtils

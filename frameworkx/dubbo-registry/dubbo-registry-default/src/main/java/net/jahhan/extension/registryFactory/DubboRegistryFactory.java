@@ -24,7 +24,6 @@ import javax.inject.Singleton;
 
 import com.alibaba.dubbo.common.Constants;
 import com.alibaba.dubbo.common.URL;
-import com.alibaba.dubbo.common.bytecode.Wrapper;
 import com.alibaba.dubbo.common.utils.NetUtils;
 import com.alibaba.dubbo.registry.Registry;
 import com.alibaba.dubbo.registry.RegistryService;
@@ -32,8 +31,10 @@ import com.alibaba.dubbo.registry.integration.RegistryDirectory;
 import com.alibaba.dubbo.registry.support.AbstractRegistryFactory;
 import com.alibaba.dubbo.rpc.Invoker;
 
+import net.jahhan.com.alibaba.dubbo.common.bytecode.Wrapper;
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.utils.StringUtils;
+import net.jahhan.registry.DubboRegistry;
 import net.jahhan.spi.Cluster;
 import net.jahhan.spi.Protocol;
 import net.jahhan.spi.ProxyFactory;

@@ -37,8 +37,6 @@ import javax.servlet.ServletContext;
 import com.alibaba.dubbo.common.Constants;
 import com.alibaba.dubbo.common.URL;
 import com.alibaba.dubbo.common.Version;
-import com.alibaba.dubbo.common.bytecode.Wrapper;
-import com.alibaba.dubbo.common.utils.ClassHelper;
 import com.alibaba.dubbo.common.utils.ConfigUtils;
 import com.alibaba.dubbo.common.utils.NamedThreadFactory;
 import com.alibaba.dubbo.common.utils.NetUtils;
@@ -53,8 +51,11 @@ import com.frameworkx.cache.ProtocolConfigHolder;
 import com.frameworkx.common.extension.utils.ExtensionExtendUtil;
 
 import lombok.extern.slf4j.Slf4j;
+import net.jahhan.com.alibaba.dubbo.common.bytecode.Wrapper;
+import net.jahhan.com.alibaba.dubbo.common.utils.ClassHelper;
 import net.jahhan.common.extension.utils.StringUtils;
 import net.jahhan.context.BaseContext;
+import net.jahhan.context.Node;
 import net.jahhan.spi.ConfiguratorFactory;
 import net.jahhan.spi.Protocol;
 import net.jahhan.spi.ProxyFactory;
@@ -585,7 +586,7 @@ public class ServiceConfig<T> extends AbstractServiceConfig {
 			Map<String, Integer> ports = BaseContext.CTX.getNode().getPorts();
 			if (protocolConfig.getName().equals("rest") && null != ports && null != ports.get("http")) {
 				protocolConfig.setPort(ports.get("http"));
-				ServletContext servletContext = BaseContext.CTX.getServletContext(ports.get("http"));
+				ServletContext servletContext = Node.getInstance().getServletContext(ports.get("http"));
 				String newContextpath = servletContext.getContextPath() + "/" + protocolConfig.getContextpath();
 				if (newContextpath.startsWith("/")) {
 					newContextpath = newContextpath.substring(1);

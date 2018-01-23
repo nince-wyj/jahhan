@@ -42,6 +42,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
+import net.jahhan.com.alibaba.dubbo.common.utils.ClassHelper;
+import net.jahhan.com.alibaba.dubbo.common.utils.ReflectUtils;
+
 /**
  * PojoUtils. Travel object deeply, and convert complex type to simple type.
  * <p>

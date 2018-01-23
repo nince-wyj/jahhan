@@ -18,7 +18,7 @@ package com.alibaba.dubbo.common.serialize.support.dubbo;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import com.alibaba.dubbo.common.serialize.DataOutput;
+import net.jahhan.com.alibaba.dubbo.common.serialize.DataOutput;
 
 /**
  * Default data output impl.

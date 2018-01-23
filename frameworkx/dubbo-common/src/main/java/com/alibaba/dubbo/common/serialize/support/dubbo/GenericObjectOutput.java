@@ -20,8 +20,8 @@ import java.io.OutputStream;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.alibaba.dubbo.common.serialize.ObjectOutput;
-import com.alibaba.dubbo.common.utils.ReflectUtils;
+import net.jahhan.com.alibaba.dubbo.common.serialize.ObjectOutput;
+import net.jahhan.com.alibaba.dubbo.common.utils.ReflectUtils;
 
 /**
  * Generic Object Output.

@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UTFDataFormatException;
 
-import com.alibaba.dubbo.common.serialize.DataInput;
+import net.jahhan.com.alibaba.dubbo.common.serialize.DataInput;
 
 /**
  * Default DataInput impl.

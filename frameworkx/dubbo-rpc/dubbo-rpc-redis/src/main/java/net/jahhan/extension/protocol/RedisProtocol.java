@@ -26,8 +26,6 @@ import javax.inject.Singleton;
 
 import com.alibaba.dubbo.common.Constants;
 import com.alibaba.dubbo.common.URL;
-import com.alibaba.dubbo.common.serialize.ObjectInput;
-import com.alibaba.dubbo.common.serialize.ObjectOutput;
 import com.alibaba.dubbo.rpc.Exporter;
 import com.alibaba.dubbo.rpc.Invocation;
 import com.alibaba.dubbo.rpc.Invoker;
@@ -38,6 +36,8 @@ import com.alibaba.dubbo.rpc.protocol.AbstractProtocol;
 import com.frameworkx.common.extension.utils.ExtensionExtendUtil;
 
 import lombok.extern.slf4j.Slf4j;
+import net.jahhan.com.alibaba.dubbo.common.serialize.ObjectInput;
+import net.jahhan.com.alibaba.dubbo.common.serialize.ObjectOutput;
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.exception.JahhanException;

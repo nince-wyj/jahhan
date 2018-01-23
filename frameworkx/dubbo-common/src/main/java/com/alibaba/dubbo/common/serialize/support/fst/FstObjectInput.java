@@ -15,12 +15,12 @@
  */
 package com.alibaba.dubbo.common.serialize.support.fst;
 
-import com.alibaba.dubbo.common.serialize.ObjectInput;
-import de.ruedigermoeller.serialization.FSTObjectInput;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
+
+import de.ruedigermoeller.serialization.FSTObjectInput;
+import net.jahhan.com.alibaba.dubbo.common.serialize.ObjectInput;
 
 /**
  * @author lishen

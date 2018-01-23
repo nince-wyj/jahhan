@@ -15,7 +15,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.alibaba.dubbo.common.URL;
-import com.alibaba.dubbo.common.compiler.support.JavassistCompiler;
 import com.frameworkx.annotation.Activate;
 import com.frameworkx.annotation.Adaptive;
 import com.frameworkx.common.extension.utils.ExtensionExtendUtil;
@@ -24,6 +23,7 @@ import com.google.inject.name.Names;
 
 import lombok.extern.slf4j.Slf4j;
 import net.jahhan.api.Wrapper;
+import net.jahhan.com.alibaba.dubbo.common.compiler.support.JavassistCompiler;
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.annotation.SPI;
 import net.jahhan.common.extension.utils.ClassScaner;
@@ -38,7 +38,7 @@ import net.jahhan.init.InitAnnocation;
 public class ExtensionExtensionInitModule extends ExtensionInitModule {
 
 	private Map<Class<?>, Set<Class<?>>> cachedWrapperClasses = new HashMap<>();
-	private com.alibaba.dubbo.common.compiler.Compiler compiler = new JavassistCompiler();
+	private net.jahhan.com.alibaba.dubbo.common.compiler.Compiler compiler = new JavassistCompiler();
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override

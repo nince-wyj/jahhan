@@ -23,7 +23,6 @@
 	</properties>
 	<modules>
 		<module>supported-dubbo-base</module>
-		<module>supported-dubbo-interface-cache</module>
 		<module>supported-dubbo-authentication-center</module>
 	</modules>
 </project>

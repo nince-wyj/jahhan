@@ -1,0 +1,7 @@
+apiLogRecordProvider=net.jahhan.extension.filter.ApiLogRecordFilter
+dbConnect=net.jahhan.extension.filter.DBConnectFilter
+jahhanexception=net.jahhan.extension.filter.ExceptionFilter
+interfaceCacheFilter=net.jahhan.extension.filter.InterfaceCacheFilter
+redisconsumercontext=net.jahhan.extension.filter.RedisConsumerContextFilter
+rediscontext=net.jahhan.extension.filter.RedisContextFilter
+variablecontext=net.jahhan.extension.filter.VariableContextFilter

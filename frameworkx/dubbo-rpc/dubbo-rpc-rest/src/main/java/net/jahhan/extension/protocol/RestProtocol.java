@@ -60,6 +60,7 @@ import net.jahhan.common.extension.utils.ClassScaner;
 import net.jahhan.common.extension.utils.PackageUtil;
 import net.jahhan.common.extension.utils.StringUtils;
 import net.jahhan.context.BaseContext;
+import net.jahhan.context.Node;
 import net.jahhan.exception.JahhanException;
 import net.jahhan.spi.HttpBinder;
 
@@ -108,7 +109,7 @@ public class RestProtocol extends AbstractProxyProtocol {
 
 		String contextPath = getContextPath(url);
 		if ("servlet".equalsIgnoreCase(url.getParameter(Constants.SERVER_KEY, "jetty"))) {
-			ServletContext servletContext = BaseContext.CTX.getServletContext(url.getPort());
+			ServletContext servletContext = Node.getInstance().getServletContext(url.getPort());
 			if (servletContext == null) {
 				throw new JahhanException("No servlet context found. Since you are using server='servlet', "
 						+ "make sure that you've configured in web.xml");

@@ -24,6 +24,6 @@
 	<modules>
 		<module>supported-api</module>
 		<module>supported-frameworkx</module>
-<!-- 		<module>supported-dubbo</module> -->
+ 		<module>supported-dubbo</module>
 	</modules>
 </project>

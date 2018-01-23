@@ -25,7 +25,7 @@ import net.jahhan.exception.JahhanException;
 import net.jahhan.spi.Filter;
 
 @Activate(group = Constants.PROVIDER)
-@Extension("exception")
+@Extension("jahhanexception")
 @Singleton
 public class ExceptionFilter implements Filter {
 

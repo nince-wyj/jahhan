@@ -30,7 +30,7 @@ public class BaseContext {
 	@Inject
 	private ThreadLocalUtil<VariableContext> threadLocalUtil;
 	@Getter
-	private Node node = new Node();
+	private Node node = Node.getInstance();
 	private Map<String, Thread> chainMap = new ConcurrentHashMap<>();
 	@Getter
 	@Setter
@@ -53,20 +53,6 @@ public class BaseContext {
 	@Getter
 	@Setter
 	private String firstSingleToken;
-
-	private final Map<Integer, ServletContext> contextMap = new ConcurrentHashMap<Integer, ServletContext>();
-
-	public void addServletContext(int port, ServletContext servletContext) {
-		contextMap.put(port, servletContext);
-	}
-
-	public void removeServletContext(int port) {
-		contextMap.remove(port);
-	}
-
-	public ServletContext getServletContext(int port) {
-		return contextMap.get(port);
-	}
 
 	public void setChain(String chainId, Thread t) {
 		chainMap.put(chainId, t);

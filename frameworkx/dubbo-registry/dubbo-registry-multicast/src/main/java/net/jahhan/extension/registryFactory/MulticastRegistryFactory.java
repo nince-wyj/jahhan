@@ -22,6 +22,7 @@ import com.alibaba.dubbo.registry.Registry;
 import com.alibaba.dubbo.registry.support.AbstractRegistryFactory;
 
 import net.jahhan.common.extension.annotation.Extension;
+import net.jahhan.registry.multicast.MulticastRegistry;
 
 /**
  * MulticastRegistryLocator

@@ -27,6 +27,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.jahhan.com.alibaba.dubbo.common.utils.ReflectUtils;
+
 /**
  * @author ding.lid
  */

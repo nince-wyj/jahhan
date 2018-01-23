@@ -42,6 +42,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.jahhan.common.extension.utils.ClassScaner;
 import net.jahhan.common.extension.utils.PackageUtil;
 import net.jahhan.context.BaseContext;
+import net.jahhan.context.Node;
 import net.jahhan.servlet.DispatcherServlet;
 
 /**
@@ -156,7 +157,7 @@ public class TomcatHttpServer extends AbstractHttpServer {
 				e.printStackTrace();
 			}
 		}
-		BaseContext.CTX.addServletContext(url.getPort(), context.getServletContext());
+		Node.getInstance().addServletContext(url.getPort(), context.getServletContext());
 
 		try {
 			tomcat.start();
@@ -168,7 +169,7 @@ public class TomcatHttpServer extends AbstractHttpServer {
 	public void close() {
 		super.close();
 
-		BaseContext.CTX.removeServletContext(url.getPort());
+		Node.getInstance().removeServletContext(url.getPort());
 
 		try {
 			tomcat.stop();

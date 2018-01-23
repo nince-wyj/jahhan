@@ -6,11 +6,10 @@ import java.io.OutputStream;
 
 import javax.inject.Singleton;
 
-import com.alibaba.dubbo.common.serialize.ObjectInput;
-import com.alibaba.dubbo.common.serialize.ObjectOutput;
-import com.alibaba.dubbo.common.serialize.support.java.JavaObjectInput;
-import com.alibaba.dubbo.common.serialize.support.java.JavaObjectOutput;
-
+import net.jahhan.com.alibaba.dubbo.common.serialize.ObjectInput;
+import net.jahhan.com.alibaba.dubbo.common.serialize.ObjectOutput;
+import net.jahhan.com.alibaba.dubbo.common.serialize.support.java.JavaObjectInput;
+import net.jahhan.com.alibaba.dubbo.common.serialize.support.java.JavaObjectOutput;
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.spi.common.Serialization;
 

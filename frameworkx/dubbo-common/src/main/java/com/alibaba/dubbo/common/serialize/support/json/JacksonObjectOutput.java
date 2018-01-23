@@ -16,8 +16,8 @@
 package com.alibaba.dubbo.common.serialize.support.json;
 
 import com.alibaba.dubbo.common.json.Jackson;
-import com.alibaba.dubbo.common.serialize.ObjectOutput;
-import com.alibaba.dubbo.common.utils.ReflectUtils;
+import net.jahhan.com.alibaba.dubbo.common.serialize.ObjectOutput;
+import net.jahhan.com.alibaba.dubbo.common.utils.ReflectUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;

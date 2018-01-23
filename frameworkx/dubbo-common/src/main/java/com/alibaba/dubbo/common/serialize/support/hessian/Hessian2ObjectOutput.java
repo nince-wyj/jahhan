@@ -19,7 +19,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import com.alibaba.com.caucho.hessian.io.Hessian2Output;
-import com.alibaba.dubbo.common.serialize.ObjectOutput;
+
+import net.jahhan.com.alibaba.dubbo.common.serialize.ObjectOutput;
 
 /**
  * Hessian2 Object output.

@@ -20,10 +20,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import com.alibaba.dubbo.common.URL;
-import com.alibaba.dubbo.common.serialize.ObjectInput;
-import com.alibaba.dubbo.common.serialize.ObjectOutput;
 import com.frameworkx.annotation.Adaptive;
 
+import net.jahhan.com.alibaba.dubbo.common.serialize.ObjectInput;
+import net.jahhan.com.alibaba.dubbo.common.serialize.ObjectOutput;
 import net.jahhan.common.extension.annotation.SPI;
 
 /**

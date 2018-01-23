@@ -21,14 +21,14 @@ import java.lang.reflect.Type;
 import javax.inject.Singleton;
 
 import com.alibaba.dubbo.common.Constants;
-import com.alibaba.dubbo.common.utils.CompatibleTypeUtils;
-import com.alibaba.dubbo.common.utils.PojoUtils;
 import com.alibaba.dubbo.rpc.Invocation;
 import com.alibaba.dubbo.rpc.Invoker;
 import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.dubbo.rpc.RpcResult;
 
 import lombok.extern.slf4j.Slf4j;
+import net.jahhan.com.alibaba.dubbo.common.utils.CompatibleTypeUtils;
+import net.jahhan.com.alibaba.dubbo.common.utils.PojoUtils;
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.exception.JahhanException;
 import net.jahhan.spi.Filter;

@@ -32,6 +32,7 @@ import com.alibaba.dubbo.remoting.http.support.AbstractHttpServer;
 
 import lombok.extern.slf4j.Slf4j;
 import net.jahhan.context.BaseContext;
+import net.jahhan.context.Node;
 import net.jahhan.servlet.DispatcherServlet;
 
 @Slf4j
@@ -78,7 +79,7 @@ public class JettyHttpServer extends AbstractHttpServer {
         // TODO Context.SESSIONS is the best option here?
         Context context = new Context(server, "/", Context.SESSIONS);
         context.setServletHandler(servletHandler);
-        BaseContext.CTX.addServletContext(url.getPort(), context.getServletContext());
+        Node.getInstance().addServletContext(url.getPort(), context.getServletContext());
 
         try {
             server.start();
@@ -92,7 +93,7 @@ public class JettyHttpServer extends AbstractHttpServer {
         super.close();
 
         // modified by lishen
-        BaseContext.CTX.removeServletContext(url.getPort());
+        Node.getInstance().removeServletContext(url.getPort());
 
         if (server != null) {
             try {

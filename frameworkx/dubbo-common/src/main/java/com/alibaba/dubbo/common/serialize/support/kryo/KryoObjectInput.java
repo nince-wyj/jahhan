@@ -15,15 +15,16 @@
  */
 package com.alibaba.dubbo.common.serialize.support.kryo;
 
-import com.alibaba.dubbo.common.serialize.Cleanable;
-import com.alibaba.dubbo.common.serialize.ObjectInput;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Type;
+
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.KryoException;
 import com.esotericsoftware.kryo.io.Input;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Type;
+import net.jahhan.com.alibaba.dubbo.common.serialize.Cleanable;
+import net.jahhan.com.alibaba.dubbo.common.serialize.ObjectInput;
 
 /**
  * @author lishen

@@ -22,7 +22,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectStreamClass;
 import java.io.StreamCorruptedException;
 
-import com.alibaba.dubbo.common.utils.ClassHelper;
+import net.jahhan.com.alibaba.dubbo.common.utils.ClassHelper;
 
 /**
  * Compacted java object input stream.

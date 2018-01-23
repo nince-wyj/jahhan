@@ -37,16 +37,16 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Matcher;
 
-import com.alibaba.dubbo.common.bytecode.ClassGenerator;
-import com.alibaba.dubbo.common.io.UnsafeByteArrayInputStream;
-import com.alibaba.dubbo.common.io.UnsafeByteArrayOutputStream;
 import com.alibaba.dubbo.common.serialize.support.java.CompactedObjectInputStream;
 import com.alibaba.dubbo.common.serialize.support.java.CompactedObjectOutputStream;
-import com.alibaba.dubbo.common.utils.ClassHelper;
-import com.alibaba.dubbo.common.utils.IOUtils;
-import com.alibaba.dubbo.common.utils.ReflectUtils;
 
 import lombok.extern.slf4j.Slf4j;
+import net.jahhan.com.alibaba.dubbo.common.bytecode.ClassGenerator;
+import net.jahhan.com.alibaba.dubbo.common.io.UnsafeByteArrayInputStream;
+import net.jahhan.com.alibaba.dubbo.common.io.UnsafeByteArrayOutputStream;
+import net.jahhan.com.alibaba.dubbo.common.utils.ClassHelper;
+import net.jahhan.com.alibaba.dubbo.common.utils.IOUtils;
+import net.jahhan.com.alibaba.dubbo.common.utils.ReflectUtils;
 import net.jahhan.common.extension.utils.StringUtils;
 
 /**

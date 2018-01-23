@@ -33,8 +33,6 @@ import javax.validation.ValidatorFactory;
 import javax.validation.groups.Default;
 
 import com.alibaba.dubbo.common.URL;
-import com.alibaba.dubbo.common.bytecode.ClassGenerator;
-import com.alibaba.dubbo.common.utils.ReflectUtils;
 import com.alibaba.dubbo.validation.Validator;
 
 import javassist.ClassPool;
@@ -60,6 +58,8 @@ import javassist.bytecode.annotation.MemberValue;
 import javassist.bytecode.annotation.ShortMemberValue;
 import javassist.bytecode.annotation.StringMemberValue;
 import lombok.extern.slf4j.Slf4j;
+import net.jahhan.com.alibaba.dubbo.common.bytecode.ClassGenerator;
+import net.jahhan.com.alibaba.dubbo.common.utils.ReflectUtils;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.exception.JahhanException;
 

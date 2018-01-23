@@ -20,8 +20,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
-import com.alibaba.dubbo.common.serialize.ObjectOutput;
-
+import net.jahhan.com.alibaba.dubbo.common.serialize.ObjectOutput;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.common.extension.utils.Assert;
 

@@ -21,10 +21,11 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
 
-import com.alibaba.dubbo.common.serialize.ObjectOutput;
 import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.alibaba.fastjson.serializer.SerializeWriter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+
+import net.jahhan.com.alibaba.dubbo.common.serialize.ObjectOutput;
 
 /**
  * JsonObjectOutput

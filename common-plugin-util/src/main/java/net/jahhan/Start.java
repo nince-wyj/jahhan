@@ -1,11 +1,11 @@
 package net.jahhan;
 
-import java.io.IOException;
 import java.util.Scanner;
 
-import com.google.inject.Injector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import lombok.extern.slf4j.Slf4j;
+import net.jahhan.context.Node;
 import net.jahhan.init.InitMethod;
 
 /**
@@ -14,15 +14,17 @@ import net.jahhan.init.InitMethod;
  * @author nince
  *
  */
-@Slf4j(topic = "message.start.info")
 public class Start {
 	private static volatile boolean running = true;
 
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
+		Node.getInstance();
 		long startTime = System.currentTimeMillis();
 		InitMethod initMethod = new InitMethod(true);
-		Injector injector = initMethod.getInjector();
+		initMethod.getInjector();
 		initMethod.init();
+		Logger log = LoggerFactory.getLogger("message.start.info");
 		log.debug("start cost:{}ms", System.currentTimeMillis() - startTime);
 
 		synchronized (Start.class) {

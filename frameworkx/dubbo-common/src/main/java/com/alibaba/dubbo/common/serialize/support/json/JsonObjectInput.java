@@ -26,8 +26,9 @@ import java.util.Map;
 
 import com.alibaba.dubbo.common.json.JSON;
 import com.alibaba.dubbo.common.json.ParseException;
-import com.alibaba.dubbo.common.serialize.ObjectInput;
 import com.alibaba.dubbo.common.utils.PojoUtils;
+
+import net.jahhan.com.alibaba.dubbo.common.serialize.ObjectInput;
 
 /**
  * JsonObjectInput

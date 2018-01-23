@@ -20,9 +20,9 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import com.alibaba.dubbo.common.utils.ReflectUtils;
 import com.frameworkx.common.extension.utils.ExtensionExtendUtil;
 
+import net.jahhan.com.alibaba.dubbo.common.utils.ReflectUtils;
 import net.jahhan.spi.Merger;
 
 /**

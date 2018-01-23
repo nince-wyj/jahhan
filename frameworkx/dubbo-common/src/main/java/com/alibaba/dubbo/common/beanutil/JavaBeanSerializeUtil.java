@@ -25,9 +25,8 @@ import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
-import com.alibaba.dubbo.common.utils.ReflectUtils;
-
 import lombok.extern.slf4j.Slf4j;
+import net.jahhan.com.alibaba.dubbo.common.utils.ReflectUtils;
 
 /**
  * @author <a href="mailto:gang.lvg@taobao.com">kimi</a>

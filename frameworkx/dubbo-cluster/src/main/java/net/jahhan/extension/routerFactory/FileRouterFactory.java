@@ -24,9 +24,9 @@ import javax.inject.Singleton;
 
 import com.alibaba.dubbo.common.Constants;
 import com.alibaba.dubbo.common.URL;
-import com.alibaba.dubbo.common.utils.IOUtils;
 import com.alibaba.dubbo.rpc.cluster.Router;
 
+import net.jahhan.com.alibaba.dubbo.common.utils.IOUtils;
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.spi.RouterFactory;
 

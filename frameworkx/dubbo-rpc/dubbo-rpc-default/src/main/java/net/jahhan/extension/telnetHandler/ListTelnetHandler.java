@@ -19,13 +19,13 @@ import java.lang.reflect.Method;
 
 import javax.inject.Singleton;
 
-import com.alibaba.dubbo.common.utils.ReflectUtils;
 import com.alibaba.dubbo.remoting.Channel;
 import com.alibaba.dubbo.remoting.telnet.support.Help;
 import com.alibaba.dubbo.rpc.Exporter;
 import com.alibaba.dubbo.rpc.Invoker;
 import com.frameworkx.annotation.Activate;
 
+import net.jahhan.com.alibaba.dubbo.common.utils.ReflectUtils;
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.extension.protocol.DubboProtocol;
 import net.jahhan.spi.TelnetHandler;
