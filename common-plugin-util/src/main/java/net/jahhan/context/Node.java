@@ -28,7 +28,11 @@ public class Node {
 
 	public static Node getInstance() {
 		if (instance == null) {
-			instance = new Node();
+			synchronized (Node.class) { 
+				if (instance == null) {
+					instance = new Node();
+				}
+			}
 		}
 		return instance;
 	}

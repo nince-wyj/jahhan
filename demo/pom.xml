@@ -23,6 +23,7 @@
 	</properties>
 	<modules>
 		<module>intf-demo</module>
-		<module>service-demo</module>
+		<module>service-demo-frameworkx</module>
+		<module>service-demo-dubbo</module>
 	</modules>
 </project>

@@ -2,10 +2,8 @@ package net.jahhan.remoting.http.tomcat;
 
 import java.io.File;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.Filter;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
@@ -29,9 +27,7 @@ import com.alibaba.dubbo.remoting.http.support.AbstractHttpServer;
 import lombok.extern.slf4j.Slf4j;
 import net.jahhan.common.extension.utils.ClassScaner;
 import net.jahhan.common.extension.utils.PackageUtil;
-import net.jahhan.context.BaseContext;
 import net.jahhan.context.Node;
-import net.jahhan.servlet.ServiceServlet;
 
 @Slf4j
 public class TomcatHttpServer extends AbstractHttpServer {
@@ -133,7 +129,7 @@ public class TomcatHttpServer extends AbstractHttpServer {
 				e.printStackTrace();
 			}
 		}
-		ServletManager.getInstance().addServletContext(url.getPort(), context.getServletContext());
+		Node.getInstance().addServletContext(url.getPort(), context.getServletContext());
 
 		try {
 			tomcat.start();
