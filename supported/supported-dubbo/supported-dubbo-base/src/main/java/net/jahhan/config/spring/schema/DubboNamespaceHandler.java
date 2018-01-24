@@ -13,9 +13,9 @@ import com.alibaba.dubbo.config.ProviderConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
 import com.alibaba.dubbo.config.spring.schema.DubboBeanDefinitionParser;
 
-import net.jahhan.config.spring.AnnotationBean;
-import net.jahhan.config.spring.ReferenceBean;
-import net.jahhan.config.spring.ServiceBean;
+import net.jahhan.config.spring.AnnotationJahhanBean;
+import net.jahhan.config.spring.ReferenceJahhanBean;
+import net.jahhan.config.spring.ServiceJahhanBean;
 
 public class DubboNamespaceHandler extends NamespaceHandlerSupport {
 
@@ -31,9 +31,9 @@ public class DubboNamespaceHandler extends NamespaceHandlerSupport {
         registerBeanDefinitionParser("provider", new DubboBeanDefinitionParser(ProviderConfig.class, true));
         registerBeanDefinitionParser("consumer", new DubboBeanDefinitionParser(ConsumerConfig.class, true));
         registerBeanDefinitionParser("protocol", new DubboBeanDefinitionParser(ProtocolConfig.class, true));
-        registerBeanDefinitionParser("service", new DubboBeanDefinitionParser(ServiceBean.class, true));
-        registerBeanDefinitionParser("reference", new DubboBeanDefinitionParser(ReferenceBean.class, false));
-        registerBeanDefinitionParser("annotation", new DubboBeanDefinitionParser(AnnotationBean.class, true));
+        registerBeanDefinitionParser("service", new DubboBeanDefinitionParser(ServiceJahhanBean.class, true));
+        registerBeanDefinitionParser("reference", new DubboBeanDefinitionParser(ReferenceJahhanBean.class, false));
+        registerBeanDefinitionParser("annotation", new DubboBeanDefinitionParser(AnnotationJahhanBean.class, true));
     }
 
 }

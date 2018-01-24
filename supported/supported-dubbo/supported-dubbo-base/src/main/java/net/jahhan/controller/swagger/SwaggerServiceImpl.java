@@ -10,13 +10,11 @@ import javax.ws.rs.core.UriInfo;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.frameworkx.annotation.Controller;
 
 import io.swagger.jaxrs.listing.BaseApiListingResource;
 import net.jahhan.intf.swagger.SwaggerService;
 
 @Service
-@Controller
 public class SwaggerServiceImpl extends BaseApiListingResource implements SwaggerService {
 	@Context
 	ServletContext context;

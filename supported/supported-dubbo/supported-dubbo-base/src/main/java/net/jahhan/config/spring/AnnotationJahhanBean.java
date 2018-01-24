@@ -1,22 +1,5 @@
 package net.jahhan.config.spring;
 
-import com.alibaba.dubbo.common.Constants;
-import com.alibaba.dubbo.common.logger.Logger;
-import com.alibaba.dubbo.common.logger.LoggerFactory;
-import com.alibaba.dubbo.common.utils.ConcurrentHashSet;
-import com.alibaba.dubbo.common.utils.ReflectUtils;
-import com.alibaba.dubbo.config.*;
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.alibaba.dubbo.config.annotation.Service;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
-import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -26,13 +9,36 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-/**
- * AnnotationBean
- *
- * @export
- */
-@Deprecated
-public class AnnotationBean extends AbstractConfig implements DisposableBean, BeanFactoryPostProcessor, BeanPostProcessor, ApplicationContextAware {
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
+import com.alibaba.dubbo.common.Constants;
+import com.alibaba.dubbo.common.logger.Logger;
+import com.alibaba.dubbo.common.logger.LoggerFactory;
+import com.alibaba.dubbo.common.utils.ConcurrentHashSet;
+import com.alibaba.dubbo.common.utils.ReflectUtils;
+import com.alibaba.dubbo.config.AbstractConfig;
+import com.alibaba.dubbo.config.ApplicationConfig;
+import com.alibaba.dubbo.config.ConsumerConfig;
+import com.alibaba.dubbo.config.ModuleConfig;
+import com.alibaba.dubbo.config.MonitorConfig;
+import com.alibaba.dubbo.config.ProtocolConfig;
+import com.alibaba.dubbo.config.ProviderConfig;
+import com.alibaba.dubbo.config.ReferenceConfig;
+import com.alibaba.dubbo.config.RegistryConfig;
+import com.alibaba.dubbo.config.ServiceConfig;
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.dubbo.config.spring.ReferenceBean;
+import com.alibaba.dubbo.config.spring.ServiceBean;
+
+public class AnnotationJahhanBean extends AbstractConfig implements DisposableBean, BeanFactoryPostProcessor, BeanPostProcessor, ApplicationContextAware {
 
     private static final long serialVersionUID = -7582802454287589552L;
 
@@ -106,7 +112,7 @@ public class AnnotationBean extends AbstractConfig implements DisposableBean, Be
         }
         Service service = bean.getClass().getAnnotation(Service.class);
         if (service != null) {
-            ServiceBean<Object> serviceConfig = new ServiceBean<Object>(service);
+            ServiceBean<Object> serviceConfig = new ServiceJahhanBean<Object>(service);
             serviceConfig.setRef(bean);
             if (void.class.equals(service.interfaceClass())
                     && "".equals(service.interfaceName())) {
@@ -226,7 +232,7 @@ public class AnnotationBean extends AbstractConfig implements DisposableBean, Be
         String key = reference.group() + "/" + interfaceName + ":" + reference.version();
         ReferenceBean<?> referenceConfig = referenceConfigs.get(key);
         if (referenceConfig == null) {
-            referenceConfig = new ReferenceBean<Object>(reference);
+            referenceConfig = new ReferenceJahhanBean<Object>(reference);
             if (void.class.equals(reference.interfaceClass())
                     && "".equals(reference.interfaceName())
                     && referenceClass.isInterface()) {
