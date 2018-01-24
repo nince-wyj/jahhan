@@ -3,6 +3,7 @@ package net.jahhan.extension.filter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.inject.Singleton;
 
@@ -18,6 +19,7 @@ import com.alibaba.dubbo.rpc.RpcException;
 import net.jahhan.cache.context.RedisVariable;
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.utils.JsonUtil;
+import net.jahhan.context.BaseVariable;
 import net.jahhan.lock.impl.GlobalReentrantLock;
 
 @Activate(group = Constants.CONSUMER, order = -9000)
@@ -36,6 +38,8 @@ public class GlobalLockConsumerContextFilter implements Filter {
 			}
 			RpcContext.getContext().setAttachment("global_locks", JsonUtil.toJson(globalLockLevelMap).replace(",", "$|"));
 		}
+		RpcContext.getContext().setAttachment("request_id", UUID.randomUUID().toString());
+		RpcContext.getContext().setAttachment("chain_id", BaseVariable.getBaseVariable().getChainId());
 		return invoker.invoke(invocation);
 	}
 }

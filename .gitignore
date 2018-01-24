@@ -18,3 +18,7 @@ target
 /demo/service-demo/dubbo-registry.properties.lock
 /demo/service-demo/dubbo-registry.properties
 /demo/service-demo/dubbo-registry.properties.lock
+/demo/service-demo-dubbo/dubbo-registry.properties
+/demo/service-demo-dubbo/dubbo-registry.properties.lock
+/demo/service-demo-frameworkx/dubbo-registry.properties
+/demo/service-demo-frameworkx/dubbo-registry.properties.lock
