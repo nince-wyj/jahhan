@@ -32,7 +32,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.ConfigurationClassPostProcessor;
 import org.springframework.core.OrderComparator;
 
 import com.google.inject.spi.ProvisionListener;
@@ -61,6 +60,10 @@ public class BeanFactoryProvider implements Provider<ConfigurableListableBeanFac
 	private String[] basePackages;
 	private List<ApplicationContextInitializer<ConfigurableApplicationContext>> initializers = new ArrayList<ApplicationContextInitializer<ConfigurableApplicationContext>>();
 	private PartiallyRefreshableApplicationContext context;
+	
+	public ApplicationContext getApplicationContext(){
+		return this.context;
+	}
 
 	/**
 	 * Create an application context by scanning these base packages.

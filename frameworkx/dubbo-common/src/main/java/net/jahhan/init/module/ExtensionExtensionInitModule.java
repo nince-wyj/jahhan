@@ -1,6 +1,5 @@
 package net.jahhan.init.module;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -597,25 +596,5 @@ public class ExtensionExtensionInitModule extends ExtensionInitModule {
 		codeBuidler.append("\n}");
 		log.debug(codeBuidler.toString());
 		return codeBuidler.toString();
-	}
-
-	private static Class<?> getSuperInterfaceByAnnotation(Class<?> type, Class<? extends Annotation> annotation) {
-		List<Class<?>> superClasses = new ArrayList<>();
-		superClasses.add(type);
-		Class<?> superclass = type;
-		while ((superclass = superclass.getSuperclass()) != null) {
-			superClasses.add(superclass);
-		}
-		for (Class<?> superclazz : superClasses) {
-			Class<?>[] interfaces = superclazz.getInterfaces();
-			if (interfaces.length > 0) {
-				for (Class<?> interfaceClass : interfaces) {
-					if (interfaceClass.isAnnotationPresent(annotation)) {
-						return interfaceClass;
-					}
-				}
-			}
-		}
-		return null;
 	}
 }

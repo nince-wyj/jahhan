@@ -33,6 +33,7 @@ import org.springframework.context.ApplicationContextException;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.guice.injector.InjectorHolder;
 import org.springframework.guice.module.SpringModule;
 
 import com.google.inject.Binding;
@@ -123,6 +124,7 @@ class ModuleRegistryConfiguration implements BeanDefinitionRegistryPostProcessor
             injector = createInjector(modules);
         }
         mapBindings(injector, registry);
+        InjectorHolder.getInstance().setInjector(injector);
     }
 
 	@Override

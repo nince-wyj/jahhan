@@ -58,7 +58,6 @@ public class GlobalLockContextFilter implements Filter {
 			if (globalLockMap.containsKey(GlobalReentrantLockUtil.getPRE() + transactionLock)) {
 				BaseVariable.getBaseVariable().setDbLazyCommit(true);
 			}
-			ApplicationContextHolder.getContext().getBeanDefinitionNames();
 			String interfaceClassName = invoker.getUrl().getParameter("interface");
 			String methodName = invocation.getMethodName();
 			Method method = null;

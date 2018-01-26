@@ -21,8 +21,8 @@ public class BaseCodeModule extends AbstractModule {
 		Set<Class> classes = ClassScaner.findClassInPath(".+Dao",
 				BaseConfiguration.SERVICE_PATH.replace(".", "/") + "/dao/");
 		for (Class daoClass : classes) {
-			String cacheName = BaseConfiguration.SERVICE_PATH + ".dao.cache." + daoClass.getSimpleName()
-					+ "Cache";
+			String cacheName = BaseConfiguration.SERVICE_PATH + ".dao.impl." + daoClass.getSimpleName()
+					+ "Impl";
 			try {
 				Class<?> implClass = Class.forName(cacheName);
 				bind(daoClass).to(implClass);
@@ -33,8 +33,8 @@ public class BaseCodeModule extends AbstractModule {
 		Set<Class> frameworkClasses = ClassScaner.findClassInPath(".+Dao",
 				BaseConfiguration.FRAMEWORK_PATH.replace(".", "/") + "/dao/");
 		for (Class daoClass : frameworkClasses) {
-			String cacheName = BaseConfiguration.FRAMEWORK_PATH + ".dao.cache." + daoClass.getSimpleName()
-					+ "Cache";
+			String cacheName = BaseConfiguration.FRAMEWORK_PATH + ".dao.impl." + daoClass.getSimpleName()
+					+ "Impl";
 			try {
 				Class<?> implClass = Class.forName(cacheName);
 				bind(daoClass).to(implClass);

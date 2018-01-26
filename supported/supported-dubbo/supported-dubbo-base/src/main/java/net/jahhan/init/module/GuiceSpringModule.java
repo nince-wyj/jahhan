@@ -4,12 +4,10 @@ import javax.inject.Provider;
 
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.BeanFactoryProvider;
-//import org.springframework.guice.module.BeanFactoryProvider;
 import org.springframework.guice.module.SpringModule;
 
+import net.jahhan.init.ApplicationContextHolder;
 import net.jahhan.init.InitAnnocation;
-import net.jahhan.init.SpringConfiguration;
 
 @InitAnnocation(isLazy = true)
 public class GuiceSpringModule extends SpringModule {
@@ -23,9 +21,10 @@ public class GuiceSpringModule extends SpringModule {
 	}
 
 	public GuiceSpringModule() {
-		this(BeanFactoryProvider.from(SpringConfiguration.class));
+		this(ApplicationContextHolder.initBeanFactoryProvider());
 	}
-//	public GuiceSpringModule() {
-//		this(ApplicationContextHolder.getContext());
+	
+//	public GuiceSpringModule(Collection<Class<?>> config) {
+//		this(ApplicationContextHolder.initContext(config));
 //	}
 }

@@ -52,7 +52,6 @@ public class ApplicationContextListener extends GuiceServletContextListener {
 			node.addServletContext(ports.get("http"), sce.getServletContext());
 			initMethod = new InitMethod(true);
 			super.contextInitialized(sce);
-			injector.getInstance(BaseContext.class);
 			init();
 			Logger log = LoggerFactory.getLogger("message.start.info");
 			log.debug("start cost:{}ms", System.currentTimeMillis() - startTime);

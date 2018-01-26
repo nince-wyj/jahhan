@@ -47,7 +47,7 @@ public class EnableGuiceModulesTests {
 	public void module() {
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
 				ModuleConfig.class);
-		assertNotNull(context.getBean(Foo.class));
+		assertNotNull(context.getBean(Service.class));
 		context.close();
 	}
 

@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import org.springframework.guice.annotation.EnableGuiceModules;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 import com.google.inject.name.Names;
@@ -29,6 +31,7 @@ import net.jahhan.init.InitAnnocation;
 
 @Slf4j
 @InitAnnocation(isLazy = false, initSequence = 4500)
+@EnableGuiceModules
 public class ExtensionInitModule extends AbstractModule {
 	
 	private Map<Class<?>, Set<Class<?>>> cachedWrapperClasses = new HashMap<>();
@@ -273,7 +276,7 @@ public class ExtensionInitModule extends AbstractModule {
 		return codeBuidler.toString();
 	}
 
-	private static Class<?> getSuperInterfaceByAnnotation(Class<?> type, Class<? extends Annotation> annotation) {
+	public static Class<?> getSuperInterfaceByAnnotation(Class<?> type, Class<? extends Annotation> annotation) {
 		List<Class<?>> superClasses = new ArrayList<>();
 		superClasses.add(type);
 		Class<?> superclass = type;

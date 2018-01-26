@@ -19,6 +19,7 @@ public class BaseConfiguration {
 	public static boolean IS_DEBUG = false;
 	public static Integer GLOBAL_EXPIRE_SECOND;
 	public static String INTERFACE_SUFFIX = "Intf";
+	public static InjectType INJECT_TYPE = InjectType.guice;
 
 	static {
 		Properties property = PropertiesUtil.getProperties("base");
@@ -33,6 +34,7 @@ public class BaseConfiguration {
 				GLOBAL_EXPIRE_SECOND = ttl;
 			}
 			INTERFACE_SUFFIX = property.getProperty("interface.suffix", "Intf");
+			INJECT_TYPE = InjectType.valueOf(property.getProperty("inject.type", InjectType.guice.toString()));
 		} catch (Exception ex) {
 			log.error("加载系统base.properties配置出错", ex);
 			throw new RuntimeException("加载系统base.properties配置出错");

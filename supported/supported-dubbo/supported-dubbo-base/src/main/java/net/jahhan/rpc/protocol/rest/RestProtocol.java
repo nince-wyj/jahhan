@@ -43,6 +43,7 @@ import com.alibaba.dubbo.rpc.protocol.rest.RpcContextFilter;
 
 import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.common.extension.utils.Assert;
+import net.jahhan.config.ServiceImplCache;
 import net.jahhan.context.Node;
 
 public class RestProtocol extends AbstractProxyProtocol {
