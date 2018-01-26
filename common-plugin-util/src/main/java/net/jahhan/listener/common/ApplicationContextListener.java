@@ -28,7 +28,6 @@ import com.google.inject.servlet.GuiceServletContextListener;
 
 import net.jahhan.common.extension.utils.NamedThreadFactory;
 import net.jahhan.common.extension.utils.PropertiesUtil;
-import net.jahhan.context.BaseContext;
 import net.jahhan.context.Node;
 import net.jahhan.init.InitMethod;
 
