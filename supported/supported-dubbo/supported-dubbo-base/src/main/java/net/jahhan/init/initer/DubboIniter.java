@@ -2,10 +2,7 @@ package net.jahhan.init.initer;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import com.alibaba.dubbo.config.annotation.Service;
-import com.google.inject.Injector;
 
 import net.jahhan.common.extension.utils.ClassScaner;
 import net.jahhan.common.extension.utils.PackageUtil;

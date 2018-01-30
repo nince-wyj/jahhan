@@ -16,5 +16,8 @@
 		
 		<module>package-dubbo</module>
 		<module>dependency-dubbo</module>
+		
+		<module>package-springcloud</module>
+		<module>dependency-springcloud</module>
 	</modules>
 </project>

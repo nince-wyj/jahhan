@@ -68,5 +68,4 @@ public class UserController implements DemoIntf {
 	public UserOVO getUser(Long userId) {
 		return userService.getUser(userId);
 	}
-
 }

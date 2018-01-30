@@ -12,6 +12,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.guice.injector.InjectorHolder;
 
@@ -19,24 +22,24 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 
-import lombok.Data;
 import net.jahhan.common.extension.constant.BaseConfiguration;
 import net.jahhan.common.extension.constant.InjectType;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.common.extension.utils.ClassScaner;
 import net.jahhan.common.extension.utils.LogUtil;
 import net.jahhan.common.extension.utils.PackageUtil;
+import net.jahhan.common.extension.utils.PropertiesUtil;
 import net.jahhan.context.BaseContext;
 import net.jahhan.exception.JahhanException;
 
 public class InitMethod {
 	public static boolean init = false;
-	private boolean isWeb = true;
+	private static boolean isWeb = true;
 
 	public InitMethod(boolean isWeb) {
 		super();
 		InitMethod.init = true;
-		this.isWeb = isWeb;
+		InitMethod.isWeb = isWeb;
 	}
 
 	private Injector injector;
@@ -120,13 +123,7 @@ public class InitMethod {
 		}
 	}
 
-	@Data
-	public class ModuleHolder {
-		private Map<Integer, Class<?>> moduleMap;
-		private Set<Class<?>> lazyModuleSet;
-	}
-
-	public ModuleHolder orderModule() {
+	public static ModuleHolder orderModule() {
 		Map<Integer, Class<?>> moduleMap = new TreeMap<>();
 		Set<Class<?>> lazyModuleSet = new HashSet<>();
 		try {
@@ -167,7 +164,7 @@ public class InitMethod {
 		return moduleHolder;
 	}
 
-	public Injector getInjector() {
+	public Injector getInjector(String[] args) {
 		ModuleHolder orderModule = orderModule();
 		Map<Integer, Class<?>> moduleMap = orderModule.getModuleMap();
 		Set<Class<?>> lazyModuleSet = orderModule.getLazyModuleSet();
@@ -189,9 +186,36 @@ public class InitMethod {
 				injector = Guice.createInjector(moduleList.toArray(new Module[moduleList.size()]));
 			} else if (BaseConfiguration.INJECT_TYPE.equals(InjectType.spring)) {
 				Collection<Class<?>> values = moduleMap.values();
-				Class<?>[] array = values.toArray(new Class<?>[values.size() + 1]);
-				array[values.size()] = SpringConfiguration.class;
+				String applicationClasses = PropertiesUtil.get("base", "applicationClasses");
+				Class<?>[] array;
+				if (StringUtils.isNoneEmpty(applicationClasses)) {
+					String[] split = applicationClasses.split(",");
+					array = values.toArray(new Class<?>[values.size() + split.length]);
+					for (int i = 0; i < split.length; i++) {
+						array[values.size() + i] = Class.forName(split[i]);
+					}
+				} else {
+					array = values.toArray(new Class<?>[values.size()]);
+				}
 				AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(array);
+				InjectorHolder instance = InjectorHolder.getInstance();
+				instance.setContext(context);
+				injector = instance.getInjector();
+			} else if (BaseConfiguration.INJECT_TYPE.equals(InjectType.springboot)) {
+				Collection<Class<?>> values = moduleMap.values();
+				String applicationClasses = PropertiesUtil.get("base", "applicationClasses");
+				Class<?>[] array;
+				if (StringUtils.isNoneEmpty(applicationClasses)) {
+					String[] split = applicationClasses.split(",");
+					array = values.toArray(new Class<?>[values.size() + split.length]);
+					for (int i = 0; i < split.length; i++) {
+						array[values.size() + i] = Class.forName(split[i]);
+					}
+				} else {
+					array = values.toArray(new Class<?>[values.size()]);
+				}
+				SpringApplicationBuilder builder = new SpringApplicationBuilder(array);
+				ConfigurableApplicationContext context = builder.run(args);
 				InjectorHolder instance = InjectorHolder.getInstance();
 				instance.setContext(context);
 				injector = instance.getInjector();

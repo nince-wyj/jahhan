@@ -23,7 +23,6 @@
 	</properties>
 	<modules>
 		<module>supported-springcloud-base</module>
-		<module>supported-springcloud-interface-cache</module>
 		<module>supported-springcloud-authentication-center</module>
 	</modules>
 </project>

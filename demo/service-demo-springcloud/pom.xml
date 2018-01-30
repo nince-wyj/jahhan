@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.jahhan.demo</groupId>
+	<artifactId>service-demo-springcloud</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	
+	<packaging>jar</packaging>
+	<repositories>
+		<repository>
+			<id>jahhan</id>
+			<url>http://47.100.61.97:8081/nexus/content/repositories/jahhan</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>central</id>
+			<name>Team Nexus Repository</name>
+			<url>http://47.100.61.97:8081/nexus/content/repositories/central</url>
+		</repository>
+	</repositories>
+	<properties>
+		<skip_maven_deploy>true</skip_maven_deploy>
+		<inteface.version>1.0-SNAPSHOT</inteface.version>
+		<resource.delimiter>${}</resource.delimiter>  
+		<!-- for maven compiler plugin -->
+		<maven_compiler_plugin_version>3.5.1</maven_compiler_plugin_version>
+		<java_source_version>1.8</java_source_version>
+		<java_target_version>1.8</java_target_version>
+		<file_encoding>UTF-8</file_encoding>
+
+		<maven_source_plugin_version>2.1.1</maven_source_plugin_version>
+		<maven_jar_plugin_version>2.3.2</maven_jar_plugin_version>
+		<maven_war_plugin_version>2.1.1</maven_war_plugin_version>
+		<maven_install_plugin_version>2.4</maven_install_plugin_version>
+		<maven_deploy_plugin_version>2.5</maven_deploy_plugin_version>
+
+		<maven-surefire-plugin_version>3.1</maven-surefire-plugin_version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>net.jahhan.demo</groupId>
+			<artifactId>intf-demo</artifactId>
+			<version>${inteface.version}</version>
+		</dependency>
+		 <dependency>
+			<groupId>net.jahhan</groupId>
+			<artifactId>dependency-springcloud-base</artifactId>
+			<version>${inteface.version}</version>
+		</dependency> 
+	</dependencies>
+
+	<!--maven的插件 -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<encoding>${file_encoding}</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven_compiler_plugin_version}</version>
+					<configuration>
+						<fork>true</fork>
+						<source>${java_source_version}</source>
+						<target>${java_target_version}</target>
+						<encoding>${file_encoding}</encoding>
+						<compilerArgs>
+							<arg>-parameters</arg>
+						</compilerArgs>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		 <filters>
+			<filter>src/main/filters/conf-${env}.properties</filter>
+		</filters>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources> 
+	</build>
+ 	<profiles>
+		<profile>
+			<id>develop</id>
+			<properties>
+				<env>develop</env>
+			</properties>
+		</profile>
+		<profile>
+			<id>product</id>
+			<properties>
+				<env>product</env>
+			</properties>
+		</profile>
+		<profile>
+			<id>local</id>
+			<properties>
+				<env>local</env>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>stresstest</id>
+			<properties>
+				<env>stresstest</env>
+			</properties>
+		</profile>
+	</profiles> 
+</project>

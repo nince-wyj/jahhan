@@ -1,5 +1,6 @@
 package org.springframework.guice.injector;
 
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.google.inject.Injector;
@@ -21,12 +22,12 @@ public class InjectorHolder {
 		return instance;
 	}
 	private Injector injector;
-	private AnnotationConfigApplicationContext context;
+	private ConfigurableApplicationContext context;
 
-	public AnnotationConfigApplicationContext getContext() {
+	public ConfigurableApplicationContext getContext() {
 		return context;
 	}
-	public void setContext(AnnotationConfigApplicationContext context) {
+	public void setContext(ConfigurableApplicationContext context) {
 		this.context = context;
 	}
 	public Injector getInjector() {

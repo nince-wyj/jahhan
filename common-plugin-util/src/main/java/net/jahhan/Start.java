@@ -22,7 +22,7 @@ public class Start {
 		Node.getInstance();
 		long startTime = System.currentTimeMillis();
 		InitMethod initMethod = new InitMethod(true);
-		initMethod.getInjector();
+		initMethod.getInjector(args);
 		initMethod.init();
 		Logger log = LoggerFactory.getLogger("message.start.info");
 		log.debug("start cost:{}ms", System.currentTimeMillis() - startTime);

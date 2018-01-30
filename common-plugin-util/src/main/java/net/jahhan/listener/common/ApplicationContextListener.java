@@ -62,7 +62,7 @@ public class ApplicationContextListener extends GuiceServletContextListener {
 	}
 
 	protected Injector getInjector() {
-		injector = initMethod.getInjector();
+		injector = initMethod.getInjector(null);
 		return injector;
 	}
 

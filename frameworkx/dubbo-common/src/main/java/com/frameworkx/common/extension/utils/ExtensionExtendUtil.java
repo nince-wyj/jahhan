@@ -63,18 +63,6 @@ public abstract class ExtensionExtendUtil extends ExtensionUtil{
 			}
 			return re;
 		}
-		// Injector injector = BaseContext.CTX.getInjector();
-		// List<Binding<T>> findBindings =
-		// injector.findBindingsByType(TypeLiteral.get(type));
-		// Set<String> result = new HashSet<>();
-		// for (Binding<T> binding : findBindings) {
-		// Named named = (Named) binding.getKey().getAnnotation();
-		// if (null != named) {
-		// String value = named.value();
-		// result.add(value);
-		// }
-		// }
-		// return result;
 		return null;
 	}
 

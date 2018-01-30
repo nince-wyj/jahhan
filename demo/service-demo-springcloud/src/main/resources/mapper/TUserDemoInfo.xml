@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 自动生成代码，请勿修改 -->
+<mapper namespace="TUSERDEMOINFO">
+	<!-- 添加-->
+	<insert id="addTUserDemoInfo" parameterType="net.jahhan.demo.pojo.TUserDemoInfo" useGeneratedKeys="true" keyProperty="userId">
+		INSERT INTO t_user_demo_info (	
+		<trim prefixOverrides=",">
+			<if test="userId != null"> , user_id </if>
+			<if test="userName != null"> , user_name </if>
+			<if test="email != null"> , email </if>
+			<if test="gender != null"> , gender </if>
+			<if test="createTime != null"> , create_time </if>
+			<if test="lastModifyTime != null"> , last_modify_time </if>
+			<if test="modifyTimestamp != null"> , modify_timestamp </if>
+		</trim>   
+		)
+		VALUES (               
+		<trim prefixOverrides=",">
+			<if test="userId != null"> , #{userId} </if>
+			<if test="userName != null"> , #{userName} </if>
+			<if test="email != null"> , #{email} </if>
+			<if test="gender != null"> , #{gender} </if>
+			<if test="createTime != null"> , #{createTime} </if>
+			<if test="lastModifyTime != null"> , #{lastModifyTime} </if>
+			<if test="modifyTimestamp != null"> , #{modifyTimestamp} </if>
+		</trim>   
+		)  
+	</insert>
+	
+	<!-- 删除 -->
+	<delete id="delTUserDemoInfo" parameterType="net.jahhan.demo.pojo.TUserDemoInfo">
+		DELETE FROM t_user_demo_info        
+		WHERE user_id = #{userId}
+	</delete>
+	
+	<!-- 删除指定的主键列表的记录-->
+	<delete id="delTUserDemoInfoByIds" parameterType="collection">
+		DELETE FROM t_user_demo_info         
+		WHERE user_id IN 
+		<foreach item="item" collection="list" open="(" separator="," close=")">  
+			#{item}  
+		</foreach>
+	</delete>
+	
+	<!-- 全部更新 -->
+	<update id="updateTUserDemoInfo" parameterType="net.jahhan.demo.pojo.TUserDemoInfo">
+		UPDATE  t_user_demo_info       
+		SET  
+		<trim prefixOverrides=",">
+				, user_name = #{userName}
+				, email = #{email}
+				, gender = #{gender}
+				, create_time = #{createTime}
+				, last_modify_time = #{lastModifyTime}
+				, modify_timestamp = #{modifyTimestamp}
+		</trim>
+		WHERE
+			user_id = #{userId}
+	</update>
+	
+	<!-- 部分更新 -->
+	<update id="updatePartTUserDemoInfo" parameterType="net.jahhan.demo.pojo.TUserDemoInfo">
+		UPDATE  t_user_demo_info       
+		SET  
+		<trim prefixOverrides=",">
+			<if test="userName != null">, user_name= #{userName} </if>
+			<if test="email != null">, email= #{email} </if>
+			<if test="gender != null">, gender= #{gender} </if>
+			<if test="createTime != null">, create_time= #{createTime} </if>
+			<if test="lastModifyTime != null">, last_modify_time= #{lastModifyTime} </if>
+			<if test="modifyTimestamp != null">, modify_timestamp= #{modifyTimestamp} </if>
+		</trim>
+		WHERE 
+			user_id = #{userId}
+	</update>
+	
+	<!-- 修改指定的主键列表的记录，部分更新-->
+	<update id="updatePartTUserDemoInfoByIds" parameterType="map">
+		UPDATE  t_user_demo_info       
+		SET
+		<trim prefixOverrides=",">
+			<if test="newObj.userName != null">, user_name= #{newObj.userName} </if>
+			<if test="newObj.email != null">, email= #{newObj.email} </if>
+			<if test="newObj.gender != null">, gender= #{newObj.gender} </if>
+			<if test="newObj.createTime != null">, create_time= #{newObj.createTime} </if>
+			<if test="newObj.lastModifyTime != null">, last_modify_time= #{newObj.lastModifyTime} </if>
+			<if test="newObj.modifyTimestamp != null">, modify_timestamp= #{newObj.modifyTimestamp} </if>
+		</trim>  
+		WHERE user_id IN
+		<foreach item="item" collection="ids" open="(" separator="," close=")">  
+			#{item}  
+		</foreach>
+		<if test="oldObj!= null">
+			<if test="oldObj.userName != null"> AND user_name = #{oldObj.userName} </if>
+			<if test="oldObj.email != null"> AND email = #{oldObj.email} </if>
+			<if test="oldObj.gender != null"> AND gender = #{oldObj.gender} </if>
+			<if test="oldObj.createTime != null"> AND create_time = #{oldObj.createTime} </if>
+			<if test="oldObj.lastModifyTime != null"> AND last_modify_time = #{oldObj.lastModifyTime} </if>
+			<if test="oldObj.modifyTimestamp != null"> AND modify_timestamp = #{oldObj.modifyTimestamp} </if>
+		</if>
+	</update>
+	
+	<!-- 查询单条-->
+	<select id="queryTUserDemoInfo" parameterType="net.jahhan.demo.pojo.page.TUserDemoInfoPage" resultType="net.jahhan.demo.pojo.TUserDemoInfo">
+		SELECT	
+			 user_id as  userId  ,
+			 user_name as  userName  ,
+			 email as  email  ,
+			 gender as  gender  ,
+			 create_time as  createTime  ,
+			 last_modify_time as  lastModifyTime  ,
+			 modify_timestamp as  modifyTimestamp  
+		FROM  t_user_demo_info 
+		<trim prefix="where" prefixOverrides="and">
+			<if test="userId != null"> AND user_id = #{userId} </if>
+			<if test="userName != null"> AND user_name = #{userName} </if>
+			<if test="email != null"> AND email = #{email} </if>
+			<if test="gender != null"> AND gender = #{gender} </if>
+			<if test="createTime != null"> AND create_time = #{createTime} </if>
+			<if test="lastModifyTime != null"> AND last_modify_time = #{lastModifyTime} </if>
+			<if test="modifyTimestamp != null"> AND modify_timestamp = #{modifyTimestamp} </if>
+		</trim>
+		LIMIT 1
+	</select>
+	
+	<!-- 精确查询 -->
+	<select id="listTUserDemoInfo" parameterType="net.jahhan.demo.pojo.page.TUserDemoInfoPage" resultType="net.jahhan.demo.pojo.TUserDemoInfo">
+		SELECT	
+			 user_id as  userId  ,
+			 user_name as  userName  ,
+			 email as  email  ,
+			 gender as  gender  ,
+			 create_time as  createTime  ,
+			 last_modify_time as  lastModifyTime  ,
+			 modify_timestamp as  modifyTimestamp  
+		FROM  t_user_demo_info  
+		<trim prefix="where" prefixOverrides="and">
+			<if test="userId != null"> AND user_id = #{userId} </if>
+			<if test="userName != null"> AND user_name = #{userName} </if>
+			<if test="email != null"> AND email = #{email} </if>
+			<if test="gender != null"> AND gender = #{gender} </if>
+			<if test="createTime != null"> AND create_time = #{createTime} </if>
+			<if test="lastModifyTime != null"> AND last_modify_time = #{lastModifyTime} </if>
+			<if test="modifyTimestamp != null"> AND modify_timestamp = #{modifyTimestamp} </if>
+		</trim>
+		<if test="order_by != null"> ORDER BY ${order_by} </if>
+		LIMIT #{beginDATAIndex},#{pageSize}
+	</select>
+	
+	
+	<!-- 精确查询数量 -->
+	<select id="countTUserDemoInfo" parameterType="net.jahhan.demo.pojo.page.TUserDemoInfoPage" resultType="_long">
+		SELECT COUNT(1)	                          			   	     		        
+		FROM t_user_demo_info    
+		<trim prefix="where" prefixOverrides="and">
+			<if test="userId != null"> AND user_id = #{userId} </if>
+			<if test="userName != null"> AND user_name = #{userName} </if>
+			<if test="email != null"> AND email = #{email} </if>
+			<if test="gender != null"> AND gender = #{gender} </if>
+			<if test="createTime != null"> AND create_time = #{createTime} </if>
+			<if test="lastModifyTime != null"> AND last_modify_time = #{lastModifyTime} </if>
+			<if test="modifyTimestamp != null"> AND modify_timestamp = #{modifyTimestamp} </if>
+		</trim>
+	</select>
+	
+	
+	<!-- 根据id查询-->
+	<select id="listTUserDemoInfoByIds" parameterType="collection" resultType="net.jahhan.demo.pojo.TUserDemoInfo">
+		SELECT	
+			user_id as  userId  ,
+			user_name as  userName  ,
+			email as  email  ,
+			gender as  gender  ,
+			create_time as  createTime  ,
+			last_modify_time as  lastModifyTime  ,
+			modify_timestamp as  modifyTimestamp  
+		FROM t_user_demo_info    
+		WHERE user_id IN 
+		<foreach item="item" collection="list" open="(" separator="," close=")">  
+			#{item}  
+		</foreach>
+	</select>
+	
+	<!-- 根据精确条件获取所有主键列表-->
+	<select id="listIds" parameterType="net.jahhan.demo.pojo.page.TUserDemoInfoPage" resultType="Long">
+		SELECT	
+			user_id as userId
+		FROM t_user_demo_info  
+		<trim prefix="where" prefixOverrides="and">
+			<if test="userId != null"> AND user_id = #{userId} </if>
+			<if test="userName != null"> AND user_name = #{userName} </if>
+			<if test="email != null"> AND email = #{email} </if>
+			<if test="gender != null"> AND gender = #{gender} </if>
+			<if test="createTime != null"> AND create_time = #{createTime} </if>
+			<if test="lastModifyTime != null"> AND last_modify_time = #{lastModifyTime} </if>
+			<if test="modifyTimestamp != null"> AND modify_timestamp = #{modifyTimestamp} </if>
+		</trim>
+		LIMIT #{beginDATAIndex},#{pageSize}
+	</select>
+	
+	
+	<!-- 获取最大主键-->
+	<select id="selectMaxTUserDemoInfoSequence" resultType="long">
+		SELECT max(user_id) as max_sequence FROM  t_user_demo_info    
+	</select>	
+</mapper>

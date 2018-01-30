@@ -12,16 +12,21 @@
  */
 package org.springframework.guice.annotation;
 
+import java.beans.PropertyDescriptor;
+
 import javax.inject.Provider;
 
+import org.springframework.beans.BeansException;
+import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessor;
 
 /**
  * Convenience class used to map a Guice {@link Provider} to a Spring bean.
  * 
  * @author Dave Syer
  */
-class GuiceFactoryBean<T> implements FactoryBean<T> {
+class GuiceFactoryBean<T> implements FactoryBean<T>, InstantiationAwareBeanPostProcessor {
 	private final Provider<T> provider;
 	private final Class<T> beanType;
 
@@ -43,5 +48,31 @@ class GuiceFactoryBean<T> implements FactoryBean<T> {
 	@Override
 	public boolean isSingleton() {
 		return true;
+	}
+
+	@Override
+	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+		return bean;
+	}
+
+	@Override
+	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+		return bean;
+	}
+
+	@Override
+	public Object postProcessBeforeInstantiation(Class<?> beanClass, String beanName) throws BeansException {
+		return null;
+	}
+
+	@Override
+	public boolean postProcessAfterInstantiation(Object bean, String beanName) throws BeansException {
+		return true;
+	}
+
+	@Override
+	public PropertyValues postProcessPropertyValues(PropertyValues pvs, PropertyDescriptor[] pds, Object bean,
+			String beanName) throws BeansException {
+		return pvs;
 	}
 }

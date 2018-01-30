@@ -74,6 +74,7 @@
 		<resteasy_version>3.1.4.Final</resteasy_version>
 		<tomcat_embed_version>8.0.44</tomcat_embed_version>
 		<spring.version>4.3.10.RELEASE</spring.version>
+		<spring.boot.version>1.5.9.RELEASE</spring.boot.version>
 		<aspectj.version>1.6.8</aspectj.version>
 		<!-- Log libs -->
 		<slf4j_version>1.7.25</slf4j_version>
@@ -394,6 +395,13 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-framework-bom</artifactId>
 				<version>${spring.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-jersey</artifactId>
+				<version>${spring.boot.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
