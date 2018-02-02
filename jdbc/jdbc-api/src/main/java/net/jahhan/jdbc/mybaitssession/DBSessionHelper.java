@@ -81,7 +81,7 @@ public class DBSessionHelper implements SessionHandler {
 	@Override
 	public SqlSession getBatchSession(String dataSource) {
 		try {
-			return getBatchSqlSession(getBatchConnection(dataSource));
+			return getSqlSession(getBatchConnection(dataSource));
 		} catch (SQLException e) {
 			JahhanException.throwException(JahhanErrorCode.DATABASE_ERROR, "数据库错误", e);
 			return null;
