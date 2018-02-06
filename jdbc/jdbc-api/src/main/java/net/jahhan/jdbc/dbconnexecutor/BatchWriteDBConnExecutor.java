@@ -27,12 +27,14 @@ public class BatchWriteDBConnExecutor implements DBConnExecutorHandler {
 	@Override
 	public void commit() throws SQLException {
 		conn.commit();
+		conn.setAutoCommit(true);
 	}
 
 	@Override
 	public void rollback() {
 		try {
 			conn.rollback();
+			conn.setAutoCommit(true);
 		} catch (SQLException e) {
 			LogUtil.error("error when rollback" + e.getMessage(), e);
 		}
