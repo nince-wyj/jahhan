@@ -100,6 +100,23 @@ public class Redis implements DBCache {
 	}
 
 	/**
+	 * 给键设置过期时间
+	 * 
+	 * @param cachedKey
+	 * @param seconds
+	 */
+	public void pexpire(final String cachedKey, final long millisecond) {
+		if (RedisConstants.isInUse()) {
+			getTemplate().executeWrite(new JedisCallBackHandler<Void>() {
+				public Void invoke(Jedis jedis) {
+					jedis.pexpire(cachedKey, millisecond);
+					return null;
+				}
+			});
+		}
+	}
+	
+	/**
 	 * 获取当前库的所有主键
 	 * 
 	 * @param key

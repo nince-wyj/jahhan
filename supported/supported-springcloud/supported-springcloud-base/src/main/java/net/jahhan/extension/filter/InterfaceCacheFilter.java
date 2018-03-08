@@ -125,16 +125,21 @@ public class InterfaceCacheFilter implements Filter {
 				}
 				log.trace("##cache key:{}", key);
 				byte[] bytes = redis.getBinary(key.getBytes());
+				TimeUnit blockTimeUnit = cache.blockTimeUnit();
 				if (bytes != null) {
 					if (cache.fastBackFail()) {
 						throw new JahhanException(JahhanErrorCode.FAST_RESPONSE_ERROR, cache.fastBackFailMessage());
 					}
 					Object deserialize = SerializerUtil.deserialize(bytes, Object.class);
+					long tempttl = cache.blockTime();
+					if (!blockTimeUnit.equals(TimeUnit.MILLISECONDS)) {
+						tempttl = blockTimeUnit.toMillis(cache.blockTime());
+					}
+					redis.pexpire(key, tempttl);
 					log.debug("快速返回：" + invocation.getImplClass().getName() + "." + method);
 					return deserialize;
 				}
 				String ret = "";
-				TimeUnit blockTimeUnit = cache.blockTimeUnit();
 				try (DistributedLock lock = ServiceReentrantLockUtil
 						.lock(LOCK_PRE + invocation.getImplClass().getName() + "." + method, cache.blockTime(), blockTimeUnit)) {
 					bytes = redis.getBinary(key.getBytes());

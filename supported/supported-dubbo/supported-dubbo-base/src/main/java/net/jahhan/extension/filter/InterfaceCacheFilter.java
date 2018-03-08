@@ -108,13 +108,13 @@ public class InterfaceCacheFilter implements Filter {
 		Result invoke = null;
 		if (RedisConstants.isInUse()) {
 			String interfaceClassName = invoker.getUrl().getParameter("interface");
-			String implClassName = invoker.getUrl().getParameter("class");
 			String methodName = invocation.getMethodName();
 
 			Method implMethod = null;
 			try {
-				implMethod = Class.forName(implClassName).getDeclaredMethod(methodName, invocation.getParameterTypes());
-			} catch (NoSuchMethodException | SecurityException | ClassNotFoundException e) {
+				implMethod = ServiceImplCache.getInstance().getRef(interfaceClassName).getDeclaredMethod(methodName,
+						invocation.getParameterTypes());
+			} catch (NoSuchMethodException | SecurityException e) {
 				throw new JahhanException(JahhanErrorCode.UNKNOW_ERROR, "未知错误", e);
 			}
 			Cache cache = implMethod.getAnnotation(Cache.class);
@@ -139,16 +139,21 @@ public class InterfaceCacheFilter implements Filter {
 				}
 				log.trace("##cache key:{}", key);
 				byte[] bytes = redis.getBinary(key.getBytes());
+				TimeUnit blockTimeUnit = cache.blockTimeUnit();
 				if (bytes != null) {
 					if (cache.fastBackFail()) {
 						throw new JahhanException(JahhanErrorCode.FAST_RESPONSE_ERROR, cache.fastBackFailMessage());
 					}
+					long tempttl = cache.blockTime();
+					if (!blockTimeUnit.equals(TimeUnit.MILLISECONDS)) {
+						tempttl = blockTimeUnit.toMillis(cache.blockTime());
+					}
+					redis.pexpire(key, tempttl);
 					Result deserialize = SerializerUtil.deserialize(bytes, Result.class);
 					log.debug("快速返回：" + interfaceClassName + "." + implMethod);
 					return deserialize;
 				}
 				String ret = "";
-				TimeUnit blockTimeUnit = cache.blockTimeUnit();
 				try (DistributedLock lock = ServiceReentrantLockUtil
 						.lock(LOCK_PRE + interfaceClassName + "." + implMethod, cache.blockTime(), blockTimeUnit)) {
 					bytes = redis.getBinary(key.getBytes());
