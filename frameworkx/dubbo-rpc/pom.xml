@@ -19,7 +19,7 @@
 	<parent>
 		<groupId>net.jahhan</groupId>
 		<artifactId>frameworkx-parent</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>1.0-RELEASE</version>
 	</parent>
 	<artifactId>dubbo-rpc</artifactId>
 	<packaging>pom</packaging>

@@ -20,7 +20,7 @@ public class TransactionWriteDBConnExecutor implements DBConnExecutorHandler {
 	public Connection beginConnection(String dataSource) throws SQLException {
 		conn = DBConnFactory.WRITE_CONNECTION(dataSource);
 		conn.setAutoCommit(false);
-		conn.setSavepoint();
+//		conn.setSavepoint();
 		return conn;
 	}
 

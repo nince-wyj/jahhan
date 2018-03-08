@@ -28,7 +28,7 @@ public class UserService {
 		Timestamp now = new Timestamp(System.currentTimeMillis());
 		tUserDemoInfo.setCreateTime(now);
 		tUserDemoInfo.setLastModifyTime(now);
-		tUserInfoDao.addTUserDemoInfo(tUserDemoInfo);
+//		tUserInfoDao.addTUserDemoInfo(tUserDemoInfo);
 		UserRegistOVO userRegistOVO = new UserRegistOVO();
 		BeanTools.copyBean(userRegistOVO, tUserDemoInfo);
 		return userRegistOVO;

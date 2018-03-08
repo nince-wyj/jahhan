@@ -12,7 +12,7 @@
 	<parent>
 		<groupId>net.jahhan</groupId>
 		<artifactId>parent</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>1.0-RELEASE</version>
 	</parent>
 	<artifactId>supported</artifactId>
 	<packaging>pom</packaging>
@@ -25,5 +25,6 @@
 		<module>supported-api</module>
 		<module>supported-frameworkx</module>
  		<module>supported-dubbo</module>
+ 		<module>supported-springcloud</module>
 	</modules>
 </project>

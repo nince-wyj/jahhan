@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>net.jahhan</groupId>
 		<artifactId>parent</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>1.0-RELEASE</version>
 	</parent>
 	<artifactId>sdk</artifactId>
 	<packaging>pom</packaging>

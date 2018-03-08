@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>package</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>1.0-RELEASE</version>
 		<groupId>net.jahhan</groupId>
 	</parent>
 	<artifactId>package-service</artifactId>

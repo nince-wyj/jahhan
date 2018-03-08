@@ -14,8 +14,10 @@ import net.jahhan.cache.annotation.Cache;
 import net.jahhan.common.extension.annotation.GlobalSyncTransaction;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.common.extension.utils.Assert;
+import net.jahhan.demo.dao.NUserDemoDao;
 import net.jahhan.demo.dao.TUserDemoInfoDao;
 import net.jahhan.demo.intf.DemoIntf;
+import net.jahhan.demo.pojo.NUserDemo;
 import net.jahhan.demo.pojo.TUserDemoInfo;
 import net.jahhan.demo.service.UserService;
 import net.jahhan.demo.vo.UserNameIVO;
@@ -33,16 +35,22 @@ public class UserController implements DemoIntf {
 	private UserService userService;
 	@Inject
 	private TUserDemoInfoDao tUserInfoDao;
-	@Reference
-	private TestService testService;
+	@Inject
+	private NUserDemoDao nUserInfoDao;
+//	@Reference
+//	private TestService testService;
 
 	@Override
-	@GlobalSyncTransaction
+//	@GlobalSyncTransaction
 	public UserRegistOVO register(UserRegistIVO userRegistIVO) {
-		if (userRegistIVO.getGender().equals("女") && userRegistIVO.getUserName().startsWith("test")) {
-			JahhanException.throwException(HttpServletResponse.SC_BAD_REQUEST, JahhanErrorCode.VALIATION_EXCEPTION,
-					"性别为女时名称不能以test开头！");
-		}
+//		if (userRegistIVO.getGender().equals("女") && userRegistIVO.getUserName().startsWith("test")) {
+//			JahhanException.throwException(HttpServletResponse.SC_BAD_REQUEST, JahhanErrorCode.VALIATION_EXCEPTION,
+//					"性别为女时名称不能以test开头！");
+//		}
+		NUserDemo nUserDemo = new NUserDemo();
+		nUserDemo.setUserName(userRegistIVO.getUserName());
+		nUserInfoDao.addNUserDemo(nUserDemo);
+		NUserDemo queryNUserDemo = nUserInfoDao.queryNUserDemo(nUserDemo.getUserId());
 		return userService.register(userRegistIVO);
 	}
 
@@ -63,9 +71,10 @@ public class UserController implements DemoIntf {
 
 	@Override
 	// @NoneToken
-	@Cache(blockTime = 3, isCustomCacheKey = true, argumentIndexNumbers = {
-			0 }, customCacheKeyCreaterClass = CacheKeyCreater.class)
+//	@Cache(blockTime = 3, isCustomCacheKey = true, argumentIndexNumbers = {
+//			0 }, customCacheKeyCreaterClass = CacheKeyCreater.class)
 	public UserOVO getUser(Long userId) {
+		NUserDemo queryNUserDemo = nUserInfoDao.queryNUserDemo(userId);
 		return userService.getUser(userId);
 	}
 }
