@@ -15,7 +15,7 @@
 
 	<!-- use dubbo protocol to export service on port 20880 -->
 	<dubbo:protocol name="dubbo" port="-1" />
-	<dubbo:protocol name="rest2" port="8080" contextpath="service" server="tomcat2"/>
+	<dubbo:protocol name="rest2" port="-1" contextpath="service" server="tomcat2"/>
 	<dubbo:annotation package="net.jahhan.demo.controller" />
 	<dubbo:provider filter="-exception" />
 </beans>
