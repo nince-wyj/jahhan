@@ -71,7 +71,7 @@
                                     <include>net.jahhan:package-service</include>
 									<include>net.jahhan:common-plugin-util</include>
                                     <include>net.jahhan:jdbc-api</include>
-                                    <include>net.jahhan:jdbc-druid</include>
+                                    <!--<include>net.jahhan:jdbc-druid</include>-->
                                     <include>net.jahhan:jdbc-c3p0</include>
                                     <include>net.jahhan:cache-api</include>
                                     <include>net.jahhan:cache-redis-sentinel</include>

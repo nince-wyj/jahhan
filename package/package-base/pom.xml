@@ -19,11 +19,17 @@
 			<artifactId>common-plugin-util</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>net.jahhan</groupId>
-			<artifactId>jdbc-druid</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>net.jahhan</groupId>-->
+			<!--<artifactId>jdbc-druid</artifactId>-->
+			<!--<version>${project.parent.version}</version>-->
+		<!--</dependency>-->
+        <dependency>
+            <groupId>net.jahhan</groupId>
+            <artifactId>jdbc-c3p0</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
 		<dependency>
 			<groupId>net.jahhan</groupId>
 			<artifactId>jdbc-api</artifactId>
@@ -92,7 +98,7 @@
                                 <includes>
                                     <include>net.jahhan:common-plugin-util</include>
                                     <include>net.jahhan:jdbc-api</include>
-                                    <include>net.jahhan:jdbc-druid</include>
+                                    <!--<include>net.jahhan:jdbc-druid</include>-->
                                     <include>net.jahhan:jdbc-c3p0</include>
                                     <include>net.jahhan:cache-api</include>
                                     <include>net.jahhan:cache-redis-sentinel</include>
