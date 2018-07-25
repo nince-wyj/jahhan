@@ -18,8 +18,8 @@ public abstract class PackageUtil {
 	/**
 	 * 获取框架及业务包
 	 * 
-	 * @param packageName
-	 * @return
+	 * @param packageNames
+	 * @return 包列表
 	 */
 	public static String[] packages(String... packageNames) {
 		List<String> packageList = new ArrayList<>();

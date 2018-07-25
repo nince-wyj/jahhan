@@ -5,7 +5,7 @@
 		converterClass="net.jahhan.logback.ThreadIdConvert" />
 	<conversionRule conversionWord="rid"
 		converterClass="net.jahhan.logback.RequestIdConvert" />
-		<conversionRule conversionWord="cid"
+	<conversionRule conversionWord="cid"
 		converterClass="net.jahhan.logback.ChainIdConvert" />
 	<conversionRule conversionWord="host"
 		converterClass="net.jahhan.logback.HostConvert" />
@@ -21,19 +21,29 @@
 		</layout>
 	</appender>
 
-	<appender name="FILEOUT"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>Z:/www/logs/${service.type}/application${nodeId}.log</file>
-		<append>true</append>
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>Z:/www/logs/${service.type}/bak${nodeId}.%d{yyyy-MM-dd}.log</fileNamePattern>
-			<maxHistory>30</maxHistory>
-		</rollingPolicy>
-		<encoder>
-			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} %L - %msg%n
-			</pattern>
-		</encoder>
+	<appender name="FILE-THREAD" class="ch.qos.logback.classic.sift.SiftingAppender">
+		<discriminator>
+			<key>logFileName</key>
+			<defaultValue>logback</defaultValue>
+		</discriminator>
+		<sift>
+			<appender name="FILEOUT"
+				class="ch.qos.logback.core.rolling.RollingFileAppender">
+		
+				<file>Z:/www/logs/${service.type}/application${nodeId}.log</file>
+				<append>true</append>
+				<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+					<fileNamePattern>Z:/www/logs/${service.type}/bak${nodeId}.%d{yyyy-MM-dd}.log
+					</fileNamePattern>
+					<maxHistory>30</maxHistory>
+				</rollingPolicy>
+				<encoder>
+					<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} %L - %msg%n</pattern>
+				</encoder>
+			</appender>
+		</sift>
 	</appender>
+	
 
 	<!-- This is the kafkaAppender -->
 	<appender name="kafkaAppender"
@@ -60,7 +70,7 @@
 		<producerConfig>bootstrap.servers=${kafka.servers}</producerConfig>
 
 		<!-- this is the fallback appender if kafka is not available. -->
-		<appender-ref ref="FILEOUT" />
+		<appender-ref ref="FILE-THREAD" />
 	</appender>
 
 	<appender name="ASYNC_KAFKA" class="net.jahhan.logback.JahhanAsyncAppender">
@@ -97,7 +107,7 @@
 	<logger name="net.jahhan.extension.filter" level="TRACE" />
 	<logger name="net.sf.ehcache.statistics.extended" level="ERROR" />
 	<logger name="net.jahhan.init.module" level="ERROR" />
-	
+
 	<logger name="com.request.log" additivity="true" level="INFO">
 		<appender-ref ref="REQLOG" />
 	</logger>

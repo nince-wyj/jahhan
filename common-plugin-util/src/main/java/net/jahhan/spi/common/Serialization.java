@@ -49,7 +49,6 @@ public interface Serialization {
 	/**
 	 * create serializer
 	 * 
-	 * @param url
 	 * @param output
 	 * @return serializer
 	 * @throws IOException
@@ -59,7 +58,6 @@ public interface Serialization {
 	/**
 	 * create deserializer
 	 * 
-	 * @param url
 	 * @param input
 	 * @return deserializer
 	 * @throws IOException

@@ -22,7 +22,7 @@
 	</repositories>
 	<properties>
 		<!-- Common libs -->
-		<skip_maven_deploy>true</skip_maven_deploy>
+		<build.skip_maven_deploy>true</build.skip_maven_deploy>
 		<framework.version>1.0-SNAPSHOT</framework.version>
 		<cwgj.version>1.0-SNAPSHOT</cwgj.version>
 

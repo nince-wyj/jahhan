@@ -87,10 +87,9 @@ public class JsonUtil {
 	 * 
 	 * @param old
 	 *            json格式的旧对象
-	 * @param partUpdate
+	 * @param updatedObject
 	 *            用于更新的对象
-	 * @return
-	 * @author nince
+	 * @return 合并结果
 	 */
 	@SuppressWarnings("unchecked")
 	public static String mergeJson(String old, Object updatedObject) {

@@ -4,14 +4,14 @@
     <parent>
         <groupId>net.jahhan</groupId>
 		<artifactId>package-springcloud</artifactId>
-		<version>1.0-RELEASE</version>
+		<version>1.0.0-RELEASE</version>
     </parent>
     <artifactId>package-springcloud-common</artifactId>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
     <description>The all in one project of common</description>
     <properties>
-        <skip_maven_deploy>false</skip_maven_deploy>
+        <build.skip_maven_deploy>false</build.skip_maven_deploy>
     </properties>
     <dependencies>
 		<dependency>

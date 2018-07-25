@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>net.jahhan</groupId>
 		<artifactId>dependency</artifactId>
-		<version>1.0-RELEASE</version>
+		<version>1.0.0-RELEASE</version>
 	</parent>
 	<artifactId>dependency-springcloud</artifactId>
 	<packaging>pom</packaging>

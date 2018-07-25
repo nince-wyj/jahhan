@@ -4,14 +4,14 @@
 	<parent>
 		<groupId>net.jahhan</groupId>
 		<artifactId>supported-springcloud</artifactId>
-		<version>1.0-RELEASE</version>
+		<version>1.0.0-RELEASE</version>
 	</parent>
 	<artifactId>supported-springcloud-base</artifactId>
 	<packaging>jar</packaging>
 	<name>${project.artifactId}</name>
 	<description>The jdbc module of dubbo project</description>
 	<properties>
-		<skip_maven_deploy>true</skip_maven_deploy>
+		<build.skip_maven_deploy>true</build.skip_maven_deploy>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -73,7 +73,7 @@
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jackson2-provider</artifactId>
-			<version>${resteasy_version}</version>
+			<version>${version.resteasy}</version>
 			<scope>provided</scope>
 		</dependency>
 

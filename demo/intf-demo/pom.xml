@@ -22,8 +22,8 @@
 		</repository>
 	</repositories>
 	<properties>
-		<skip_maven_deploy>true</skip_maven_deploy>
-		<project.parent.version>1.0-SNAPSHOT</project.parent.version>
+		<build.skip_maven_deploy>true</build.skip_maven_deploy>
+		<project.parent.version>1.0.0-RELEASE</project.parent.version>
 	</properties>
 	<dependencies>
 		<dependency>

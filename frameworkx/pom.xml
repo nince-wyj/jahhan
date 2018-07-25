@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>net.jahhan</groupId>
 		<artifactId>parent</artifactId>
-		<version>1.0-RELEASE</version>
+		<version>1.0.0-RELEASE</version>
 	</parent>
 	<modules>
 		<module>dubbo-common</module>
@@ -73,7 +73,7 @@
 		<argline>-server -Xms64m -Xmx256m -XX:PermSize=64m
 			-XX:MaxPermSize=128m -Dfile.encoding=UTF-8
 			-Djava.net.preferIPv4Stack=true</argline>
-		<skip_maven_deploy>false</skip_maven_deploy>
+		<build.skip_maven_deploy>false</build.skip_maven_deploy>
 		<updateReleaseInfo>true</updateReleaseInfo>
 		<project.build.sourceEncoding>${file_encoding}</project.build.sourceEncoding>
 
@@ -484,7 +484,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
 				<configuration>
-					<skip>${skip_maven_deploy}</skip>
+					<skip>${build.skip_maven_deploy}</skip>
 				</configuration>
 			</plugin>
 		</plugins>

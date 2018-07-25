@@ -22,7 +22,7 @@
 		</repository>
 	</repositories>
 	<properties>
-		<skip_maven_deploy>true</skip_maven_deploy>
+		<build.skip_maven_deploy>true</build.skip_maven_deploy>
 		<inteface.version>1.0-SNAPSHOT</inteface.version>
 		<resource.delimiter>${}</resource.delimiter>  
 		<!-- for maven compiler plugin -->

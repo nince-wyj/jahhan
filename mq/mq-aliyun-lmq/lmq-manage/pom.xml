@@ -12,7 +12,7 @@
     <parent>
         <groupId>net.jahhan</groupId>
         <artifactId>mq-aliyun-lmq</artifactId>
-        <version>1.0-RELEASE</version>
+        <version>1.0.0-RELEASE</version>
     </parent>
     <artifactId>lmq-manage</artifactId>
     <packaging>jar</packaging>

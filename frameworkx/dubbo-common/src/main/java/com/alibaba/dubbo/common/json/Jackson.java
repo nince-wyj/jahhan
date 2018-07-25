@@ -26,7 +26,7 @@ public class Jackson {
     /**
      * 获取object mapper
      *
-     * @return
+     * @return 
      */
     public static ObjectMapper getObjectMapper() {
         if (objectMapper == null) {

@@ -5,14 +5,14 @@
 	<parent>
 		<groupId>net.jahhan</groupId>
 		<artifactId>jdbc</artifactId>
-		<version>1.0-RELEASE</version>
+		<version>1.0.0-RELEASE</version>
 	</parent>
 	<artifactId>jdbc-api</artifactId>
 	<packaging>jar</packaging>
 	<name>${project.artifactId}</name>
 	<description>The jdbc module of dubbo project</description>
 	<properties>
-		<skip_maven_deploy>true</skip_maven_deploy>
+		<build.skip_maven_deploy>true</build.skip_maven_deploy>
 	</properties>
 	<dependencies>
 		<dependency>

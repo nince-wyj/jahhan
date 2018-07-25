@@ -12,14 +12,14 @@
 	<parent>
 		<groupId>net.jahhan</groupId>
 		<artifactId>parent</artifactId>
-		<version>1.0-RELEASE</version>
+		<version>1.0.0-RELEASE</version>
 	</parent>
 	<artifactId>mq</artifactId>
 	<packaging>pom</packaging>
 	<name>${project.artifactId}</name>
 	<description>The filter module of dubbo project</description>
 	<properties>
-		<skip_maven_deploy>false</skip_maven_deploy>
+		<build.skip_maven_deploy>false</build.skip_maven_deploy>
 		<!-- Log libs -->
 		<slf4j_version>1.7.25</slf4j_version>
 		<jcl_version>1.2</jcl_version>

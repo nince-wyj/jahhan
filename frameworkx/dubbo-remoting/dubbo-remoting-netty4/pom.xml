@@ -3,7 +3,7 @@
 	<parent>
 		<artifactId>dubbo-remoting</artifactId>
 		<groupId>net.jahhan</groupId>
-		<version>1.0-RELEASE</version>
+		<version>1.0.0-RELEASE</version>
 	</parent>
 
 	<artifactId>dubbo-remoting-netty4</artifactId>
@@ -13,7 +13,7 @@
 	<description>The netty4 remoting module of dubbo project</description>
 
 	<properties>
-		<skip_maven_deploy>true</skip_maven_deploy>
+		<build.skip_maven_deploy>true</build.skip_maven_deploy>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 

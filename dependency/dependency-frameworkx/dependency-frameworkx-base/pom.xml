@@ -8,10 +8,10 @@
 	<parent>
 		<groupId>net.jahhan</groupId>
 		<artifactId>dependency-frameworkx</artifactId>
-		<version>1.0-RELEASE</version>
+		<version>1.0.0-RELEASE</version>
 	</parent>
 	<properties>
-		<skip_maven_deploy>false</skip_maven_deploy>
+		<build.skip_maven_deploy>false</build.skip_maven_deploy>
 	</properties>
 	<dependencies>
 		<dependency>

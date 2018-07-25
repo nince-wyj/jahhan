@@ -1,26 +1,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>net.jahhan</groupId>
 	<artifactId>dependency-dubbo-common</artifactId>
-	<version>1.0-RELEASE</version>
 	<packaging>jar</packaging>
 	<name>${project.artifactId}</name>
 	<description>The all in one project of common</description>
-	<distributionManagement>
-		<repository>
-			<id>releases</id>
-			<name>release repository</name>
-			<url>http://47.100.61.97:8081/nexus/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>jahhan</id>
-			<url>http://47.100.61.97:8081/nexus/content/repositories/jahhan</url>
-		</snapshotRepository>
-	</distributionManagement>
+	<parent>
+		<groupId>net.jahhan</groupId>
+		<artifactId>dependency-dubbo</artifactId>
+		<version>1.0.0-RELEASE</version>
+	</parent>
 	<properties>
 		<!-- Common libs -->
-		<project.parent.version>1.0-RELEASE</project.parent.version>
+		<project.parent.version>2.0-SNAPSHOT</project.parent.version>
 		<spring.bom.version>3.2.9.RELEASE</spring.bom.version>
 		<javassist_version>3.20.0-GA</javassist_version>
 		<netty_version>3.7.0.Final</netty_version>
@@ -68,7 +60,7 @@
 		<argline>-server -Xms64m -Xmx256m -XX:PermSize=64m
 			-XX:MaxPermSize=128m -Dfile.encoding=UTF-8
 			-Djava.net.preferIPv4Stack=true</argline>
-		<skip_maven_deploy>false</skip_maven_deploy>
+		<build.skip_maven_deploy>false</build.skip_maven_deploy>
 		<updateReleaseInfo>true</updateReleaseInfo>
 		<project.build.sourceEncoding>${file_encoding}</project.build.sourceEncoding>
 

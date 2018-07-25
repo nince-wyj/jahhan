@@ -38,8 +38,7 @@ public class ListUtils {
      * 将任意类型的list转化为string类型的列表，保持列表的顺序不变
      * 
      * @param list
-     * @return
-     * @author nince
+     * @return 列表
      */
     public static List<String> list2StrList(List<?> list) {
         List<String> retList = new ArrayList<String>(list.size());

@@ -4,14 +4,14 @@
 	<parent>
 		<groupId>net.jahhan</groupId>
 		<artifactId>frameworkx-parent</artifactId>
-		<version>1.0-RELEASE</version>
+		<version>1.0.0-RELEASE</version>
 	</parent>
 	<artifactId>frameworkx-package</artifactId>
 	<packaging>jar</packaging>
 	<name>${project.artifactId}</name>
 	<description>The all in one project of common</description>
 	<properties>
-		<skip_maven_deploy>false</skip_maven_deploy>
+		<build.skip_maven_deploy>false</build.skip_maven_deploy>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -259,6 +259,34 @@
 	</dependencies>
 	<build>
 		<plugins>
+		<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-javadoc</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<doclint>none</doclint>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<includeDependencySources>true</includeDependencySources>
+					<dependencySourceIncludes>
+						<dependencySourceInclude>net.jahhan:dubbo-*</dependencySourceInclude>
+						<dependencySourceExclude>net.jahhan:dubbo-*</dependencySourceExclude>
+					</dependencySourceIncludes>
+					<show>public</show>
+					<charset>${build.file_encoding}</charset>
+					<encoding>${build.file_encoding}</encoding>
+					<docencoding>${build.file_encoding}</docencoding>
+					<links>
+						<link>http://docs.oracle.com/javase/7/docs/api</link>
+					</links>
+				</configuration>
+			</plugin>
 			<plugin>
 				<artifactId>maven-source-plugin</artifactId>
 				<executions>
