@@ -3,12 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.jahhan</groupId>
 	<artifactId>parent</artifactId>
-	<version>1.0.0-RELEASE</version>
+	<version>2.0.0-SNAPSHOTS</version>
 	<packaging>pom</packaging>
 	<name>${project.artifactId}</name>
 	<description>The cluster module of jahhan project</description>
 	<url>https://github.com/nince-wyj/jahhan</url>
-	
+
 	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>
@@ -34,6 +34,20 @@
 		<tag>${project.version}</tag>
 	</scm>
 
+	<repositories>
+		<repository>
+			<id>jahhan</id>
+			<name>Maven Central Staging Repository</name>
+			<url>http://47.100.61.97:8081/repository/maven-public/</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>jahhan</id>
+			<name>Maven Central Staging Repository</name>
+			<url>http://47.100.61.97:8081/repository/maven-public/</url>
+		</pluginRepository>
+	</pluginRepositories>
 	<distributionManagement>
 		<snapshotRepository>
 			<id>ossrh</id>
@@ -59,10 +73,10 @@
 		<module>package</module>
 		<module>sdk</module>
 		<module>spring-guice</module>
- 		<module>supported</module>
+		<module>supported</module>
 
-<!-- 		<module>dependency</module> -->
-<!-- 		<module>mq</module> -->
+		<!-- <module>dependency</module> -->
+		<!-- <module>mq</module> -->
 	</modules>
 	<properties>
 		<!-- libs version -->

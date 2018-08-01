@@ -12,7 +12,7 @@
 	<parent>
 		<groupId>net.jahhan</groupId>
 		<artifactId>parent</artifactId>
-		<version>1.0.0-RELEASE</version>
+		<version>2.0.0-SNAPSHOTS</version>
 	</parent>
 	<artifactId>logappend</artifactId>
 	<packaging>pom</packaging>
