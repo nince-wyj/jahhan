@@ -3,8 +3,8 @@ package net.jahhan.cache.context;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.jahhan.context.BaseContext;
-import net.jahhan.context.Variable;
+import net.jahhan.common.extension.context.BaseContext;
+import net.jahhan.common.extension.context.Variable;
 import net.jahhan.lock.DistributedLock;
 import net.jahhan.lock.impl.GlobalReentrantLock;
 

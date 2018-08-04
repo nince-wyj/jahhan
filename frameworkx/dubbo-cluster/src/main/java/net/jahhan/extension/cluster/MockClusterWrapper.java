@@ -19,9 +19,9 @@ import com.alibaba.dubbo.rpc.Invoker;
 import com.alibaba.dubbo.rpc.cluster.Directory;
 import com.alibaba.dubbo.rpc.cluster.support.wrapper.MockClusterInvoker;
 
-import net.jahhan.api.Wrapper;
 import net.jahhan.common.extension.annotation.Extension;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.api.Wrapper;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.spi.Cluster;
 
 /**

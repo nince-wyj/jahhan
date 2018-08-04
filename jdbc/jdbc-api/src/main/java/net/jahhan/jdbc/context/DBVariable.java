@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Set;
 
 import lombok.Data;
-import net.jahhan.context.BaseContext;
-import net.jahhan.context.Variable;
+import net.jahhan.common.extension.context.BaseContext;
+import net.jahhan.common.extension.context.Variable;
 import net.jahhan.jdbc.constant.enumeration.DBConnectLevel;
 import net.jahhan.jdbc.constant.enumeration.DBConnectStrategy;
 import net.jahhan.jdbc.dbconnexecutor.DBConnExecutorHolder;

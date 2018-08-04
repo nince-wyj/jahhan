@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.alibaba.dubbo.remoting.http.HttpHandler;
 
 import lombok.Setter;
-import net.jahhan.context.BaseContext;
-import net.jahhan.context.VariableContext;
+import net.jahhan.common.extension.context.BaseContext;
+import net.jahhan.common.extension.context.VariableContext;
 
 /**
  * 接口异步线程方法

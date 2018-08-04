@@ -4,7 +4,7 @@
     <parent>
         <groupId>net.jahhan</groupId>
 		<artifactId>package-frameworkx</artifactId>
-		<version>1.0.0-RELEASE</version>
+		<version>2.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>package-frameworkx-common</artifactId>
     <packaging>jar</packaging>
@@ -15,35 +15,35 @@
     </properties>
     <dependencies>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>package-common</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>frameworkx-package</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>supported-frameworkx-base</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>intf-authentication-center</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>sdk-authentication-center</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>supported-frameworkx-authentication-center</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
     </dependencies>
     <build>
@@ -75,56 +75,56 @@
                             <promoteTransitiveDependencies>true</promoteTransitiveDependencies>
                             <artifactSet>
                                 <includes>
-                                    <include>net.jahhan:package-common</include>
-                                    <include>net.jahhan:frameworkx-package</include>
-                                    <include>net.jahhan:intf-authentication-center</include>
-                                    <include>net.jahhan:supported-frameworkx-authentication-center</include>
-                                    <include>net.jahhan:supported-frameworkx-base</include>
+                                    <include>${project.groupId}:package-common</include>
+                                    <include>${project.groupId}:frameworkx-package</include>
+                                    <include>${project.groupId}:intf-authentication-center</include>
+                                    <include>${project.groupId}:supported-frameworkx-authentication-center</include>
+                                    <include>${project.groupId}:supported-frameworkx-base</include>
                                     
-                                    <include>net.jahhan:package-service</include>
-									<include>net.jahhan:package-base</include>
-									<include>net.jahhan:common-plugin-util</include>
-                                    <include>net.jahhan:jdbc-api</include>
-                                    <include>net.jahhan:jdbc-druid</include>
-                                    <include>net.jahhan:jdbc-c3p0</include>
-                                    <include>net.jahhan:cache-api</include>
-                                    <include>net.jahhan:cache-redis-sentinel</include>
-                                    <include>net.jahhan:cache-ehcache</include>
-                                    <include>net.jahhan:apidoc-swagger</include>
-                                    <include>net.jahhan:logappend-logback</include>
-                                    <include>net.jahhan:register-api</include>
-                                    <include>net.jahhan:register-zookeeper</include>
+                                    <include>${project.groupId}:package-service</include>
+									<include>${project.groupId}:package-base</include>
+									<include>${project.groupId}:common-extension</include>
+                                    <include>${project.groupId}:jdbc-api</include>
+                                    <include>${project.groupId}:jdbc-druid</include>
+                                    <include>${project.groupId}:jdbc-c3p0</include>
+                                    <include>${project.groupId}:cache-api</include>
+                                    <include>${project.groupId}:cache-redis-sentinel</include>
+                                    <include>${project.groupId}:cache-ehcache</include>
+                                    <include>${project.groupId}:apidoc-swagger</include>
+                                    <include>${project.groupId}:logappend-logback</include>
+                                    <include>${project.groupId}:register-api</include>
+                                    <include>${project.groupId}:register-zookeeper</include>
                                     
-                                    <include>net.jahhan:hessian-lite</include>
-									<include>net.jahhan:dubbo-common</include>
-									<include>net.jahhan:dubbo-remoting-api</include>
-									<include>net.jahhan:dubbo-remoting-netty</include>
-									<include>net.jahhan:dubbo-remoting-mina</include>
-									<include>net.jahhan:dubbo-remoting-grizzly</include>
-									<include>net.jahhan:dubbo-remoting-p2p</include>
-									<include>net.jahhan:dubbo-remoting-http</include>
-									<include>net.jahhan:dubbo-remoting-zookeeper</include>
-									<include>net.jahhan:dubbo-rpc-api</include>
-									<include>net.jahhan:dubbo-rpc-default</include>
-									<include>net.jahhan:dubbo-rpc-injvm</include>
-									<include>net.jahhan:dubbo-rpc-rmi</include>
-									<include>net.jahhan:dubbo-rpc-hessian</include>
-									<include>net.jahhan:dubbo-rpc-http</include>
-									<include>net.jahhan:dubbo-rpc-webservice</include>
-									<include>net.jahhan:dubbo-rpc-memcached</include>
-									<include>net.jahhan:dubbo-rpc-redis</include>
-									<include>net.jahhan:dubbo-rpc-rest</include>
-									<include>net.jahhan:dubbo-filter-validation</include>
-									<include>net.jahhan:dubbo-filter-cache</include>
-									<include>net.jahhan:dubbo-cluster</include>
-									<include>net.jahhan:dubbo-registry-api</include>
-									<include>net.jahhan:dubbo-registry-default</include>
-									<include>net.jahhan:dubbo-registry-multicast</include>
-									<include>net.jahhan:dubbo-registry-zookeeper</include>
-									<include>net.jahhan:dubbo-registry-redis</include>
-									<include>net.jahhan:dubbo-monitor-api</include>
-									<include>net.jahhan:dubbo-monitor-default</include>
-									<include>net.jahhan:dubbo-config-api</include>
+                                    <include>${project.groupId}:hessian-lite</include>
+									<include>${project.groupId}:dubbo-common</include>
+									<include>${project.groupId}:dubbo-remoting-api</include>
+									<include>${project.groupId}:dubbo-remoting-netty</include>
+									<include>${project.groupId}:dubbo-remoting-mina</include>
+									<include>${project.groupId}:dubbo-remoting-grizzly</include>
+									<include>${project.groupId}:dubbo-remoting-p2p</include>
+									<include>${project.groupId}:dubbo-remoting-http</include>
+									<include>${project.groupId}:dubbo-remoting-zookeeper</include>
+									<include>${project.groupId}:dubbo-rpc-api</include>
+									<include>${project.groupId}:dubbo-rpc-default</include>
+									<include>${project.groupId}:dubbo-rpc-injvm</include>
+									<include>${project.groupId}:dubbo-rpc-rmi</include>
+									<include>${project.groupId}:dubbo-rpc-hessian</include>
+									<include>${project.groupId}:dubbo-rpc-http</include>
+									<include>${project.groupId}:dubbo-rpc-webservice</include>
+									<include>${project.groupId}:dubbo-rpc-memcached</include>
+									<include>${project.groupId}:dubbo-rpc-redis</include>
+									<include>${project.groupId}:dubbo-rpc-rest</include>
+									<include>${project.groupId}:dubbo-filter-validation</include>
+									<include>${project.groupId}:dubbo-filter-cache</include>
+									<include>${project.groupId}:dubbo-cluster</include>
+									<include>${project.groupId}:dubbo-registry-api</include>
+									<include>${project.groupId}:dubbo-registry-default</include>
+									<include>${project.groupId}:dubbo-registry-multicast</include>
+									<include>${project.groupId}:dubbo-registry-zookeeper</include>
+									<include>${project.groupId}:dubbo-registry-redis</include>
+									<include>${project.groupId}:dubbo-monitor-api</include>
+									<include>${project.groupId}:dubbo-monitor-default</include>
+									<include>${project.groupId}:dubbo-config-api</include>
                                 </includes>
                             </artifactSet>
                         </configuration>

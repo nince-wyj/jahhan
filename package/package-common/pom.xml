@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>net.jahhan</groupId>
 		<artifactId>package</artifactId>
-		<version>2.0.0-SNAPSHOTS</version>
+		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>package-common</artifactId>
 	<packaging>jar</packaging>
@@ -15,14 +15,14 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>package-service</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>package-base</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -43,10 +43,10 @@
 				<configuration>
 					<includeDependencySources>true</includeDependencySources>
 					<dependencySourceIncludes>
-						<dependencySourceInclude>net.jahhan:package-base</dependencySourceInclude>
-						<dependencySourceInclude>net.jahhan:package-service</dependencySourceInclude>
+						<dependencySourceInclude>${project.groupId}:package-base</dependencySourceInclude>
+						<dependencySourceInclude>${project.groupId}:package-service</dependencySourceInclude>
 						
-						<dependencySourceExclude>net.jahhan:dubbo-*</dependencySourceExclude>
+						<dependencySourceExclude>${project.groupId}:dubbo-*</dependencySourceExclude>
 					</dependencySourceIncludes>
 					<show>public</show>
 					<charset>${build.file_encoding}</charset>
@@ -106,8 +106,8 @@
 							<promoteTransitiveDependencies>true</promoteTransitiveDependencies>
 							<artifactSet>
 								<includes>
-									<include>net.jahhan:package-service</include>
-									<include>net.jahhan:package-base</include>
+									<include>${project.groupId}:package-service</include>
+									<include>${project.groupId}:package-base</include>
 								</includes>
 							</artifactSet>
 						</configuration>

@@ -28,8 +28,8 @@ import com.alibaba.dubbo.rpc.cluster.Directory;
 import com.alibaba.dubbo.rpc.support.MockInvoker;
 
 import lombok.extern.slf4j.Slf4j;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.StringUtils;
-import net.jahhan.exception.JahhanException;
 
 /**
  * @author chao.liuc

@@ -1,6 +1,6 @@
 package net.jahhan.cache.repository.common;
 
-import net.jahhan.context.BaseContext;
+import net.jahhan.common.extension.context.BaseContext;
 import net.jahhan.spi.DBSeqCache;
 
 /**

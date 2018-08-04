@@ -10,8 +10,8 @@ import org.aopalliance.intercept.MethodInvocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.jahhan.context.BaseVariable;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.context.BaseVariable;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.jdbc.annotation.DBConnect;
 import net.jahhan.jdbc.annotation.DBConnections;
 import net.jahhan.jdbc.conn.DBConnFactory;

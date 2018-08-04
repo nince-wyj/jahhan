@@ -22,11 +22,10 @@ import net.jahhan.cache.context.RedisVariable;
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.annotation.GlobalSyncTransaction;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
+import net.jahhan.common.extension.context.BaseVariable;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.JsonUtil;
 import net.jahhan.config.ServiceImplCache;
-import net.jahhan.context.BaseVariable;
-import net.jahhan.exception.JahhanException;
-import net.jahhan.init.ApplicationContextHolder;
 import net.jahhan.lock.impl.GlobalReentrantLock;
 import net.jahhan.lock.util.GlobalReentrantLockUtil;
 

@@ -29,7 +29,7 @@ import com.alibaba.dubbo.rpc.support.ProtocolUtils;
 import com.frameworkx.common.extension.utils.ExtensionExtendUtil;
 
 import net.jahhan.common.extension.annotation.Extension;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.spi.Protocol;
 
 /**

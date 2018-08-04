@@ -2,9 +2,9 @@ package net.jahhan.properties;
 
 import java.util.Properties;
 
-import net.jahhan.api.PropertiesResetter;
 import net.jahhan.common.extension.annotation.Order;
 import net.jahhan.common.extension.annotation.PropertiesFile;
+import net.jahhan.common.extension.api.PropertiesResetter;
 import net.jahhan.spi.DataSourcePoolInit;
 
 @PropertiesFile("extensionInit")

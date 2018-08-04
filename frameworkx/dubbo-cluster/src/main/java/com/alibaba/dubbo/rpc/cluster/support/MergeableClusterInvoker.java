@@ -41,7 +41,7 @@ import com.alibaba.dubbo.rpc.cluster.Directory;
 import com.frameworkx.common.extension.utils.ExtensionExtendUtil;
 
 import lombok.extern.slf4j.Slf4j;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.extension.merger.MergerFactory;
 import net.jahhan.spi.Merger;
 

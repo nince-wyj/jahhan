@@ -9,7 +9,7 @@ import com.alibaba.dubbo.rpc.protocol.rest.RestConstraintViolation;
 import com.alibaba.dubbo.rpc.protocol.rest.ViolationReport;
 
 import net.jahhan.common.extension.constant.ContentType;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 
 public class RpcExceptionMapper implements ExceptionMapper<JahhanException> {
 

@@ -6,9 +6,9 @@ import java.util.Map;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import net.jahhan.context.BaseContext;
-import net.jahhan.context.Variable;
-import net.jahhan.context.VariableContext;
+import net.jahhan.common.extension.context.BaseContext;
+import net.jahhan.common.extension.context.Variable;
+import net.jahhan.common.extension.context.VariableContext;
 
 @Data
 @EqualsAndHashCode(callSuper = false)

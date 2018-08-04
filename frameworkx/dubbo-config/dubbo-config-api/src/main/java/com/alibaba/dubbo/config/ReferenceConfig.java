@@ -45,7 +45,7 @@ import com.frameworkx.common.extension.utils.ExtensionExtendUtil;
 import lombok.extern.slf4j.Slf4j;
 import net.jahhan.com.alibaba.dubbo.common.bytecode.Wrapper;
 import net.jahhan.com.alibaba.dubbo.common.utils.ReflectUtils;
-import net.jahhan.context.BaseContext;
+import net.jahhan.common.extension.context.BaseContext;
 import net.jahhan.extension.cluster.AvailableCluster;
 import net.jahhan.extension.protocol.InjvmProtocol;
 import net.jahhan.spi.Cluster;

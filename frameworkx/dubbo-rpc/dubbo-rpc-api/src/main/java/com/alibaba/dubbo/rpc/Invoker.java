@@ -17,7 +17,7 @@ package com.alibaba.dubbo.rpc;
 
 import com.alibaba.dubbo.common.Node;
 
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 
 /**
  * Invoker. (API/SPI, Prototype, ThreadSafe)

@@ -13,10 +13,10 @@ import com.alibaba.dubbo.rpc.RpcContext;
 import com.frameworkx.annotation.Activate;
 
 import net.jahhan.common.extension.annotation.Extension;
-import net.jahhan.context.BaseContext;
-import net.jahhan.context.BaseVariable;
-import net.jahhan.context.VariableContext;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.context.BaseContext;
+import net.jahhan.common.extension.context.BaseVariable;
+import net.jahhan.common.extension.context.VariableContext;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.spi.Filter;
 
 @Activate(group = Constants.PROVIDER, order = Integer.MIN_VALUE + 1)

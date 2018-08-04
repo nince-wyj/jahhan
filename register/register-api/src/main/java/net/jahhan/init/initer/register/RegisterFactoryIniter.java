@@ -6,9 +6,9 @@ import javax.inject.Inject;
 
 import org.apache.commons.lang3.BooleanUtils;
 
+import net.jahhan.common.extension.context.BaseContext;
+import net.jahhan.common.extension.context.Node;
 import net.jahhan.common.extension.utils.PropertiesUtil;
-import net.jahhan.context.BaseContext;
-import net.jahhan.context.Node;
 import net.jahhan.init.BootstrapInit;
 import net.jahhan.init.InitAnnocation;
 import net.jahhan.register.api.Registry;

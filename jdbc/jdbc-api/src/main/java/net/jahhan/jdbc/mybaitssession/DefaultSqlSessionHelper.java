@@ -22,7 +22,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import net.jahhan.common.extension.constant.JahhanErrorCode;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 
 public class DefaultSqlSessionHelper implements SqlSession {
 

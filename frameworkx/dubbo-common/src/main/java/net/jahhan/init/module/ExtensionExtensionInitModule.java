@@ -21,10 +21,9 @@ import com.google.inject.Scopes;
 import com.google.inject.name.Names;
 
 import lombok.extern.slf4j.Slf4j;
-import net.jahhan.api.Wrapper;
-import net.jahhan.com.alibaba.dubbo.common.compiler.support.JavassistCompiler;
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.annotation.SPI;
+import net.jahhan.common.extension.api.Wrapper;
 import net.jahhan.common.extension.utils.ClassScaner;
 import net.jahhan.common.extension.utils.ExtensionUtil;
 import net.jahhan.common.extension.utils.LogUtil;
@@ -36,8 +35,7 @@ import net.jahhan.init.InitAnnocation;
 @InitAnnocation(isLazy = false, initSequence = 4400)
 public class ExtensionExtensionInitModule extends ExtensionInitModule {
 
-	private Map<Class<?>, Set<Class<?>>> cachedWrapperClasses = new HashMap<>();
-	private net.jahhan.com.alibaba.dubbo.common.compiler.Compiler compiler = new JavassistCompiler();
+	private Map<Class<?>, Set<Class<?>>> cachedWrapperClasses = new ConcurrentHashMap<>();
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override

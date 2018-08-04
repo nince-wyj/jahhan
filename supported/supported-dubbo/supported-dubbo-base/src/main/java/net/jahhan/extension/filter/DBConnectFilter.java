@@ -8,8 +8,6 @@ import java.util.Set;
 
 import javax.inject.Singleton;
 
-import org.springframework.context.support.BeanFactoryProvider;
-
 import com.alibaba.dubbo.common.Constants;
 import com.alibaba.dubbo.common.Extension;
 import com.alibaba.dubbo.common.extension.Activate;
@@ -21,13 +19,12 @@ import com.alibaba.dubbo.rpc.RpcException;
 
 import net.jahhan.common.extension.annotation.GlobalSyncTransaction;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
+import net.jahhan.common.extension.context.BaseContext;
+import net.jahhan.common.extension.context.BaseVariable;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.ExtensionUtil;
 import net.jahhan.common.extension.utils.LogUtil;
 import net.jahhan.config.ServiceImplCache;
-import net.jahhan.context.BaseContext;
-import net.jahhan.context.BaseVariable;
-import net.jahhan.exception.JahhanException;
-import net.jahhan.init.ApplicationContextHolder;
 import net.jahhan.jdbc.annotation.DBConnect;
 import net.jahhan.jdbc.annotation.DBConnections;
 import net.jahhan.jdbc.conn.DBConnFactory;

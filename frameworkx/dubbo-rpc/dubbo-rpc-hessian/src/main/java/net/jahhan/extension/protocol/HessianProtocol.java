@@ -42,7 +42,7 @@ import com.caucho.hessian.server.HessianSkeleton;
 import lombok.extern.slf4j.Slf4j;
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.spi.HttpBinder;
 
 /**

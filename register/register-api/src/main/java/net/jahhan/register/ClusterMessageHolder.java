@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.inject.Singleton;
 
-import net.jahhan.context.Node;
+import net.jahhan.common.extension.context.Node;
 
 @Singleton
 public class ClusterMessageHolder {

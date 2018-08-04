@@ -19,7 +19,7 @@ import com.alibaba.dubbo.common.URL;
 import com.alibaba.dubbo.rpc.Invoker;
 
 import net.jahhan.common.extension.annotation.SPI;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 
 /**
  * InvokerListener. (SPI, Singleton, ThreadSafe)

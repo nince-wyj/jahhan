@@ -22,9 +22,9 @@ import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.dubbo.rpc.RpcResult;
 import lombok.extern.slf4j.Slf4j;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
+import net.jahhan.common.extension.exception.ExceptionMessage;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.JsonUtil;
-import net.jahhan.exception.ExceptionMessage;
-import net.jahhan.exception.JahhanException;
 
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.ServerErrorException;

@@ -11,9 +11,9 @@
 		<repository>
 			<id>jahhan</id>
 			<url>http://47.100.61.97:8081/nexus/content/repositories/jahhan</url>
-			<snapshots>
+			<SNAPSHOT>
 				<enabled>true</enabled>
-			</snapshots>
+			</SNAPSHOT>
 		</repository>
 		<repository>
 			<id>central</id>
@@ -23,13 +23,14 @@
 	</repositories>
 	<properties>
 		<build.skip_maven_deploy>true</build.skip_maven_deploy>
-		<project.parent.version>1.0.0-RELEASE</project.parent.version>
+		<project.version>1.0.0-RELEASE</project.version>
+		<framework.version>2.0.0-SNAPSHOT</framework.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>net.jahhan</groupId>
 			<artifactId>package-service</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${framework.version}</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

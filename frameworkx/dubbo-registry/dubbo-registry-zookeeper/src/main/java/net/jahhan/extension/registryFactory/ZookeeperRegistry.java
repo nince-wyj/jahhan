@@ -28,17 +28,12 @@ import com.alibaba.dubbo.common.utils.UrlUtils;
 import com.alibaba.dubbo.registry.NotifyListener;
 import com.alibaba.dubbo.registry.support.FailbackRegistry;
 import com.alibaba.dubbo.remoting.zookeeper.ChildListener;
-import com.alibaba.dubbo.remoting.zookeeper.ChildNodeListener;
 import com.alibaba.dubbo.remoting.zookeeper.StateListener;
 import com.alibaba.dubbo.remoting.zookeeper.ZookeeperClient;
-import com.frameworkx.cache.ClusterMessageHolder;
-import com.frameworkx.cache.ProtocolConfigHolder;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import net.jahhan.common.extension.constant.BaseConfiguration;
-import net.jahhan.context.BaseContext;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.spi.ZookeeperTransporter;
 
 /**

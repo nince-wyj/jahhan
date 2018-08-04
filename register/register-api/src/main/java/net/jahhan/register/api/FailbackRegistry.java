@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import net.jahhan.context.Node;
+import net.jahhan.common.extension.context.Node;
 
 @Slf4j
 public abstract class FailbackRegistry implements Registry {

@@ -32,9 +32,8 @@ import com.alibaba.dubbo.remoting.http.HttpHandler;
 import com.alibaba.dubbo.remoting.http.HttpServer;
 import com.alibaba.dubbo.rpc.RpcContext;
 
-import net.jahhan.context.BaseContext;
-import net.jahhan.context.Node;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.context.Node;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.spi.HttpBinder;
 
 /**

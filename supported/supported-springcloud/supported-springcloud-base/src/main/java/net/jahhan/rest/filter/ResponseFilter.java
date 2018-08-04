@@ -14,8 +14,8 @@ import org.apache.catalina.connector.Response;
 
 import net.jahhan.common.extension.constant.BaseConfiguration;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
+import net.jahhan.common.extension.exception.ExceptionMessage;
 import net.jahhan.common.extension.utils.LocalIpUtils;
-import net.jahhan.exception.ExceptionMessage;
 
 @Provider
 public class ResponseFilter implements ContainerResponseFilter {

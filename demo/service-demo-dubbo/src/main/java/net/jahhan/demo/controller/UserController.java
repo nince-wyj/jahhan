@@ -24,7 +24,6 @@ import net.jahhan.demo.vo.UserNameIVO;
 import net.jahhan.demo.vo.UserOVO;
 import net.jahhan.demo.vo.UserRegistIVO;
 import net.jahhan.demo.vo.UserRegistOVO;
-import net.jahhan.exception.JahhanException;
 import net.jahhan.test.intf.TestService;
 
 @Service

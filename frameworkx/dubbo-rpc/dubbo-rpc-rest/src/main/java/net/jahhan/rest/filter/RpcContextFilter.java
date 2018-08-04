@@ -37,10 +37,10 @@ import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import com.alibaba.dubbo.rpc.RpcContext;
 
 import net.jahhan.common.extension.constant.BaseConfiguration;
+import net.jahhan.common.extension.context.BaseContext;
+import net.jahhan.common.extension.context.BaseVariable;
+import net.jahhan.common.extension.context.VariableContext;
 import net.jahhan.common.extension.utils.StringUtils;
-import net.jahhan.context.BaseContext;
-import net.jahhan.context.BaseVariable;
-import net.jahhan.context.VariableContext;
 
 /**
  * easyrest filter

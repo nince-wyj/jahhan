@@ -21,7 +21,7 @@ import com.alibaba.dubbo.rpc.Invoker;
 import com.frameworkx.annotation.Adaptive;
 
 import net.jahhan.common.extension.annotation.SPI;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 
 /**
  * ProxyFactory. (API/SPI, Singleton, ThreadSafe)

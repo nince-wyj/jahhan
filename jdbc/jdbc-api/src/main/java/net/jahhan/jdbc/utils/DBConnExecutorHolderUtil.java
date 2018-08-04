@@ -7,8 +7,8 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import net.jahhan.common.extension.context.BaseVariable;
 import net.jahhan.common.extension.utils.LogUtil;
-import net.jahhan.context.BaseVariable;
 import net.jahhan.jdbc.context.DBVariable;
 import net.jahhan.jdbc.dbconnexecutor.DBConnExecutorHolder;
 import net.jahhan.spi.common.BroadcastSender;

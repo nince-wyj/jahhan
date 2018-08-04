@@ -56,10 +56,10 @@ import java.util.ArrayList;
  * Deserializing a Java array
  */
 public class ArrayDeserializer extends AbstractListDeserializer {
-  private Class _componentType;
-  private Class _type;
+  private Class<?> _componentType;
+  private Class<?> _type;
   
-  public ArrayDeserializer(Class componentType)
+  public ArrayDeserializer(Class<?> componentType)
   {
     _componentType = componentType;
     
@@ -74,7 +74,7 @@ public class ArrayDeserializer extends AbstractListDeserializer {
       _type = Object[].class;
   }
 
-  public Class getType()
+  public Class<?> getType()
   {
     return _type;
   }
@@ -104,7 +104,7 @@ public class ArrayDeserializer extends AbstractListDeserializer {
       return data;
     }
     else {
-      ArrayList list = new ArrayList();
+      ArrayList<Object> list = new ArrayList<>();
 
       in.addRef(list);
 

@@ -11,11 +11,11 @@ import net.jahhan.authenticationcenter.intf.ServiceIntf;
 import net.jahhan.authenticationcenter.vo.ServiceLoginIVO;
 import net.jahhan.authenticationcenter.vo.ServiceLoginOVO;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
+import net.jahhan.common.extension.context.BaseContext;
+import net.jahhan.common.extension.context.BaseVariable;
+import net.jahhan.common.extension.context.VariableContext;
 import net.jahhan.common.extension.utils.Assert;
 import net.jahhan.common.extension.utils.PropertiesUtil;
-import net.jahhan.context.BaseContext;
-import net.jahhan.context.BaseVariable;
-import net.jahhan.context.VariableContext;
 
 @Named
 @Singleton

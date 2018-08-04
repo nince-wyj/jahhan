@@ -1,6 +1,6 @@
 package net.jahhan.spring.aspect;
 
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 
 public interface Invoker {
 

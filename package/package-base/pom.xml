@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>net.jahhan</groupId>
 		<artifactId>package</artifactId>
-		<version>2.0.0-SNAPSHOTS</version>
+		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>package-base</artifactId>
 	<packaging>jar</packaging>
@@ -15,55 +15,55 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>net.jahhan</groupId>
-			<artifactId>common-plugin-util</artifactId>
-			<version>${project.parent.version}</version>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>common-extension</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>jdbc-druid</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>jdbc-api</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>cache-redis-sentinel</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>cache-ehcache</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>cache-api</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>apidoc-swagger</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>logappend-logback</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>register-api</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>register-zookeeper</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -84,14 +84,14 @@
 				<configuration>
 					<includeDependencySources>true</includeDependencySources>
 					<dependencySourceIncludes>
-						<dependencySourceInclude>net.jahhan:common-plugin-util</dependencySourceInclude>
-						<dependencySourceInclude>net.jahhan:jdbc-*</dependencySourceInclude>
-						<dependencySourceInclude>net.jahhan:cache-*</dependencySourceInclude>
-						<dependencySourceInclude>net.jahhan:apidoc-*</dependencySourceInclude>
-						<dependencySourceInclude>net.jahhan:logappend-*</dependencySourceInclude>
-						<dependencySourceInclude>net.jahhan:register-*</dependencySourceInclude>
+						<dependencySourceInclude>${project.groupId}:common-extension</dependencySourceInclude>
+						<dependencySourceInclude>${project.groupId}:jdbc-*</dependencySourceInclude>
+						<dependencySourceInclude>${project.groupId}:cache-*</dependencySourceInclude>
+						<dependencySourceInclude>${project.groupId}:apidoc-*</dependencySourceInclude>
+						<dependencySourceInclude>${project.groupId}:logappend-*</dependencySourceInclude>
+						<dependencySourceInclude>${project.groupId}:register-*</dependencySourceInclude>
 						
-						<dependencySourceExclude>net.jahhan:dubbo-*</dependencySourceExclude>
+						<dependencySourceExclude>${project.groupId}:dubbo-*</dependencySourceExclude>
 					</dependencySourceIncludes>
 					<show>public</show>
 					<charset>${build.file_encoding}</charset>
@@ -127,17 +127,17 @@
 							<promoteTransitiveDependencies>true</promoteTransitiveDependencies>
 							<artifactSet>
 								<includes>
-									<include>net.jahhan:common-plugin-util</include>
-									<include>net.jahhan:jdbc-api</include>
-									<include>net.jahhan:jdbc-druid</include>
-									<include>net.jahhan:jdbc-c3p0</include>
-									<include>net.jahhan:cache-api</include>
-									<include>net.jahhan:cache-redis-sentinel</include>
-									<include>net.jahhan:cache-ehcache</include>
-									<include>net.jahhan:apidoc-swagger</include>
-									<include>net.jahhan:logappend-logback</include>
-									<include>net.jahhan:register-api</include>
-									<include>net.jahhan:register-zookeeper</include>
+									<include>${project.groupId}:common-extension</include>
+									<include>${project.groupId}:jdbc-api</include>
+									<include>${project.groupId}:jdbc-druid</include>
+									<include>${project.groupId}:jdbc-c3p0</include>
+									<include>${project.groupId}:cache-api</include>
+									<include>${project.groupId}:cache-redis-sentinel</include>
+									<include>${project.groupId}:cache-ehcache</include>
+									<include>${project.groupId}:apidoc-swagger</include>
+									<include>${project.groupId}:logappend-logback</include>
+									<include>${project.groupId}:register-api</include>
+									<include>${project.groupId}:register-zookeeper</include>
 								</includes>
 							</artifactSet>
 						</configuration>

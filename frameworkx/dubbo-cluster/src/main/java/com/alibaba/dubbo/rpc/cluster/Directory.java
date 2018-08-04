@@ -21,7 +21,7 @@ import com.alibaba.dubbo.common.Node;
 import com.alibaba.dubbo.rpc.Invocation;
 import com.alibaba.dubbo.rpc.Invoker;
 
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 
 /**
  * Directory. (SPI, Prototype, ThreadSafe)

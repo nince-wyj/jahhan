@@ -4,7 +4,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import net.jahhan.common.extension.constant.ContentType;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 
 public class RpcExceptionMapper implements ExceptionMapper<JahhanException> {
 

@@ -6,9 +6,9 @@ import net.jahhan.cache.RedisFactory;
 import net.jahhan.cache.constants.RedisConstants;
 import net.jahhan.cache.context.RedisVariable;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
+import net.jahhan.common.extension.context.BaseVariable;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.LogUtil;
-import net.jahhan.context.BaseVariable;
-import net.jahhan.exception.JahhanException;
 import net.jahhan.lock.impl.GlobalReentrantLock;
 
 /**

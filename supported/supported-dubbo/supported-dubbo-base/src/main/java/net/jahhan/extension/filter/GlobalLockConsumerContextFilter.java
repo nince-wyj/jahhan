@@ -18,8 +18,8 @@ import com.alibaba.dubbo.rpc.RpcException;
 
 import net.jahhan.cache.context.RedisVariable;
 import net.jahhan.common.extension.annotation.Extension;
+import net.jahhan.common.extension.context.BaseVariable;
 import net.jahhan.common.extension.utils.JsonUtil;
-import net.jahhan.context.BaseVariable;
 import net.jahhan.lock.impl.GlobalReentrantLock;
 
 @Activate(group = Constants.CONSUMER, order = -9000)

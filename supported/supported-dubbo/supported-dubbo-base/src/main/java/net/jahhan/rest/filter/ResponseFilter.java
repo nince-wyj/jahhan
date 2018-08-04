@@ -2,8 +2,9 @@ package net.jahhan.rest.filter;
 
 import net.jahhan.common.extension.constant.BaseConfiguration;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
+import net.jahhan.common.extension.exception.ExceptionMessage;
 import net.jahhan.common.extension.utils.LocalIpUtils;
-import net.jahhan.exception.ExceptionMessage;
+
 import org.jboss.resteasy.util.HttpResponseCodes;
 
 import javax.ws.rs.container.ContainerRequestContext;

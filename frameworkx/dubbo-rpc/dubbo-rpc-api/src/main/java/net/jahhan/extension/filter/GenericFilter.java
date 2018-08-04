@@ -39,8 +39,8 @@ import net.jahhan.com.alibaba.dubbo.common.io.UnsafeByteArrayOutputStream;
 import net.jahhan.com.alibaba.dubbo.common.utils.PojoUtils;
 import net.jahhan.com.alibaba.dubbo.common.utils.ReflectUtils;
 import net.jahhan.common.extension.annotation.Extension;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.StringUtils;
-import net.jahhan.exception.JahhanException;
 import net.jahhan.spi.Filter;
 import net.jahhan.spi.Serialization;
 

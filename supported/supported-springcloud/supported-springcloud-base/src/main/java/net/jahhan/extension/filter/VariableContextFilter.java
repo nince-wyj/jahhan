@@ -7,10 +7,10 @@ import javax.inject.Singleton;
 
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.annotation.Order;
-import net.jahhan.context.BaseContext;
-import net.jahhan.context.BaseVariable;
-import net.jahhan.context.VariableContext;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.context.BaseContext;
+import net.jahhan.common.extension.context.BaseVariable;
+import net.jahhan.common.extension.context.VariableContext;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.request.context.RequestVariable;
 import net.jahhan.spring.aspect.Filter;
 import net.jahhan.spring.aspect.Invocation;

@@ -24,7 +24,7 @@ import com.alibaba.dubbo.rpc.protocol.AbstractProtocol;
 import com.alibaba.dubbo.rpc.support.MockInvoker;
 
 import net.jahhan.common.extension.annotation.Extension;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 
 /**
  * MockProtocol 用于在consumer side 通过url及类型生成一个mockInvoker

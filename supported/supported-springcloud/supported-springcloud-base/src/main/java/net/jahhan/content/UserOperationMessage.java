@@ -4,7 +4,7 @@ import java.util.Map;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import net.jahhan.context.OperationMessage;
+import net.jahhan.common.extension.context.OperationMessage;
 import net.jahhan.service.context.AuthenticationVariable;
 import net.jahhan.service.service.bean.Service;
 import net.jahhan.service.service.bean.User;

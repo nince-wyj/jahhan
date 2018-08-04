@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.concurrent.atomic.AtomicLong;
 
-import net.jahhan.context.BaseContext;
-import net.jahhan.context.BaseVariable;
+import net.jahhan.common.extension.context.BaseContext;
+import net.jahhan.common.extension.context.BaseVariable;
 import net.jahhan.jdbc.constant.enumeration.DBConnectLevel;
 import net.jahhan.spi.DataSourcePoolInit;
 

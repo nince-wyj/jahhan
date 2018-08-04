@@ -32,7 +32,7 @@ import com.alibaba.dubbo.rpc.RpcResult;
 import com.alibaba.dubbo.rpc.protocol.AbstractInvoker;
 
 import net.jahhan.common.extension.constant.JahhanErrorCode;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.spi.ChannelHandler;
 
 /**

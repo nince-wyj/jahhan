@@ -9,7 +9,7 @@ import net.jahhan.cache.Redis;
 import net.jahhan.cache.RedisFactory;
 import net.jahhan.cache.constants.RedisConstants;
 import net.jahhan.common.extension.annotation.Extension;
-import net.jahhan.context.BaseContext;
+import net.jahhan.common.extension.context.BaseContext;
 import net.jahhan.spi.common.BroadcastSender;
 
 @Slf4j

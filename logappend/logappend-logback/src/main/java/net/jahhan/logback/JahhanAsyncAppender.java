@@ -4,10 +4,10 @@ import java.util.Map;
 
 import ch.qos.logback.classic.AsyncAppender;
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import net.jahhan.context.BaseContext;
-import net.jahhan.context.BaseVariable;
-import net.jahhan.context.Node;
-import net.jahhan.context.VariableContext;
+import net.jahhan.common.extension.context.BaseContext;
+import net.jahhan.common.extension.context.BaseVariable;
+import net.jahhan.common.extension.context.Node;
+import net.jahhan.common.extension.context.VariableContext;
 
 public class JahhanAsyncAppender extends AsyncAppender {
 	@Override

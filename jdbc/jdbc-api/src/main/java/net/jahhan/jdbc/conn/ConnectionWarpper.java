@@ -23,8 +23,8 @@ import java.util.concurrent.Executor;
 
 import org.apache.commons.lang3.StringUtils;
 
+import net.jahhan.common.extension.context.BaseContext;
 import net.jahhan.common.extension.utils.LogUtil;
-import net.jahhan.context.BaseContext;
 import net.jahhan.jdbc.context.DBContext;
 import net.jahhan.jdbc.context.DBVariable;
 import net.jahhan.jdbc.event.DBEvent;

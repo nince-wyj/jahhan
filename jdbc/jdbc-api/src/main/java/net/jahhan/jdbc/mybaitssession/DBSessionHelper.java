@@ -16,9 +16,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.transaction.managed.ManagedTransaction;
 
 import net.jahhan.common.extension.constant.JahhanErrorCode;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.ClassScaner;
 import net.jahhan.common.extension.utils.LogUtil;
-import net.jahhan.exception.JahhanException;
 import net.jahhan.jdbc.DBConnExecutorHandler;
 import net.jahhan.jdbc.SessionHandler;
 import net.jahhan.jdbc.annotation.DBConnect;

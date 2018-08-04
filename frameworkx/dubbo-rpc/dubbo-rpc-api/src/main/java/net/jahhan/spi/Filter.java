@@ -20,7 +20,7 @@ import com.alibaba.dubbo.rpc.Invoker;
 import com.alibaba.dubbo.rpc.Result;
 
 import net.jahhan.common.extension.annotation.SPI;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 
 /**
  * Filter. (SPI, Singleton, ThreadSafe)

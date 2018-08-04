@@ -35,7 +35,7 @@ import com.alibaba.dubbo.rpc.support.RpcUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 
 /**
  * AbstractInvoker.

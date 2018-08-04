@@ -30,7 +30,7 @@ import com.frameworkx.annotation.Adaptive;
 
 import lombok.extern.slf4j.Slf4j;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.spi.ProxyFactory;
 
 /**

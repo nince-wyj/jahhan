@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>net.jahhan</groupId>
 		<artifactId>frameworkx-parent</artifactId>
-		<version>2.0.0-SNAPSHOTS</version>
+		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>frameworkx-package</artifactId>
 	<packaging>jar</packaging>
@@ -15,9 +15,9 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>net.jahhan</groupId>
-			<artifactId>common-plugin-util</artifactId>
-			<version>${project.parent.version}</version>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>common-extension</artifactId>
+			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.mortbay.jetty</groupId>
@@ -26,9 +26,9 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>dubbo-config-api</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.mortbay.jetty</groupId>
@@ -37,14 +37,14 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>dubbo-remoting-netty</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>dubbo-remoting-mina</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.mina</groupId>
@@ -57,9 +57,9 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>dubbo-remoting-grizzly</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.glassfish.grizzly</groupId>
@@ -68,14 +68,14 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>dubbo-remoting-p2p</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>dubbo-remoting-http</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.mortbay.jetty</groupId>
@@ -96,19 +96,19 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>dubbo-rpc-default</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>dubbo-rpc-injvm</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>dubbo-rpc-hessian</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>com.caucho</groupId>
@@ -117,13 +117,13 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>hessian-lite</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>dubbo-rpc-webservice</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.cxf</groupId>
@@ -136,9 +136,9 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>dubbo-rpc-memcached</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>com.googlecode.xmemcached</groupId>
@@ -147,9 +147,9 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>dubbo-rpc-redis</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>redis.clients</groupId>
@@ -158,9 +158,9 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>dubbo-rpc-rest</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.jboss.resteasy</groupId>
@@ -205,19 +205,19 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>dubbo-registry-default</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>dubbo-registry-multicast</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>dubbo-registry-zookeeper</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.zookeeper</groupId>
@@ -234,9 +234,9 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>dubbo-registry-redis</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>redis.clients</groupId>
@@ -245,16 +245,16 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>net.jahhan</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>dubbo-monitor-default</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 
-		<!-- <dependency> <groupId>net.jahhan</groupId> <artifactId>dubbo-rpc-avro</artifactId> 
-			<version>${project.parent.version}</version> </dependency> <dependency> <groupId>net.jahhan</groupId> 
-			<artifactId>dubbo-rpc-grpc</artifactId> <version>${project.parent.version}</version> 
-			</dependency> <dependency> <groupId>net.jahhan</groupId> <artifactId>dubbo-rpc-thrift</artifactId> 
-			<version>${project.parent.version}</version> </dependency> -->
+		<!-- <dependency> <groupId>${project.groupId}</groupId> <artifactId>dubbo-rpc-avro</artifactId> 
+			<version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> 
+			<artifactId>dubbo-rpc-grpc</artifactId> <version>${project.version}</version> 
+			</dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>dubbo-rpc-thrift</artifactId> 
+			<version>${project.version}</version> </dependency> -->
 
 	</dependencies>
 	<build>
@@ -275,8 +275,8 @@
 				<configuration>
 					<includeDependencySources>true</includeDependencySources>
 					<dependencySourceIncludes>
-						<dependencySourceInclude>net.jahhan:dubbo-*</dependencySourceInclude>
-						<dependencySourceExclude>net.jahhan:dubbo-*</dependencySourceExclude>
+						<dependencySourceInclude>${project.groupId}:dubbo-*</dependencySourceInclude>
+						<dependencySourceExclude>${project.groupId}:dubbo-*</dependencySourceExclude>
 					</dependencySourceIncludes>
 					<show>public</show>
 					<charset>${build.file_encoding}</charset>
@@ -314,41 +314,41 @@
 							<promoteTransitiveDependencies>true</promoteTransitiveDependencies>
 							<artifactSet>
 								<includes>
-									<include>net.jahhan:hessian-lite</include>
-									<include>net.jahhan:common-plugin-util</include>
-									<include>net.jahhan:dubbo-common</include>
-									<include>net.jahhan:dubbo-remoting-api</include>
-									<include>net.jahhan:dubbo-remoting-netty</include>
-									<include>net.jahhan:dubbo-remoting-mina</include>
-									<include>net.jahhan:dubbo-remoting-grizzly</include>
-									<include>net.jahhan:dubbo-remoting-p2p</include>
-									<include>net.jahhan:dubbo-remoting-http</include>
-									<include>net.jahhan:dubbo-remoting-zookeeper</include>
-									<include>net.jahhan:dubbo-rpc-api</include>
-									<include>net.jahhan:dubbo-rpc-default</include>
-									<include>net.jahhan:dubbo-rpc-injvm</include>
-									<include>net.jahhan:dubbo-rpc-rmi</include>
-									<include>net.jahhan:dubbo-rpc-hessian</include>
-									<include>net.jahhan:dubbo-rpc-http</include>
-									<include>net.jahhan:dubbo-rpc-webservice</include>
-									<include>net.jahhan:dubbo-rpc-memcached</include>
-									<include>net.jahhan:dubbo-rpc-redis</include>
-									<include>net.jahhan:dubbo-rpc-rest</include>
-									<include>net.jahhan:dubbo-filter-validation</include>
-									<include>net.jahhan:dubbo-filter-cache</include>
-									<include>net.jahhan:dubbo-cluster</include>
-									<include>net.jahhan:dubbo-registry-api</include>
-									<include>net.jahhan:dubbo-registry-default</include>
-									<include>net.jahhan:dubbo-registry-multicast</include>
-									<include>net.jahhan:dubbo-registry-zookeeper</include>
-									<include>net.jahhan:dubbo-registry-redis</include>
-									<include>net.jahhan:dubbo-monitor-api</include>
-									<include>net.jahhan:dubbo-monitor-default</include>
-									<include>net.jahhan:dubbo-config-api</include>
+									<include>${project.groupId}:hessian-lite</include>
+									<include>${project.groupId}:common-extension</include>
+									<include>${project.groupId}:dubbo-common</include>
+									<include>${project.groupId}:dubbo-remoting-api</include>
+									<include>${project.groupId}:dubbo-remoting-netty</include>
+									<include>${project.groupId}:dubbo-remoting-mina</include>
+									<include>${project.groupId}:dubbo-remoting-grizzly</include>
+									<include>${project.groupId}:dubbo-remoting-p2p</include>
+									<include>${project.groupId}:dubbo-remoting-http</include>
+									<include>${project.groupId}:dubbo-remoting-zookeeper</include>
+									<include>${project.groupId}:dubbo-rpc-api</include>
+									<include>${project.groupId}:dubbo-rpc-default</include>
+									<include>${project.groupId}:dubbo-rpc-injvm</include>
+									<include>${project.groupId}:dubbo-rpc-rmi</include>
+									<include>${project.groupId}:dubbo-rpc-hessian</include>
+									<include>${project.groupId}:dubbo-rpc-http</include>
+									<include>${project.groupId}:dubbo-rpc-webservice</include>
+									<include>${project.groupId}:dubbo-rpc-memcached</include>
+									<include>${project.groupId}:dubbo-rpc-redis</include>
+									<include>${project.groupId}:dubbo-rpc-rest</include>
+									<include>${project.groupId}:dubbo-filter-validation</include>
+									<include>${project.groupId}:dubbo-filter-cache</include>
+									<include>${project.groupId}:dubbo-cluster</include>
+									<include>${project.groupId}:dubbo-registry-api</include>
+									<include>${project.groupId}:dubbo-registry-default</include>
+									<include>${project.groupId}:dubbo-registry-multicast</include>
+									<include>${project.groupId}:dubbo-registry-zookeeper</include>
+									<include>${project.groupId}:dubbo-registry-redis</include>
+									<include>${project.groupId}:dubbo-monitor-api</include>
+									<include>${project.groupId}:dubbo-monitor-default</include>
+									<include>${project.groupId}:dubbo-config-api</include>
 
 
-									<!-- <include>net.jahhan:dubbo-rpc-avro</include> <include>net.jahhan:dubbo-rpc-grpc</include> 
-										<include>net.jahhan:dubbo-rpc-thrift</include> -->
+									<!-- <include>${project.groupId}:dubbo-rpc-avro</include> <include>${project.groupId}:dubbo-rpc-grpc</include> 
+										<include>${project.groupId}:dubbo-rpc-thrift</include> -->
 
 								</includes>
 							</artifactSet>

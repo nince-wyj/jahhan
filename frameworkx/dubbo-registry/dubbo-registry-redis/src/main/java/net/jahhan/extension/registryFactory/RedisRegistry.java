@@ -41,8 +41,8 @@ import com.alibaba.dubbo.registry.NotifyListener;
 import com.alibaba.dubbo.registry.support.FailbackRegistry;
 
 import lombok.extern.slf4j.Slf4j;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.StringUtils;
-import net.jahhan.exception.JahhanException;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;

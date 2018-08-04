@@ -34,8 +34,8 @@ import com.frameworkx.common.extension.utils.ExtensionExtendUtil;
 
 import net.jahhan.com.alibaba.dubbo.common.utils.ReflectUtils;
 import net.jahhan.common.extension.constant.BaseConfiguration;
+import net.jahhan.common.extension.context.BaseContext;
 import net.jahhan.common.extension.utils.StringUtils;
-import net.jahhan.context.BaseContext;
 import net.jahhan.spi.Cluster;
 import net.jahhan.spi.Filter;
 import net.jahhan.spi.InvokerListener;

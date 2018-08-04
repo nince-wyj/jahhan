@@ -40,7 +40,7 @@ import net.jahhan.com.alibaba.dubbo.common.serialize.ObjectInput;
 import net.jahhan.com.alibaba.dubbo.common.serialize.ObjectOutput;
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.spi.Serialization;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;

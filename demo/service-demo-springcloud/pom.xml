@@ -11,9 +11,9 @@
 		<repository>
 			<id>jahhan</id>
 			<url>http://47.100.61.97:8081/nexus/content/repositories/jahhan</url>
-			<snapshots>
+			<SNAPSHOT>
 				<enabled>true</enabled>
-			</snapshots>
+			</SNAPSHOT>
 		</repository>
 		<repository>
 			<id>central</id>
@@ -24,6 +24,7 @@
 	<properties>
 		<build.skip_maven_deploy>true</build.skip_maven_deploy>
 		<inteface.version>1.0-SNAPSHOT</inteface.version>
+		<framework.version>2.0.0-SNAPSHOT</framework.version>
 		<resource.delimiter>${}</resource.delimiter>  
 		<!-- for maven compiler plugin -->
 		<maven_compiler_plugin_version>3.5.1</maven_compiler_plugin_version>
@@ -48,7 +49,7 @@
 		 <dependency>
 			<groupId>net.jahhan</groupId>
 			<artifactId>dependency-springcloud-base</artifactId>
-			<version>${inteface.version}</version>
+			<version>${framework.version}</version>
 		</dependency> 
 	</dependencies>
 

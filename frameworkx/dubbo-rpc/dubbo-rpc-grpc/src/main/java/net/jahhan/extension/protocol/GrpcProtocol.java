@@ -16,8 +16,8 @@ import io.grpc.ServerBuilder;
 import lombok.extern.slf4j.Slf4j;
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.constant.BaseConfiguration;
-import net.jahhan.context.BaseContext;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.context.BaseContext;
+import net.jahhan.common.extension.exception.JahhanException;
 
 @Extension("grpc")
 @Singleton

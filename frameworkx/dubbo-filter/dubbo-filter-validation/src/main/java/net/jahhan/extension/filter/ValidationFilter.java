@@ -26,7 +26,7 @@ import com.alibaba.dubbo.validation.Validator;
 import com.frameworkx.annotation.Activate;
 
 import net.jahhan.common.extension.annotation.Extension;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.spi.Filter;
 import net.jahhan.spi.Validation;
 

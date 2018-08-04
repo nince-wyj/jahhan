@@ -10,8 +10,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.PropertiesUtil;
-import net.jahhan.exception.JahhanException;
 import net.jahhan.spi.DataSourcePoolInit;
 
 @Slf4j

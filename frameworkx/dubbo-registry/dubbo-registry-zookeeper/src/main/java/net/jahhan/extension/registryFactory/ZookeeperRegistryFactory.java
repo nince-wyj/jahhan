@@ -10,7 +10,7 @@ import com.frameworkx.annotation.Adaptive;
 
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.constant.BaseConfiguration;
-import net.jahhan.context.BaseContext;
+import net.jahhan.common.extension.context.BaseContext;
 import net.jahhan.spi.ZookeeperTransporter;
 
 @Extension("zookeeper")

@@ -35,8 +35,8 @@ import com.frameworkx.common.extension.utils.ExtensionExtendUtil;
 import net.jahhan.com.alibaba.dubbo.common.utils.PojoUtils;
 import net.jahhan.com.alibaba.dubbo.common.utils.ReflectUtils;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.StringUtils;
-import net.jahhan.exception.JahhanException;
 import net.jahhan.spi.ProxyFactory;
 
 /**

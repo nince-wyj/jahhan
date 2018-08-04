@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.jahhan</groupId>
 	<artifactId>parent</artifactId>
-	<version>2.0.0-SNAPSHOTS</version>
+	<version>2.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>${project.artifactId}</name>
 	<description>The cluster module of jahhan project</description>
@@ -48,20 +48,10 @@
 			<url>http://47.100.61.97:8081/repository/maven-public/</url>
 		</pluginRepository>
 	</pluginRepositories>
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>ossmv</id>
-			<name>Maven Central Staging Repository</name>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-		</repository>
-	</distributionManagement>
+
 
 	<modules>
-		<module>common-plugin-util</module>
+		<module>common</module>
 
 		<module>jdbc</module>
 		<module>cache</module>
@@ -72,7 +62,6 @@
 		<module>frameworkx</module>
 		<module>package</module>
 		<module>sdk</module>
-		<module>spring-guice</module>
 		<module>supported</module>
 
 		<!-- <module>dependency</module> -->
@@ -91,6 +80,7 @@
 		<version.fastjson>1.2.38</version.fastjson>
 		<version.fst>1.55</version.fst>
 		<version.guice>4.0</version.guice>
+		<version.guice_servlet>4.0</version.guice_servlet>
 		<version.hessian>4.0.38</version.hessian>
 		<version.hibernate_validator>5.4.1.Final</version.hibernate_validator>
 		<version.jackson>2.8.5</version.jackson>
@@ -219,7 +209,11 @@
 				<artifactId>guice</artifactId>
 				<version>${version.guice}</version>
 			</dependency>
-
+			<dependency>
+				<groupId>com.google.inject.extensions</groupId>
+				<artifactId>guice-servlet</artifactId>
+				<version>${version.guice_servlet}</version>
+			</dependency>
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-core</artifactId>
@@ -440,40 +434,6 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.sonatype.plugins</groupId>
-				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>${maven_version.nexus_staging_maven_plugin}</version>
-				<extensions>true</extensions>
-				<configuration>
-					<serverId>ossrh</serverId>
-					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-					<autoReleaseAfterClose>true</autoReleaseAfterClose>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>attach-javadoc</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-						<configuration>
-							<doclint>none</doclint>
-						</configuration>
-					</execution>
-				</executions>
-				<configuration>
-					<show>public</show>
-					<charset>${build.file_encoding}</charset>
-					<encoding>${build.file_encoding}</encoding>
-					<docencoding>${build.file_encoding}</docencoding>
-					<links>
-						<link>http://docs.oracle.com/javase/7/docs/api</link>
-					</links>
-				</configuration>
-			</plugin>
-			<plugin>
 				<artifactId>maven-jar-plugin</artifactId>
 				<configuration>
 					<archive>
@@ -486,18 +446,7 @@
 					</archive>
 				</configuration>
 			</plugin>
-			<plugin>
-				<artifactId>maven-source-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+
 			<plugin>
 				<artifactId>maven-deploy-plugin</artifactId>
 				<configuration>
@@ -516,19 +465,7 @@
 					</compilerArgs>
 				</configuration>
 			</plugin>
-			<!-- GPG -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-gpg-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>verify</phase>
-						<goals>
-							<goal>sign</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+
 		</plugins>
 
 		<pluginManagement>
@@ -598,4 +535,83 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+						<version>${maven_version.nexus_staging_maven_plugin}</version>
+						<extensions>true</extensions>
+						<configuration>
+							<serverId>ossrh</serverId>
+							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+							<autoReleaseAfterClose>true</autoReleaseAfterClose>
+						</configuration>
+					</plugin>
+					<plugin>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>attach-javadoc</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+								<configuration>
+									<doclint>none</doclint>
+								</configuration>
+							</execution>
+						</executions>
+						<configuration>
+							<show>public</show>
+							<charset>${build.file_encoding}</charset>
+							<encoding>${build.file_encoding}</encoding>
+							<docencoding>${build.file_encoding}</docencoding>
+							<links>
+								<link>http://docs.oracle.com/javase/7/docs/api</link>
+							</links>
+						</configuration>
+					</plugin>
+					<plugin>
+						<artifactId>maven-source-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<!-- GPG -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+			<distributionManagement>
+				<snapshotRepository>
+					<id>ossrh</id>
+					<url>https://oss.sonatype.org/content/repositories/SNAPSHOT</url>
+				</snapshotRepository>
+				<repository>
+					<id>ossmv</id>
+					<name>Maven Central Staging Repository</name>
+					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+				</repository>
+			</distributionManagement>
+		</profile>
+	</profiles>
 </project>

@@ -33,8 +33,8 @@ import lombok.extern.slf4j.Slf4j;
 import net.jahhan.com.alibaba.dubbo.common.bytecode.Wrapper;
 import net.jahhan.com.alibaba.dubbo.common.utils.ReflectUtils;
 import net.jahhan.common.extension.annotation.Extension;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.StringUtils;
-import net.jahhan.exception.JahhanException;
 import net.jahhan.spi.Protocol;
 import net.jahhan.spi.ProxyFactory;
 
@@ -45,7 +45,7 @@ import net.jahhan.spi.ProxyFactory;
  */
 @Extension("stub")
 @Slf4j
-public class StubProxyFactoryWrapper extends net.jahhan.api.Wrapper<ProxyFactory> implements ProxyFactory {
+public class StubProxyFactoryWrapper extends net.jahhan.common.extension.api.Wrapper<ProxyFactory> implements ProxyFactory {
 
 	@Inject
 	@Adaptive

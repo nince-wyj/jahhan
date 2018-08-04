@@ -3,8 +3,8 @@ package net.jahhan.service.context;
 import io.swagger.annotations.ApiParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import net.jahhan.context.BaseContext;
-import net.jahhan.context.Variable;
+import net.jahhan.common.extension.context.BaseContext;
+import net.jahhan.common.extension.context.Variable;
 import net.jahhan.service.service.bean.Service;
 import net.jahhan.service.service.bean.User;
 

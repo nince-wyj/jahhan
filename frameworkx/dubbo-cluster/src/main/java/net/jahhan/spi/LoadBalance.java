@@ -24,7 +24,7 @@ import com.alibaba.dubbo.rpc.cluster.Directory;
 import com.frameworkx.annotation.Adaptive;
 
 import net.jahhan.common.extension.annotation.SPI;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.extension.loadBalance.RandomLoadBalance;
 
 /**

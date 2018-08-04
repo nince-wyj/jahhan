@@ -20,7 +20,7 @@ import com.alibaba.dubbo.rpc.protocol.AbstractProxyProtocol;
 
 import lombok.extern.slf4j.Slf4j;
 import net.jahhan.common.extension.annotation.Extension;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 
 /**
  * 为dubbo-rpc添加"原生thrift"支持

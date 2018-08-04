@@ -18,10 +18,10 @@ import com.frameworkx.annotation.Activate;
 
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.JsonUtil;
 import net.jahhan.common.extension.utils.LogUtil;
 import net.jahhan.content.UserOperationMessage;
-import net.jahhan.exception.JahhanException;
 import net.jahhan.spi.Filter;
 
 @Activate(group = Constants.PROVIDER)

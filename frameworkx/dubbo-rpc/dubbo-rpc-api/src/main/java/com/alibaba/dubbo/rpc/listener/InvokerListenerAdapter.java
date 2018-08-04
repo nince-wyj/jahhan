@@ -17,7 +17,7 @@ package com.alibaba.dubbo.rpc.listener;
 
 import com.alibaba.dubbo.rpc.Invoker;
 
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.spi.InvokerListener;
 
 /**

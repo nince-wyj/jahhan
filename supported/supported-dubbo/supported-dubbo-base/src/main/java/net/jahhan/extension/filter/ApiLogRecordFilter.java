@@ -19,10 +19,10 @@ import com.alibaba.dubbo.rpc.RpcException;
 
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.JsonUtil;
 import net.jahhan.common.extension.utils.LogUtil;
 import net.jahhan.content.UserOperationMessage;
-import net.jahhan.exception.JahhanException;
 
 @Activate(group = Constants.PROVIDER, order = -4000)
 @Extension("apiLogRecordProvider")

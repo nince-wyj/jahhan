@@ -19,10 +19,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
 import net.jahhan.common.extension.constant.BaseConfiguration;
+import net.jahhan.common.extension.context.BaseContext;
+import net.jahhan.common.extension.context.BaseVariable;
+import net.jahhan.common.extension.context.VariableContext;
 import net.jahhan.common.extension.utils.StringUtils;
-import net.jahhan.context.BaseContext;
-import net.jahhan.context.BaseVariable;
-import net.jahhan.context.VariableContext;
 import net.jahhan.request.context.RequestVariable;
 
 @Priority(Integer.MIN_VALUE + 1)

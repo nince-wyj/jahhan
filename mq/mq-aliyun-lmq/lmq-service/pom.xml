@@ -22,7 +22,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>net.jahhan</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>lmq-common</artifactId>
             <version>1.0.0-RELEASE</version>
         </dependency>

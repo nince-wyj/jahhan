@@ -48,7 +48,7 @@ import com.alibaba.dubbo.rpc.protocol.AbstractProxyProtocol;
 
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.servlet.DispatcherServlet;
 import net.jahhan.spi.HttpBinder;
 

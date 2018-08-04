@@ -89,7 +89,7 @@ public class BasicDeserializer extends AbstractDeserializer {
     _code = code;
   }
 
-  public Class getType()
+  public Class<?> getType()
   {
     switch (_code) {
     case NULL:
@@ -278,7 +278,7 @@ public class BasicDeserializer extends AbstractDeserializer {
         return data;
       }
       else {
-        ArrayList list = new ArrayList();
+        ArrayList<Boolean> list = new ArrayList<>();
 
         while (! in.isEnd())
           list.add(Boolean.valueOf(in.readBoolean()));
@@ -310,7 +310,7 @@ public class BasicDeserializer extends AbstractDeserializer {
         return data;
       }
       else {
-        ArrayList list = new ArrayList();
+        ArrayList<Short> list = new ArrayList<>();
 
         while (! in.isEnd())
           list.add(Short.valueOf((short) in.readInt()));
@@ -341,7 +341,7 @@ public class BasicDeserializer extends AbstractDeserializer {
         return data;
       }
       else {
-        ArrayList list = new ArrayList();
+        ArrayList<Integer> list = new ArrayList<>();
 
         while (! in.isEnd())
           list.add(Integer.valueOf(in.readInt()));

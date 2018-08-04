@@ -21,8 +21,8 @@ import com.google.inject.Key;
 import com.google.inject.name.Names;
 
 import lombok.Getter;
+import net.jahhan.common.extension.context.BaseContext;
 import net.jahhan.common.extension.utils.ExtensionUtil;
-import net.jahhan.context.BaseContext;
 
 public abstract class ExtensionExtendUtil extends ExtensionUtil{
 	@Getter

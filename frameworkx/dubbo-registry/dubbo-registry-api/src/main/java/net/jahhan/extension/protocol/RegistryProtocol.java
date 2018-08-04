@@ -41,8 +41,8 @@ import com.frameworkx.common.extension.utils.ExtensionExtendUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import net.jahhan.common.extension.annotation.Extension;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.StringUtils;
-import net.jahhan.exception.JahhanException;
 import net.jahhan.spi.Cluster;
 import net.jahhan.spi.Protocol;
 import net.jahhan.spi.ProxyFactory;

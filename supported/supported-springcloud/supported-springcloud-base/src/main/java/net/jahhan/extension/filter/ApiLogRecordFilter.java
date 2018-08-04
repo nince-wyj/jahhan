@@ -9,10 +9,10 @@ import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
 
 import net.jahhan.common.extension.annotation.Order;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.JsonUtil;
 import net.jahhan.common.extension.utils.LogUtil;
 import net.jahhan.content.UserOperationMessage;
-import net.jahhan.exception.JahhanException;
 import net.jahhan.request.context.RequestVariable;
 import net.jahhan.spring.aspect.Filter;
 import net.jahhan.spring.aspect.Invocation;

@@ -17,7 +17,7 @@ import net.jahhan.spi.DBEventListener;
  * @author nince
  */
 public class EventPublisher {
-    protected static Logger logger = LoggerFactory.getLogger("event");
+    protected static Logger logger = LoggerFactory.getLogger(EventPublisher.class);
 
     private static Map<String, ListenerGroupHandler> listenerGroups = new HashMap<String, ListenerGroupHandler>();
 

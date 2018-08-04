@@ -34,12 +34,12 @@ import com.frameworkx.common.extension.utils.ExtensionExtendUtil;
 
 import net.jahhan.common.extension.constant.BaseConfiguration;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
+import net.jahhan.common.extension.context.BaseContext;
+import net.jahhan.common.extension.context.BaseVariable;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.Assert;
 import net.jahhan.common.extension.utils.JsonUtil;
 import net.jahhan.common.extension.utils.StringUtils;
-import net.jahhan.context.BaseContext;
-import net.jahhan.context.BaseVariable;
-import net.jahhan.exception.JahhanException;
 import net.jahhan.service.authenticationcenter.Authentication;
 import net.jahhan.service.context.AuthenticationVariable;
 import net.jahhan.service.service.bean.User;

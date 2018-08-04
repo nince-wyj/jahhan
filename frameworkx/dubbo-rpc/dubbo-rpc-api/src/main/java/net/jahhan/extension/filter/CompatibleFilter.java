@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.jahhan.com.alibaba.dubbo.common.utils.CompatibleTypeUtils;
 import net.jahhan.com.alibaba.dubbo.common.utils.PojoUtils;
 import net.jahhan.common.extension.annotation.Extension;
-import net.jahhan.exception.JahhanException;
+import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.spi.Filter;
 
 /**
