@@ -10,22 +10,21 @@ import javax.inject.Inject;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.ibatis.session.SqlSession;
 
-import net.jahhan.demo.pojo.TUserDemoInfo;
-import net.jahhan.demo.dao.TUserDemoInfoDao;
-import net.jahhan.demo.pojo.page.TUserDemoInfoPage;
-import net.jahhan.demo.dao.listen.TUserDemoInfoRep;
-
 import lombok.extern.slf4j.Slf4j;
 import net.jahhan.cache.repository.common.SeqRepository;
 import net.jahhan.cache.util.SerializerUtil;
 import net.jahhan.common.extension.utils.ListUtils;
+import net.jahhan.demo.dao.TUserDemoInfoDao;
+import net.jahhan.demo.dao.listen.TUserDemoInfoRep;
+import net.jahhan.demo.pojo.TUserDemoInfo;
+import net.jahhan.demo.pojo.page.TUserDemoInfoPage;
 import net.jahhan.jdbc.context.DBContext;
-import net.jahhan.jdbc.context.DBVariable;
+import net.jahhan.jdbc.dopage.PagedResult;
 import net.jahhan.jdbc.event.EventOperate;
-import net.jahhan.jdbc.pojo.page.PagedResult;
 import net.jahhan.jdbc.utils.ValidationUtil;
 import net.jahhan.jdbc.validategroup.Create;
 import net.jahhan.jdbc.validategroup.Modify;
+import net.jahhan.variable.DBVariable;
 
 /*
  * 自动生成,开发人员请勿修改.
@@ -254,7 +253,7 @@ public abstract class AbstrTUserDemoInfoImpl implements TUserDemoInfoDao {
 	
 	/** 加载 **/
 	public TUserDemoInfo queryTUserDemoInfo(long userId){
-		DBVariable invocationContext = DBVariable.getDBVariable();
+		DBVariable invocationContext = (DBVariable) DBVariable.getThreadVariable("db");
 		TUserDemoInfo localCache = (TUserDemoInfo) invocationContext.getLocalCachePojo(TUserDemoInfo.class,
 				String.valueOf(userId));
 		if (null != localCache) {
@@ -331,7 +330,7 @@ public abstract class AbstrTUserDemoInfoImpl implements TUserDemoInfoDao {
 		if (CollectionUtils.isEmpty(userIds)) {
 			return new ArrayList<TUserDemoInfo>();
 		}
-		DBVariable invocationContext = DBVariable.getDBVariable();
+		DBVariable invocationContext = (DBVariable) DBVariable.getThreadVariable("db");
 		List<Long> hitList = new ArrayList<>();
 		List<TUserDemoInfo> localCacheList = new ArrayList<>();
 		for (Long userId : userIds) {

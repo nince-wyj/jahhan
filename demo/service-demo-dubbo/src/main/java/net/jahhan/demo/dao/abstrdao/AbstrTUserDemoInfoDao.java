@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.jahhan.demo.pojo.TUserDemoInfo;
 import net.jahhan.demo.pojo.page.TUserDemoInfoPage;
-import net.jahhan.jdbc.pojo.page.PagedResult;
+import net.jahhan.jdbc.dopage.PagedResult;
 
 /*
  * 自动生成,开发人员请勿修改.

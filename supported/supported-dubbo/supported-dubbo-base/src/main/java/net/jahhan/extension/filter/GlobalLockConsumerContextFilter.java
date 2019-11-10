@@ -16,11 +16,11 @@ import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.dubbo.rpc.RpcContext;
 import com.alibaba.dubbo.rpc.RpcException;
 
-import net.jahhan.cache.context.RedisVariable;
 import net.jahhan.common.extension.annotation.Extension;
-import net.jahhan.common.extension.context.BaseVariable;
 import net.jahhan.common.extension.utils.JsonUtil;
 import net.jahhan.lock.impl.GlobalReentrantLock;
+import net.jahhan.variable.BaseThreadVariable;
+import net.jahhan.variable.RedisVariable;
 
 @Activate(group = Constants.CONSUMER, order = -9000)
 @Extension("globalLockconsumercontext")
@@ -28,7 +28,7 @@ import net.jahhan.lock.impl.GlobalReentrantLock;
 public class GlobalLockConsumerContextFilter implements Filter {
 
 	public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-		Map<String, GlobalReentrantLock> globalLockMap = RedisVariable.getDBVariable().getGlobalLockMap();
+		Map<String, GlobalReentrantLock> globalLockMap = ((RedisVariable) RedisVariable.getThreadVariable("redis")).getGlobalLockMap();
 		if (null != globalLockMap) {
 			Set<String> keySet = globalLockMap.keySet();
 			Map<String, Long> globalLockLevelMap = new HashMap<>();
@@ -39,7 +39,7 @@ public class GlobalLockConsumerContextFilter implements Filter {
 			RpcContext.getContext().setAttachment("global_locks", JsonUtil.toJson(globalLockLevelMap).replace(",", "$|"));
 		}
 		RpcContext.getContext().setAttachment("request_id", UUID.randomUUID().toString());
-		RpcContext.getContext().setAttachment("chain_id", BaseVariable.getBaseVariable().getChainId());
+		RpcContext.getContext().setAttachment("chain_id", ((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).getChainId());
 		return invoker.invoke(invocation);
 	}
 }

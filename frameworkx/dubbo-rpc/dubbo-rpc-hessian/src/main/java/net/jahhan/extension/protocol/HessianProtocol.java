@@ -125,7 +125,7 @@ public class HessianProtocol extends AbstractProxyProtocol {
         return (T) hessianProxyFactory.create(serviceType, url.setProtocol("http").toJavaURL(), Thread.currentThread().getContextClassLoader());
     }
 
-    protected int getErrorCode(Throwable e) {
+    protected String getErrorCode(Throwable e) {
         if (e instanceof HessianConnectionException) {
             if (e.getCause() != null) {
                 Class<?> cls = e.getCause().getClass();

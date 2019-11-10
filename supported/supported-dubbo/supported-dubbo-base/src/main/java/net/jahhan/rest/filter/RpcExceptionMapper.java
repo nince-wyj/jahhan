@@ -9,6 +9,7 @@ import com.alibaba.dubbo.rpc.protocol.rest.RestConstraintViolation;
 import com.alibaba.dubbo.rpc.protocol.rest.ViolationReport;
 
 import net.jahhan.common.extension.constant.ContentType;
+import net.jahhan.common.extension.exception.HttpException;
 import net.jahhan.common.extension.exception.JahhanException;
 
 public class RpcExceptionMapper implements ExceptionMapper<JahhanException> {
@@ -20,9 +21,12 @@ public class RpcExceptionMapper implements ExceptionMapper<JahhanException> {
 //        }
 //        // we may want to avoid exposing the dubbo exception details to certain clients
 //        // TODO for now just do plain text output
-        
-        return Response.status(e.getExceptionMessage().getHttpStatus()).entity(e.getExceptionMessage()).type(ContentType.APPLICATION_JSON_UTF_8).build();
-    }
+    	int status = Response.Status.INTERNAL_SERVER_ERROR.getStatusCode();
+		if (e instanceof HttpException) {
+			status = ((HttpException) e).getHttpStatus();
+		}
+		return Response.status(status).entity(e.getExceptionMessage()).type(ContentType.APPLICATION_JSON_UTF_8).build();
+	}
 
     protected Response handleConstraintViolationException(ConstraintViolationException cve) {
         ViolationReport report = new ViolationReport();

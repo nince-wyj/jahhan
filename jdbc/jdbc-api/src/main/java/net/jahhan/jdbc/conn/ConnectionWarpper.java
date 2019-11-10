@@ -26,9 +26,9 @@ import org.apache.commons.lang3.StringUtils;
 import net.jahhan.common.extension.context.BaseContext;
 import net.jahhan.common.extension.utils.LogUtil;
 import net.jahhan.jdbc.context.DBContext;
-import net.jahhan.jdbc.context.DBVariable;
 import net.jahhan.jdbc.event.DBEvent;
 import net.jahhan.jdbc.event.EventOperate;
+import net.jahhan.variable.DBVariable;
 
 public class ConnectionWarpper implements Connection {
 	private DBContext appContext = BaseContext.CTX.getInjector().getInstance(DBContext.class);
@@ -125,7 +125,7 @@ public class ConnectionWarpper implements Connection {
 	public void rollback() throws SQLException {
 		inner.rollback();
 		events.clear();
-		DBVariable.getDBVariable().clearLocalCache();
+		((DBVariable) DBVariable.getThreadVariable("db")).clearLocalCache();
 	}
 
 	@Override
@@ -403,7 +403,7 @@ public class ConnectionWarpper implements Connection {
 
 	public void addEvent(DBEvent event) {
 		events.add(event);
-		if (DBVariable.getDBVariable().isWriteConnection(event.getDataSource())) {
+		if (((DBVariable) DBVariable.getThreadVariable("db")).isWriteConnection(event.getDataSource())) {
 			String id = event.getId();
 			String op = event.getOperate();
 			if (StringUtils.isEmpty(id)) {
@@ -411,9 +411,9 @@ public class ConnectionWarpper implements Connection {
 			}
 			if (op.equals(EventOperate.INSERT) || op.equals(EventOperate.UPDATE)) {
 				Object sourceObject = event.getSource();
-				DBVariable.getDBVariable().addPojo(sourceObject.getClass(), id, sourceObject);
+				((DBVariable) DBVariable.getThreadVariable("db")).addPojo(sourceObject.getClass(), id, sourceObject);
 			} else if (EventOperate.isModify(op)) {
-				DBVariable.getDBVariable().delPojo(event.getSource().getClass(), id);
+				((DBVariable) DBVariable.getThreadVariable("db")).delPojo(event.getSource().getClass(), id);
 			}
 		}
 	}

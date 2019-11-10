@@ -12,7 +12,7 @@ import org.apache.ibatis.session.SqlSession;
 import lombok.extern.slf4j.Slf4j;
 import net.jahhan.jdbc.PublisherHandler;
 import net.jahhan.jdbc.SessionHandler;
-import net.jahhan.jdbc.SuperPojo;
+import net.jahhan.jdbc.SuperDO;
 import net.jahhan.jdbc.event.CollectionEvent;
 import net.jahhan.jdbc.event.CountEvent;
 import net.jahhan.jdbc.event.DBEvent;
@@ -50,7 +50,7 @@ public class DBContext implements SessionHandler, PublisherHandler {
 		publisher.publishWrite(conn, event);
 	}
 
-	public void publishDataModifyEvent(String dataSource, Connection dbConn, SuperPojo<?> pojo, String operate, String id) {
+	public void publishDataModifyEvent(String dataSource, Connection dbConn, SuperDO<?> pojo, String operate, String id) {
 		if (pojo == null || operate == null) {
 			log.error("");
 			return;
@@ -65,7 +65,7 @@ public class DBContext implements SessionHandler, PublisherHandler {
 		publishWrite(dbConn, event);
 	}
 
-	public void publishDeleteEvent(String dataSource, Connection dbConn, SuperPojo<?> pojo, String id) {
+	public void publishDeleteEvent(String dataSource, Connection dbConn, SuperDO<?> pojo, String id) {
 		if (pojo == null) {
 			log.error("");
 			return;
@@ -78,7 +78,7 @@ public class DBContext implements SessionHandler, PublisherHandler {
 		publishWrite(dbConn, event);
 	}
 
-	public void publishAddNumEvent(String dataSource, Connection dbConn, SuperPojo<?> pojo, String id, String field,
+	public void publishAddNumEvent(String dataSource, Connection dbConn, SuperDO<?> pojo, String id, String field,
 			Number num) {
 		if (pojo == null || field == null || "".equals(field) || num == null) {
 			log.error("");
@@ -118,7 +118,7 @@ public class DBContext implements SessionHandler, PublisherHandler {
 		EventPublisherManager.publish(event);
 	}
 
-	public void publishReadPojo(String dataSource, SuperPojo<?> pojo, String id) {
+	public void publishReadPojo(String dataSource, SuperDO<?> pojo, String id) {
 		if (pojo == null || id == null) {
 			log.error("");
 			return;

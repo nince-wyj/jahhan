@@ -6,8 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import net.jahhan.common.extension.constant.BaseConfiguration;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
-import net.jahhan.common.extension.context.BaseVariable;
 import net.jahhan.common.extension.utils.LocalIpUtils;
+import net.jahhan.variable.BaseThreadVariable;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -15,16 +15,14 @@ public class JahhanException extends RuntimeException {
 
 	private static final long serialVersionUID = -3297153548445915405L;
 	protected ExceptionMessage exceptionMessage;
-	private static int defaultHttpStatus = 500;
 
-	public JahhanException(int httpStatus, int code, String msg, ExceptionMessage cause) {
+	public JahhanException(String code, String msg, ExceptionMessage cause) {
 		super(msg);
 		this.exceptionMessage = new ExceptionMessage();
-		this.exceptionMessage.setHttpStatus(httpStatus);
 		this.exceptionMessage.setCode(code);
 		this.exceptionMessage.setMessage(msg);
 		this.exceptionMessage.setService(BaseConfiguration.SERVICE);
-		BaseVariable baseVariable = BaseVariable.getBaseVariable();
+		BaseThreadVariable baseVariable = (BaseThreadVariable) BaseThreadVariable.getThreadVariable("base");
 		if (null != baseVariable) {
 			this.exceptionMessage.setRequestId(baseVariable.getRequestId());
 			this.exceptionMessage.setChainId(baseVariable.getChainId());
@@ -36,24 +34,15 @@ public class JahhanException extends RuntimeException {
 		this.exceptionMessage.setCause(cause);
 	}
 
-	public JahhanException(int code, String msg, ExceptionMessage cause) {
-		this(defaultHttpStatus, code, msg, cause);
-		this.exceptionMessage.setHttpStatus(cause.getHttpStatus());
-	}
-
-	public JahhanException(int httpStatus, int code, String msg) {
-		this(httpStatus, code, msg, (ExceptionMessage) null);
-	}
-
-	public JahhanException(int code, String msg) {
-		this(defaultHttpStatus, code, msg);
+	public JahhanException(String code, String msg) {
+		this(code, msg, (ExceptionMessage) null);
 	}
 
 	public JahhanException(String msg) {
-		this(defaultHttpStatus, JahhanErrorCode.UNKNOW_ERROR, msg);
+		this(JahhanErrorCode.UNKNOW_ERROR, msg);
 	}
 
-	public JahhanException(int httpStatus, int code, String msg, Throwable exception) {
+	public JahhanException(String code, String msg, Throwable exception) {
 		super(msg, exception);
 		this.exceptionMessage = new ExceptionMessage();
 		if (null != exception) {
@@ -61,11 +50,10 @@ public class JahhanException extends RuntimeException {
 			cause.setMessage(exception.getMessage());
 			this.exceptionMessage.setCause(cause);
 		}
-		this.exceptionMessage.setHttpStatus(httpStatus);
 		this.exceptionMessage.setCode(code);
 		this.exceptionMessage.setMessage(msg);
 		this.exceptionMessage.setService(BaseConfiguration.SERVICE);
-		BaseVariable baseVariable = BaseVariable.getBaseVariable();
+		BaseThreadVariable baseVariable = (BaseThreadVariable) BaseThreadVariable.getThreadVariable("base");
 		if (null != baseVariable) {
 			this.exceptionMessage.setRequestId(baseVariable.getRequestId());
 			this.exceptionMessage.setChainId(baseVariable.getChainId());
@@ -77,51 +65,31 @@ public class JahhanException extends RuntimeException {
 
 	}
 
-	public JahhanException(int code, String msg, Throwable exception) {
-		this(defaultHttpStatus, code, msg, exception);
-	}
-
 	public JahhanException(String msg, Throwable exception) {
-		this(defaultHttpStatus, JahhanErrorCode.UNKNOW_ERROR, msg, exception);
+		this(JahhanErrorCode.UNKNOW_ERROR, msg, exception);
 	}
 
 	public JahhanException(Throwable exception) {
-		this(defaultHttpStatus, JahhanErrorCode.UNKNOW_ERROR, exception.getMessage(), exception.getCause());
+		this(JahhanErrorCode.UNKNOW_ERROR, exception.getMessage(), exception.getCause());
 	}
 
-	public JahhanException(int code, Throwable exception) {
-		this(defaultHttpStatus, code, exception.getMessage(), exception.getCause());
-	}
-
-	public static void throwException(int code, String msg, ExceptionMessage cause) {
+	public static void throwException(String code, String msg, ExceptionMessage cause) {
 		throw new JahhanException(code, msg, cause);
 	}
 
-	public static void throwException(int code, String msg) {
+	public static void throwException(String code, String msg) {
 		throw new JahhanException(code, msg);
 	}
 
-	public static void throwException(int code, String msg, Throwable exception) {
+	public static void throwException(String code, String msg, Throwable exception) {
 		throw new JahhanException(code, msg, exception);
 	}
 
-	public static void throwException(int httpStatus, int code, String msg, ExceptionMessage cause) {
-		throw new JahhanException(httpStatus, code, msg, cause);
-	}
-
-	public static void throwException(int httpStatus, int code, String msg) {
-		throw new JahhanException(httpStatus, code, msg);
-	}
-
-	public static void throwException(int httpStatus, int code, String msg, Throwable exception) {
-		throw new JahhanException(httpStatus, code, msg, exception);
-	}
-
-	public int getCode() {
+	public String getCode() {
 		return this.exceptionMessage.getCode();
 	}
 
-	public void setCode(int code) {
+	public void setCode(String code) {
 		this.exceptionMessage.setCode(code);
 	}
 

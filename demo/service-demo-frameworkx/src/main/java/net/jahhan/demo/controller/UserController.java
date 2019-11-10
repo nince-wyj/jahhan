@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.jahhan.cache.annotation.Cache;
 import net.jahhan.common.extension.annotation.GlobalSyncTransaction;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
-import net.jahhan.common.extension.exception.JahhanException;
+import net.jahhan.common.extension.exception.HttpException;
 import net.jahhan.common.extension.utils.Assert;
 import net.jahhan.demo.dao.TUserDemoInfoDao;
 import net.jahhan.demo.intf.DemoIntf;
@@ -42,7 +42,7 @@ public class UserController implements DemoIntf {
 	@GlobalSyncTransaction
 	public UserRegistOVO register(UserRegistIVO userRegistIVO) {
 		if (userRegistIVO.getGender().equals("女") && userRegistIVO.getUserName().startsWith("test")) {
-			JahhanException.throwException(HttpServletResponse.SC_BAD_REQUEST, JahhanErrorCode.VALIATION_EXCEPTION,
+			HttpException.throwException(HttpServletResponse.SC_BAD_REQUEST, JahhanErrorCode.VALIATION_EXCEPTION,
 					"性别为女时名称不能以test开头！");
 		}
 		return userService.register(userRegistIVO);

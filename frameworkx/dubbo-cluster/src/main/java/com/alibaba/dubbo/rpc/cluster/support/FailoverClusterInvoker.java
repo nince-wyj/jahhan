@@ -30,6 +30,7 @@ import com.alibaba.dubbo.rpc.RpcContext;
 import com.alibaba.dubbo.rpc.cluster.Directory;
 
 import lombok.extern.slf4j.Slf4j;
+import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.spi.LoadBalance;
 
@@ -97,7 +98,7 @@ public class FailoverClusterInvoker<T> extends AbstractClusterInvoker<T> {
                 providers.add(invoker.getUrl().getAddress());
             }
         }
-        throw new JahhanException(le != null ? le.getCode() : 0, "Failed to invoke the method "
+        throw new JahhanException(le != null ? le.getCode() : JahhanErrorCode.UNKNOW_ERROR, "Failed to invoke the method "
                 + invocation.getMethodName() + " in the service " + getInterface().getName() 
                 + ". Tried " + len + " times of the providers " + providers 
                 + " (" + providers.size() + "/" + copyinvokers.size() 

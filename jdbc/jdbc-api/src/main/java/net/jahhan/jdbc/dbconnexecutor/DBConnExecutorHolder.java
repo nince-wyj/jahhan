@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import lombok.Getter;
 import net.jahhan.jdbc.DBConnExecutorHandler;
 import net.jahhan.jdbc.constant.enumeration.DBConnectLevel;
-import net.jahhan.jdbc.context.DBVariable;
+import net.jahhan.variable.DBVariable;
 
 public class DBConnExecutorHolder {
 	private String dataSource;
@@ -64,7 +64,7 @@ public class DBConnExecutorHolder {
 	public void close() {
 		if (dBConnExecutor != null) {
 			dBConnExecutor.close();
-			DBVariable dbVariable = DBVariable.getDBVariable();
+			DBVariable dbVariable = (DBVariable) DBVariable.getThreadVariable("db");
 			dbVariable.removeDBConnExecutorHolder(dataSource, this);
 		}
 	}

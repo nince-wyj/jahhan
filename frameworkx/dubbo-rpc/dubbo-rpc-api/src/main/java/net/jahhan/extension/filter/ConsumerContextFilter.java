@@ -30,9 +30,9 @@ import com.alibaba.dubbo.rpc.RpcInvocation;
 import com.frameworkx.annotation.Activate;
 
 import net.jahhan.common.extension.annotation.Extension;
-import net.jahhan.common.extension.context.BaseVariable;
 import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.spi.Filter;
+import net.jahhan.variable.BaseThreadVariable;
 
 /**
  * ConsumerContextInvokerFilter
@@ -53,7 +53,7 @@ public class ConsumerContextFilter implements Filter {
                 .setRemoteAddress(invoker.getUrl().getHost(), 
                                   invoker.getUrl().getPort());
 		RpcContext.getContext().setAttachment("request_id", UUID.randomUUID().toString());
-		RpcContext.getContext().setAttachment("chain_id", BaseVariable.getBaseVariable().getChainId());
+		RpcContext.getContext().setAttachment("chain_id", ((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).getChainId());
         if (invocation instanceof RpcInvocation) {
             ((RpcInvocation)invocation).setInvoker(invoker);
         }

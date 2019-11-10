@@ -24,6 +24,7 @@ import com.alibaba.dubbo.rpc.Invoker;
 import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.dubbo.rpc.cluster.Directory;
 
+import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.spi.LoadBalance;
 
@@ -50,7 +51,7 @@ public class FailfastClusterInvoker<T> extends AbstractClusterInvoker<T>{
             if (e instanceof JahhanException && ((JahhanException)e).isBiz()) { // biz exception.
                 throw (JahhanException) e;
             }
-            throw new JahhanException(e instanceof JahhanException ? ((JahhanException)e).getCode() : 0, "Failfast invoke providers " + invoker.getUrl() + " " + loadbalance.getClass().getSimpleName() + " select from all providers " + invokers + " for service " + getInterface().getName() + " method " + invocation.getMethodName() + " on consumer " + NetUtils.getLocalHost() + " use dubbo version " + Version.getVersion() + ", but no luck to perform the invocation. Last error is: " + e.getMessage(), e.getCause() != null ? e.getCause() : e);
+            throw new JahhanException(e instanceof JahhanException ? ((JahhanException)e).getCode() : JahhanErrorCode.UNKNOW_ERROR, "Failfast invoke providers " + invoker.getUrl() + " " + loadbalance.getClass().getSimpleName() + " select from all providers " + invokers + " for service " + getInterface().getName() + " method " + invocation.getMethodName() + " on consumer " + NetUtils.getLocalHost() + " use dubbo version " + Version.getVersion() + ", but no luck to perform the invocation. Last error is: " + e.getMessage(), e.getCause() != null ? e.getCause() : e);
         }
     }
 }

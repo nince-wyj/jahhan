@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.IntUnaryOperator;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -71,10 +72,17 @@ public class DataSourceConnectionPool {
 		return sb.toString();
 	}
 
-	public synchronized int getReadConnIdx() {
-		int i = ai.getAndIncrement();
-		ai.compareAndSet(readDSList.size(), 0);
-		return i;
+	public int getReadConnIdx() {
+//		int i = ai.getAndIncrement();
+//		ai.compareAndSet(readDSList.size(), 0);
+//		return i;
+		return ai.getAndUpdate(new IntUnaryOperator() {
+
+			@Override
+			public int applyAsInt(int operand) {
+				return (operand + 1) % readDSList.size();
+			}
+		});
 	}
 
 	public PoolConfig createBatchConf(Properties property) {

@@ -15,7 +15,7 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>net.jahhan</groupId>
 			<artifactId>package-springcloud-base</artifactId>
 			<version>${project.version}</version>
 		</dependency>

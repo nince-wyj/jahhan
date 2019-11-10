@@ -8,18 +8,18 @@ import java.util.Set;
 import javax.inject.Singleton;
 
 import net.jahhan.cache.constants.RedisConstants;
-import net.jahhan.cache.context.RedisVariable;
 import net.jahhan.common.extension.annotation.GlobalSyncTransaction;
 import net.jahhan.common.extension.annotation.Order;
-import net.jahhan.common.extension.context.BaseVariable;
 import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.JsonUtil;
 import net.jahhan.lock.impl.GlobalReentrantLock;
 import net.jahhan.lock.util.GlobalReentrantLockUtil;
-import net.jahhan.request.context.RequestVariable;
 import net.jahhan.spring.aspect.Filter;
 import net.jahhan.spring.aspect.Invocation;
 import net.jahhan.spring.aspect.Invoker;
+import net.jahhan.variable.BaseThreadVariable;
+import net.jahhan.variable.RedisVariable;
+import net.jahhan.variable.RequestVariable;
 
 @Singleton
 @Order(-5000)
@@ -28,7 +28,7 @@ public class GlobalLockContextFilter implements Filter {
 	@SuppressWarnings("unchecked")
 	public Object invoke(Invoker invoker, Invocation invocation) throws JahhanException {
 		Object invoke = null;
-		RequestVariable requestVariable = RequestVariable.getVariable();
+		RequestVariable requestVariable = (RequestVariable) RequestVariable.getThreadVariable("request");
 		String globalLocks = requestVariable.getAttachments().get("global_locks");
 		Map<String, GlobalReentrantLock> globalLockMap = new HashMap<>();
 		if (null != globalLocks) {
@@ -41,11 +41,11 @@ public class GlobalLockContextFilter implements Filter {
 				globalReentrantLock.setLevel(((Number) globalLockLevelMap.get(key)).longValue());
 				globalLockMap.put(key, globalReentrantLock);
 			}
-			RedisVariable.getDBVariable().setGlobalLockMap(globalLockMap);
+			((RedisVariable) RedisVariable.getThreadVariable("redis")).setGlobalLockMap(globalLockMap);
 		}
-		String transactionLock = "GlobalTransaction_" + BaseVariable.getBaseVariable().getChainId();
+		String transactionLock = "GlobalTransaction_" + ((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).getChainId();
 		if (globalLockMap.containsKey(GlobalReentrantLockUtil.getPRE() + transactionLock)) {
-			BaseVariable.getBaseVariable().setDbLazyCommit(true);
+			((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).setDbLazyCommit(true);
 		}
 		Method method = invocation.getMethod();
 		GlobalSyncTransaction globalSyncTransaction = method.getAnnotation(GlobalSyncTransaction.class);

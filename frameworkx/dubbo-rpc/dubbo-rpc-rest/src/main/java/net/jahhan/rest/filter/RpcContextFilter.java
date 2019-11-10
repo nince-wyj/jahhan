@@ -38,9 +38,10 @@ import com.alibaba.dubbo.rpc.RpcContext;
 
 import net.jahhan.common.extension.constant.BaseConfiguration;
 import net.jahhan.common.extension.context.BaseContext;
-import net.jahhan.common.extension.context.BaseVariable;
-import net.jahhan.common.extension.context.VariableContext;
+import net.jahhan.common.extension.context.ThreadVariableContext;
 import net.jahhan.common.extension.utils.StringUtils;
+import net.jahhan.variable.BaseGlobalVariable;
+import net.jahhan.variable.BaseThreadVariable;
 
 /**
  * easyrest filter
@@ -59,9 +60,9 @@ public class RpcContextFilter implements ContainerRequestFilter, ClientRequestFi
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 		BaseContext applicationContext = BaseContext.CTX;
-		VariableContext variableContext = new VariableContext();
+		ThreadVariableContext variableContext = new ThreadVariableContext();
 		applicationContext.getThreadLocalUtil().openThreadLocal(variableContext);
-		BaseVariable base = BaseVariable.getBaseVariable();
+		BaseThreadVariable base = (BaseThreadVariable) BaseThreadVariable.getThreadVariable("base");
 		
 		HttpServletRequest request = ResteasyProviderFactory.getContextData(HttpServletRequest.class);
 		RpcContext.getContext().setRequest(request);
@@ -103,7 +104,7 @@ public class RpcContextFilter implements ContainerRequestFilter, ClientRequestFi
 		base.setRequestId(requestId);
 		base.setChainId(chainId);
 		base.setBehaviorId(behaviorId);
-		BaseContext.CTX.setChain(chainId, Thread.currentThread());
+		((BaseGlobalVariable) BaseContext.CTX.getVariable("base")).setChain(chainId, Thread.currentThread());
 	}
 
 	@Override

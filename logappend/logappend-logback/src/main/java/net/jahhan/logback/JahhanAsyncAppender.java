@@ -5,20 +5,20 @@ import java.util.Map;
 import ch.qos.logback.classic.AsyncAppender;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import net.jahhan.common.extension.context.BaseContext;
-import net.jahhan.common.extension.context.BaseVariable;
 import net.jahhan.common.extension.context.Node;
-import net.jahhan.common.extension.context.VariableContext;
+import net.jahhan.common.extension.context.ThreadVariableContext;
+import net.jahhan.variable.BaseThreadVariable;
 
 public class JahhanAsyncAppender extends AsyncAppender {
 	@Override
 	protected void append(ILoggingEvent eventObject) {
 		JahhanLoggingEvent frameWorkXLoggingEvent = new JahhanLoggingEvent(eventObject);
 		frameWorkXLoggingEvent.setThreadId(String.valueOf(Thread.currentThread().getId()));
-		VariableContext variableContext = BaseContext.CTX.getVariableContext();
+		ThreadVariableContext variableContext = BaseContext.CTX.getVariableContext();
 		String requestId = "";
 		String chainId = "";
 		if (null != variableContext) {
-			BaseVariable base = BaseVariable.getBaseVariable();
+			BaseThreadVariable base = (BaseThreadVariable) BaseThreadVariable.getThreadVariable("base");
 			if (null != base) {
 				requestId = base.getRequestId();
 				chainId=base.getChainId();

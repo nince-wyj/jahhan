@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Constraint;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -61,7 +62,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.jahhan.com.alibaba.dubbo.common.bytecode.ClassGenerator;
 import net.jahhan.com.alibaba.dubbo.common.utils.ReflectUtils;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
-import net.jahhan.common.extension.exception.JahhanException;
+import net.jahhan.common.extension.exception.HttpException;
 
 /**
  * JValidator
@@ -111,7 +112,7 @@ public class JValidator implements Validator {
 			validate(violations, arg, clazz, methodClass);
 		}
 		if (violations.size() > 0) {
-			JahhanException.throwException(400, JahhanErrorCode.VALIATION_EXCEPTION,
+			HttpException.throwException(HttpServletResponse.SC_BAD_REQUEST, JahhanErrorCode.VALIATION_EXCEPTION,
 					violations.iterator().next().getMessageTemplate());
 		}
 	}

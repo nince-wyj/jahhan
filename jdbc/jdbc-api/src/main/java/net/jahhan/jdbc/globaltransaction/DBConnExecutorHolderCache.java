@@ -7,9 +7,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import net.jahhan.common.extension.context.BaseVariable;
-import net.jahhan.jdbc.context.DBVariable;
 import net.jahhan.jdbc.dbconnexecutor.DBConnExecutorHolder;
+import net.jahhan.variable.BaseThreadVariable;
+import net.jahhan.variable.DBVariable;
 
 public class DBConnExecutorHolderCache {
 	private static Map<String, Map<String, List<DBConnExecutorHolder>>> dbExecutorHolderMap = new ConcurrentHashMap<>();
@@ -57,7 +57,7 @@ public class DBConnExecutorHolderCache {
 	}
 
 	public static void delDbExecutorHolders() {
-		String chainId = BaseVariable.getBaseVariable().getChainId();
+		String chainId = ((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).getChainId();
 		dbExecutorHolderMap.remove(chainId);
 	}
 
@@ -65,7 +65,7 @@ public class DBConnExecutorHolderCache {
 		Map<String, List<DBConnExecutorHolder>> map = dbExecutorHolderMap.remove(chainId);
 		Map<String, DBConnExecutorHolder> currentMap = currentDbExecutorHolderMap.remove(chainId);
 		if (null != map && !map.isEmpty()) {
-			DBVariable dbVariable = DBVariable.getDBVariable();
+			DBVariable dbVariable = (DBVariable) DBVariable.getThreadVariable("db");
 			Set<String> dataSourceSet = map.keySet();
 			for (String dataSource : dataSourceSet) {
 				dbVariable.initConnectionData(dataSource);
@@ -84,10 +84,10 @@ public class DBConnExecutorHolderCache {
 	}
 
 	public static void setDbExecutorHolders() {
-		String chainId = BaseVariable.getBaseVariable().getChainId();
+		String chainId = ((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).getChainId();
 		Map<String, List<DBConnExecutorHolder>> map = new HashMap<>();
 		Map<String, DBConnExecutorHolder> currentMap = new HashMap<>();
-		DBVariable dbVariable = DBVariable.getDBVariable();
+		DBVariable dbVariable = (DBVariable) DBVariable.getThreadVariable("db");
 		Set<String> dataSources = dbVariable.getDataSources();
 		for (String dataSource : dataSources) {
 			List<DBConnExecutorHolder> dbConnExecutorHolders = dbVariable.getDBConnExecutorHolders(dataSource);

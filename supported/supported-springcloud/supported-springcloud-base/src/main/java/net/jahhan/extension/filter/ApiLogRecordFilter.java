@@ -13,10 +13,10 @@ import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.JsonUtil;
 import net.jahhan.common.extension.utils.LogUtil;
 import net.jahhan.content.UserOperationMessage;
-import net.jahhan.request.context.RequestVariable;
 import net.jahhan.spring.aspect.Filter;
 import net.jahhan.spring.aspect.Invocation;
 import net.jahhan.spring.aspect.Invoker;
+import net.jahhan.variable.RequestVariable;
 
 @Singleton
 @Order(-4000)
@@ -24,7 +24,7 @@ public class ApiLogRecordFilter implements Filter {
 
 	public Object invoke(Invoker invoker, Invocation invocation) throws JahhanException {
 		long startTime = System.currentTimeMillis();
-		RequestVariable requestVariable = RequestVariable.getVariable();
+		RequestVariable requestVariable = (RequestVariable) RequestVariable.getThreadVariable("request");
 		Map<String, String> attachments = requestVariable.getAttachments();
 
 		Method method = invocation.getMethod();

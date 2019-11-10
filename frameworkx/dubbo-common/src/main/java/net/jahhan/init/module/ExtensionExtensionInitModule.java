@@ -36,7 +36,7 @@ import net.jahhan.init.InitAnnocation;
 public class ExtensionExtensionInitModule extends ExtensionInitModule {
 
 	private Map<Class<?>, Set<Class<?>>> cachedWrapperClasses = new ConcurrentHashMap<>();
-
+	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	protected void configure() {

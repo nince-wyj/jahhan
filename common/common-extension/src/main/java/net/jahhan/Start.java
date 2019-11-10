@@ -26,7 +26,6 @@ public class Start {
 		initMethod.init();
 		Logger log = LoggerFactory.getLogger("message.start.info");
 		log.debug("start cost:{}ms", System.currentTimeMillis() - startTime);
-
 		synchronized (Start.class) {
 			while (running) {
 				try {

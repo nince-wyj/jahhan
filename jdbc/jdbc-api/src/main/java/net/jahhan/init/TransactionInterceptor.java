@@ -9,14 +9,14 @@ import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
 import lombok.extern.slf4j.Slf4j;
-import net.jahhan.common.extension.context.BaseVariable;
 import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.exception.NoRollBackException;
 import net.jahhan.common.extension.utils.LogUtil;
 import net.jahhan.jdbc.annotation.Transaction;
-import net.jahhan.jdbc.context.DBVariable;
 import net.jahhan.jdbc.dbconnexecutor.DBConnExecutorHolder;
 import net.jahhan.spi.common.BroadcastSender;
+import net.jahhan.variable.BaseThreadVariable;
+import net.jahhan.variable.DBVariable;
 
 @Slf4j
 public class TransactionInterceptor implements MethodInterceptor {
@@ -24,7 +24,7 @@ public class TransactionInterceptor implements MethodInterceptor {
 	private BroadcastSender broadcastSender;
 	@Override
 	public Object invoke(MethodInvocation invocation) throws Throwable {
-		DBVariable dbVariable = DBVariable.getDBVariable();
+		DBVariable dbVariable = (DBVariable) DBVariable.getThreadVariable("db");
 		Object obj = null;
 		Transaction transaction = invocation.getMethod().getAnnotation(Transaction.class);
 		if (null != transaction) {
@@ -42,8 +42,8 @@ public class TransactionInterceptor implements MethodInterceptor {
 			}
 			try {
 				obj = invocation.proceed();
-				if (BaseVariable.getBaseVariable().isDbLazyCommit() && !transaction.globalRespond()) {
-					broadcastSender.setChainNode(BaseVariable.getBaseVariable().getChainId());
+				if (((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).isDbLazyCommit() && !transaction.globalRespond()) {
+					broadcastSender.setChainNode(((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).getChainId());
 				} else {
 					for (DBConnExecutorHolder connExec : dbConnExecutorHolderList) {
 						connExec.commit();
@@ -70,8 +70,8 @@ public class TransactionInterceptor implements MethodInterceptor {
 				}
 				throw e;
 			} finally {
-				if (BaseVariable.getBaseVariable().isDbLazyCommit() && !transaction.globalRespond()) {
-					broadcastSender.setChainNode(BaseVariable.getBaseVariable().getChainId());
+				if (((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).isDbLazyCommit() && !transaction.globalRespond()) {
+					broadcastSender.setChainNode(((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).getChainId());
 				} else {
 					for (DBConnExecutorHolder connExec : dbConnExecutorHolderList) {
 						connExec.close();

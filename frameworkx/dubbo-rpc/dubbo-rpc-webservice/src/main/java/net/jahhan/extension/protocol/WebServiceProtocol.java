@@ -144,7 +144,7 @@ public class WebServiceProtocol extends AbstractProxyProtocol {
         return ref;
     }
 
-    protected int getErrorCode(Throwable e) {
+    protected String getErrorCode(Throwable e) {
     	if (e instanceof Fault) {
             e = e.getCause();
         }

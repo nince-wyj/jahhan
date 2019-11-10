@@ -4,7 +4,6 @@ import lombok.Data;
 import net.jahhan.cache.Redis;
 import net.jahhan.cache.RedisFactory;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
-import net.jahhan.common.extension.context.BaseVariable;
 import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.LogUtil;
 import net.jahhan.globalTransaction.LockParamHolder;
@@ -12,6 +11,7 @@ import net.jahhan.globalTransaction.LockStatus;
 import net.jahhan.globalTransaction.LockThreadStatus;
 import net.jahhan.lock.DistributedLock;
 import net.jahhan.lock.communication.LockWaitingThreadHolder;
+import net.jahhan.variable.BaseThreadVariable;
 
 @Data
 public class GlobalReentrantLock implements DistributedLock {
@@ -28,7 +28,7 @@ public class GlobalReentrantLock implements DistributedLock {
 
 	@Override
 	public void lock() {
-		String chainId = BaseVariable.getBaseVariable().getChainId();
+		String chainId = ((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).getChainId();
 		level = redis.queueGetGlobalReentrantLock(lockName, chainId, level, ttl);
 		if (level > 0) {
 			LogUtil.lockInfo("get globalLock:" + lockName + ",lock chain:" + chainId + ",level:" + level);
@@ -72,7 +72,7 @@ public class GlobalReentrantLock implements DistributedLock {
 
 	@Override
 	public boolean tryLock() {
-		String chainId = BaseVariable.getBaseVariable().getChainId();
+		String chainId = ((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).getChainId();
 		level = redis.queueGetGlobalReentrantLock(lockName, chainId, level, ttl);
 		if (level > 0) {
 			LogUtil.lockInfo("get globalLock:" + lockName + ",lock chain:" + chainId + ",level:" + level);
@@ -83,7 +83,7 @@ public class GlobalReentrantLock implements DistributedLock {
 
 	@Override
 	public void unlock() {
-		String chainId = BaseVariable.getBaseVariable().getChainId();
+		String chainId = ((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).getChainId();
 		level = redis.unLockGlobalReentrantLock(lockName, chainId, level);
 		LockParamHolder.removeChainLock(chainId);
 		LogUtil.lockInfo("release globalLock:" + lockName + ",lock chain:" + chainId + ",level:" + level);
@@ -94,7 +94,7 @@ public class GlobalReentrantLock implements DistributedLock {
 	}
 
 	private boolean weakup() {
-		String chainId = BaseVariable.getBaseVariable().getChainId();
+		String chainId = ((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).getChainId();
 		LockStatus chainLock = LockParamHolder.getChainLock(chainId);
 		level = redis.callGetGlobalReentrantLock(lockName, chainId, ttl);
 		chainLock.setStatus(LockThreadStatus.BLOCK);
@@ -106,7 +106,7 @@ public class GlobalReentrantLock implements DistributedLock {
 	}
 
 	private boolean compete() {
-		String chainId = BaseVariable.getBaseVariable().getChainId();
+		String chainId = ((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).getChainId();
 		LockStatus chainLock = LockParamHolder.getChainLock(chainId);
 		level = redis.competeGetGlobalReentrantLock(lockName, chainId, chainLock.getKey(), ttl);
 		chainLock.setStatus(LockThreadStatus.BLOCK);

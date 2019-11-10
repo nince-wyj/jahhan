@@ -6,20 +6,17 @@
 	<packaging>war</packaging>
 	<version>1.0.0</version>
 	<description>The demo project</description>
-	<repositories>
+	<!-- <repositories>
 		<repository>
 			<id>jahhan</id>
 			<url>http://47.100.61.97:8081/nexus/content/repositories/jahhan</url>
-			<SNAPSHOT>
-				<enabled>true</enabled>
-			</SNAPSHOT>
 		</repository>
 		<repository>
 			<id>central</id>
 			<name>Team Nexus Repository</name>
 			<url>http://47.100.61.97:8081/nexus/content/repositories/central</url>
 		</repository>
-	</repositories>
+	</repositories> -->
 	<properties>
 		<!-- Common libs -->
 		<build.skip_maven_deploy>true</build.skip_maven_deploy>

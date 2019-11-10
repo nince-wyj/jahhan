@@ -13,12 +13,12 @@ import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.dubbo.rpc.RpcContext;
 import com.frameworkx.annotation.Activate;
 
-import net.jahhan.cache.context.RedisVariable;
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.JsonUtil;
 import net.jahhan.lock.impl.GlobalReentrantLock;
 import net.jahhan.spi.Filter;
+import net.jahhan.variable.RedisVariable;
 
 @Activate(group = Constants.CONSUMER, order = -9000)
 @Extension("globalLockconsumercontext")
@@ -26,7 +26,7 @@ import net.jahhan.spi.Filter;
 public class GlobalLockConsumerContextFilter implements Filter {
 
 	public Result invoke(Invoker<?> invoker, Invocation invocation) throws JahhanException {
-		Map<String, GlobalReentrantLock> globalLockMap = RedisVariable.getDBVariable().getGlobalLockMap();
+		Map<String, GlobalReentrantLock> globalLockMap = ((RedisVariable) RedisVariable.getThreadVariable("redis")).getGlobalLockMap();
 		if (null != globalLockMap) {
 			Set<String> keySet = globalLockMap.keySet();
 			Map<String, Long> globalLockLevelMap = new HashMap<>();

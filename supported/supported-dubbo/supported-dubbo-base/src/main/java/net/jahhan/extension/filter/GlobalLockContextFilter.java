@@ -18,16 +18,16 @@ import com.alibaba.dubbo.rpc.RpcException;
 import com.alibaba.dubbo.rpc.RpcResult;
 
 import net.jahhan.cache.constants.RedisConstants;
-import net.jahhan.cache.context.RedisVariable;
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.annotation.GlobalSyncTransaction;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
-import net.jahhan.common.extension.context.BaseVariable;
 import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.JsonUtil;
 import net.jahhan.config.ServiceImplCache;
 import net.jahhan.lock.impl.GlobalReentrantLock;
 import net.jahhan.lock.util.GlobalReentrantLockUtil;
+import net.jahhan.variable.BaseThreadVariable;
+import net.jahhan.variable.RedisVariable;
 
 @Activate(group = Constants.PROVIDER, order = -5000)
 @Extension("globalLockcontext")
@@ -51,11 +51,11 @@ public class GlobalLockContextFilter implements Filter {
 					globalReentrantLock.setLevel(((Number) globalLockLevelMap.get(key)).longValue());
 					globalLockMap.put(key, globalReentrantLock);
 				}
-				RedisVariable.getDBVariable().setGlobalLockMap(globalLockMap);
+				((RedisVariable) RedisVariable.getThreadVariable("redis")).setGlobalLockMap(globalLockMap);
 			}
-			String transactionLock = "GlobalTransaction_" + BaseVariable.getBaseVariable().getChainId();
+			String transactionLock = "GlobalTransaction_" + ((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).getChainId();
 			if (globalLockMap.containsKey(GlobalReentrantLockUtil.getPRE() + transactionLock)) {
-				BaseVariable.getBaseVariable().setDbLazyCommit(true);
+				((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).setDbLazyCommit(true);
 			}
 			String interfaceClassName = invoker.getUrl().getParameter("interface");
 			String methodName = invocation.getMethodName();

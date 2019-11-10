@@ -254,7 +254,7 @@ public abstract class AbstrTUserDemoInfoImpl implements TUserDemoInfoDao {
 	
 	/** 加载 **/
 	public TUserDemoInfo queryTUserDemoInfo(long userId){
-		DBVariable invocationContext = DBVariable.getDBVariable();
+		DBVariable invocationContext = (DBVariable) DBVariable.getVariable("db");
 		TUserDemoInfo localCache = (TUserDemoInfo) invocationContext.getLocalCachePojo(TUserDemoInfo.class,
 				String.valueOf(userId));
 		if (null != localCache) {
@@ -331,7 +331,7 @@ public abstract class AbstrTUserDemoInfoImpl implements TUserDemoInfoDao {
 		if (CollectionUtils.isEmpty(userIds)) {
 			return new ArrayList<TUserDemoInfo>();
 		}
-		DBVariable invocationContext = DBVariable.getDBVariable();
+		DBVariable invocationContext = (DBVariable) DBVariable.getVariable("db");
 		List<Long> hitList = new ArrayList<>();
 		List<TUserDemoInfo> localCacheList = new ArrayList<>();
 		for (Long userId : userIds) {

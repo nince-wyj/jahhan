@@ -15,21 +15,25 @@
  */
 package com.alibaba.dubbo.rpc.proxy;
 
+import java.lang.reflect.InvocationTargetException;
+
+import javax.ws.rs.InternalServerErrorException;
+import javax.ws.rs.ServerErrorException;
+import javax.ws.rs.core.Response;
+
 import com.alibaba.dubbo.common.URL;
 import com.alibaba.dubbo.rpc.Invocation;
 import com.alibaba.dubbo.rpc.Invoker;
 import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.dubbo.rpc.RpcResult;
+
 import lombok.extern.slf4j.Slf4j;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.common.extension.exception.ExceptionMessage;
+import net.jahhan.common.extension.exception.HttpException;
+import net.jahhan.common.extension.exception.HttpExceptionMessage;
 import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.JsonUtil;
-
-import javax.ws.rs.InternalServerErrorException;
-import javax.ws.rs.ServerErrorException;
-import javax.ws.rs.core.Response;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * InvokerWrapper
@@ -82,14 +86,18 @@ public abstract class AbstractProxyInvoker<T> implements Invoker<T> {
 		} catch (InvocationTargetException e) {
 			log.debug(e.getMessage(), e);
 			int httpStatus = 500;
-			int code = JahhanErrorCode.UNKNOW_ERROR;
+			String code = JahhanErrorCode.UNKNOW_ERROR;
 			String message = e.getTargetException().getMessage();
 
 			Throwable targetException = e.getTargetException();
 			Throwable cause = e.getCause().getCause();
-			if (targetException instanceof JahhanException) {// 判断异常是否是调用其他服务抛出的JahhanException异常
+			if (targetException instanceof HttpException) {// 判断异常是否是调用其他服务抛出的JahhanException异常
+				HttpException exception = (HttpException) targetException;
+				httpStatus = exception.getHttpStatus();
+				code = exception.getExceptionMessage().getCode();
+				message = exception.getExceptionMessage().getMessage();
+			} else if (targetException instanceof JahhanException) {// 判断异常是否是调用其他服务抛出的JahhanException异常
 				JahhanException exception = (JahhanException) targetException;
-				httpStatus = exception.getExceptionMessage().getHttpStatus();
 				code = exception.getExceptionMessage().getCode();
 				message = exception.getExceptionMessage().getMessage();
 			}
@@ -101,9 +109,11 @@ public abstract class AbstractProxyInvoker<T> implements Invoker<T> {
 						ExceptionMessage.class);
 				code = serverException.getCode();
 				message = serverException.getMessage();
-				httpStatus = serverException.getHttpStatus();
+				if (serverException instanceof HttpExceptionMessage) {
+					httpStatus = ((HttpExceptionMessage) serverException).getHttpStatus();
+				}
 			}
-			return new RpcResult(new JahhanException(httpStatus, code, message, cause));
+			return new RpcResult(new HttpException(httpStatus, code, message, cause));
 		} catch (Throwable e) {
 			throw new JahhanException("Failed to invoke remote proxy method " + invocation.getMethodName() + " to "
 					+ getUrl() + ", cause: " + e.getMessage(), e);

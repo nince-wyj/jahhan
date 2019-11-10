@@ -20,7 +20,6 @@ import com.alibaba.dubbo.rpc.RpcException;
 import net.jahhan.common.extension.annotation.GlobalSyncTransaction;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.common.extension.context.BaseContext;
-import net.jahhan.common.extension.context.BaseVariable;
 import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.ExtensionUtil;
 import net.jahhan.common.extension.utils.LogUtil;
@@ -28,10 +27,11 @@ import net.jahhan.config.ServiceImplCache;
 import net.jahhan.jdbc.annotation.DBConnect;
 import net.jahhan.jdbc.annotation.DBConnections;
 import net.jahhan.jdbc.conn.DBConnFactory;
-import net.jahhan.jdbc.context.DBVariable;
 import net.jahhan.jdbc.dbconnexecutor.DBConnExecutorHolder;
 import net.jahhan.register.ClusterMessageHolder;
 import net.jahhan.spi.common.BroadcastSender;
+import net.jahhan.variable.BaseThreadVariable;
+import net.jahhan.variable.DBVariable;
 
 @Activate(group = Constants.PROVIDER, order = 1000)
 @Extension("dbConnect")
@@ -52,14 +52,14 @@ public class DBConnectFilter implements Filter {
 		}
 		DBConnections dBConnects = implMethod.getAnnotation(DBConnections.class);
 		GlobalSyncTransaction globalSyncTransaction = implMethod.getAnnotation(GlobalSyncTransaction.class);
-		BaseVariable baseVariable = BaseVariable.getBaseVariable();
+		BaseThreadVariable baseVariable = (BaseThreadVariable) BaseThreadVariable.getThreadVariable("base");
 		if (null != globalSyncTransaction) {
 			if (!baseVariable.isDbLazyCommit()) {
 				baseVariable.setDbLazyCommit(true);
 				baseVariable.setGlobalSyncTransactionHold(true);
 			}
 		}
-		DBVariable dbVariable = DBVariable.getDBVariable();
+		DBVariable dbVariable = (DBVariable) DBVariable.getThreadVariable("db");
 		if (null != dBConnects && dBConnects.value().length > 0) {
 			for (DBConnect dBConnect : dBConnects.value()) {
 				String dataSource = dBConnect.dataSource();
@@ -87,7 +87,7 @@ public class DBConnectFilter implements Filter {
 					commit = false;
 				}
 			}
-			String chainId = BaseVariable.getBaseVariable().getChainId();
+			String chainId = ((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).getChainId();
 			if (baseVariable.isGlobalSyncTransactionHold()) {
 				if (null != result) {
 					Throwable exception = result.getException();
@@ -126,7 +126,7 @@ public class DBConnectFilter implements Filter {
 	}
 
 	private void closeAllConnection(boolean commit) {
-		DBVariable dbVariable = DBVariable.getDBVariable();
+		DBVariable dbVariable = (DBVariable) DBVariable.getThreadVariable("db");
 		Set<String> dataSources = dbVariable.getDataSources();
 		for (String dataSource : dataSources) {
 			List<DBConnExecutorHolder> dbConnExecutorHolders = dbVariable.getDBConnExecutorHolders(dataSource);

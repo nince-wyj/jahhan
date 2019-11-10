@@ -26,7 +26,6 @@
 			<artifactId>slf4j-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>jdbc-api</artifactId>
@@ -39,5 +38,14 @@
 			<version>${project.version}</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>com.sun</groupId>
+			<artifactId>tools</artifactId>
+			<version>1.6.0</version>
+			<scope>system</scope>
+			<systemPath>${env.JAVA_HOME}/lib/tools.jar</systemPath>
+		</dependency>
+		
 	</dependencies>
 </project>

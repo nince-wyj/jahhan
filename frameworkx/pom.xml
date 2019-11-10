@@ -24,7 +24,6 @@
 	</modules>
 	<properties>
 		<!-- Common libs -->
-		<project.version>1.0-SNAPSHOT</project.version>
 		<spring.bom.version>3.2.9.RELEASE</spring.bom.version>
 		<javassist_version>3.20.0-GA</javassist_version>
 		<netty_version>3.7.0.Final</netty_version>
@@ -226,11 +225,6 @@
 				<groupId>org.apache.cxf</groupId>
 				<artifactId>cxf-rt-transports-http</artifactId>
 				<version>${cxf_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.thrift</groupId>
-				<artifactId>libthrift</artifactId>
-				<version>${thrift2_version}</version>
 			</dependency>
 			<dependency>
 				<groupId>jfree</groupId>
@@ -470,6 +464,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-source-plugin</artifactId>
+				<version>${maven_version.source_plugin}</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>

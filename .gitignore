@@ -14,6 +14,7 @@ target
 .settings
 .project
 .classpath
+*.versionsBackup
 /demo/service-demo/dubbo-registry.properties
 /demo/service-demo/dubbo-registry.properties.lock
 /demo/service-demo/dubbo-registry.properties
@@ -22,3 +23,5 @@ target
 /demo/service-demo-dubbo/dubbo-registry.properties.lock
 /demo/service-demo-frameworkx/dubbo-registry.properties
 /demo/service-demo-frameworkx/dubbo-registry.properties.lock
+
+/frameworkx/dubbo-rpc/dubbo-rpc-webservice/pom.xml.versionsBackup

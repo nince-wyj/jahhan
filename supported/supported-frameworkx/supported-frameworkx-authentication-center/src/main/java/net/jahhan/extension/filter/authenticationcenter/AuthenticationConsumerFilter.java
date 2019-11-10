@@ -11,8 +11,8 @@ import com.frameworkx.annotation.Activate;
 
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.exception.JahhanException;
-import net.jahhan.service.context.AuthenticationVariable;
 import net.jahhan.spi.Filter;
+import net.jahhan.variable.AuthenticationVariable;
 
 @Activate(group = Constants.CONSUMER, order = -9000)
 @Extension("authenticationConsumer")
@@ -24,7 +24,7 @@ public class AuthenticationConsumerFilter implements Filter {
 		String protocol = url.getProtocol();
 		String directUrl = url.getParameter("directUrl");
 		if (protocol.equals("rest") && directUrl.equals("true")) {
-			AuthenticationVariable.getAuthenticationVariable().setCrypt(false);
+			((AuthenticationVariable) AuthenticationVariable.getThreadVariable("authentication")).setCrypt(false);
 		}
 		Result invoke = invoker.invoke(invocation);
 		return invoke;

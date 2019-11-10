@@ -197,10 +197,8 @@ public class InitMethod {
 				} else {
 					array = values.toArray(new Class<?>[values.size()]);
 				}
-				AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(array);
 				InjectorHolder instance = InjectorHolder.getInstance();
-				instance.setContext(context);
-				injector = instance.getInjector();
+				injector = instance.initContext(array);
 			} else if (BaseConfiguration.INJECT_TYPE.equals(InjectType.springboot)) {
 				Collection<Class<?>> values = moduleMap.values();
 				String applicationClasses = PropertiesUtil.get("base", "applicationClasses");
@@ -214,11 +212,16 @@ public class InitMethod {
 				} else {
 					array = values.toArray(new Class<?>[values.size()]);
 				}
-				SpringApplicationBuilder builder = new SpringApplicationBuilder(array);
-				ConfigurableApplicationContext context = builder.run(args);
 				InjectorHolder instance = InjectorHolder.getInstance();
-				instance.setContext(context);
-				injector = instance.getInjector();
+				injector = instance.initContext(array,args);
+			}else {
+				Iterator<Class<?>> lazyWorkHandlerIt = lazyModuleSet.iterator();
+				while (lazyWorkHandlerIt.hasNext()) {
+					Class<?> moduleClass = lazyWorkHandlerIt.next();
+					Module module = (Module) moduleClass.newInstance();
+					moduleList.add(module);
+				}
+				injector = Guice.createInjector(moduleList.toArray(new Module[moduleList.size()]));
 			}
 			injector.getInstance(BaseContext.class);
 		} catch (Throwable e) {

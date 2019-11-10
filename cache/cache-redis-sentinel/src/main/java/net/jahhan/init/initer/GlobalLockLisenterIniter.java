@@ -14,19 +14,19 @@ import net.jahhan.cache.Redis;
 import net.jahhan.cache.constants.RedisConnectType;
 import net.jahhan.cache.constants.RedisConstants;
 import net.jahhan.common.extension.context.BaseContext;
-import net.jahhan.common.extension.context.BaseVariable;
-import net.jahhan.common.extension.context.VariableContext;
+import net.jahhan.common.extension.context.ThreadVariableContext;
 import net.jahhan.common.extension.utils.PropertiesUtil;
 import net.jahhan.init.BootstrapInit;
 import net.jahhan.init.InitAnnocation;
 import net.jahhan.jdbc.constant.JDBCConstants;
-import net.jahhan.jdbc.context.DBVariable;
 import net.jahhan.jdbc.dbconnexecutor.DBConnExecutorHolder;
 import net.jahhan.jdbc.globaltransaction.DBConnExecutorHolderCache;
 import net.jahhan.jdbc.utils.DBConnExecutorHolderUtil;
 import net.jahhan.jedis.JedisSentinelPoolExt;
 import net.jahhan.lock.communication.LockWaitingThreadHolder;
 import net.jahhan.spi.common.BroadcastSender;
+import net.jahhan.variable.BaseThreadVariable;
+import net.jahhan.variable.DBVariable;
 import redis.clients.jedis.Client;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -137,11 +137,11 @@ public class GlobalLockLisenterIniter extends JedisPubSub implements BootstrapIn
 					try {
 						String chainId = split[1];
 						BaseContext applicationContext = BaseContext.CTX;
-						VariableContext variableContext = new VariableContext();
+						ThreadVariableContext variableContext = new ThreadVariableContext();
 						if (null == applicationContext.getThreadLocalUtil().getValue()) {
 							applicationContext.getThreadLocalUtil().openThreadLocal(variableContext);
 						}
-						DBVariable dbVariable = DBVariable.getDBVariable();
+						DBVariable dbVariable = (DBVariable) DBVariable.getThreadVariable("db");
 						long holdTimeOut = JDBCConstants.getHoldTimeOut();
 						Map<String, List<DBConnExecutorHolder>> dbExecutorHolders = DBConnExecutorHolderCache
 								.getDbExecutorHolders(chainId);
@@ -171,7 +171,7 @@ public class GlobalLockLisenterIniter extends JedisPubSub implements BootstrapIn
 								dBConnExecutorHolderUtil.commit(true);
 							} else {
 								broadcastSender.send("TRANSACTION_ROLLBACK",
-										BaseVariable.getBaseVariable().getChainId());
+										((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).getChainId());
 								dBConnExecutorHolderUtil.commit(false);
 							}
 						}
@@ -189,7 +189,7 @@ public class GlobalLockLisenterIniter extends JedisPubSub implements BootstrapIn
 					try {
 						String chainId = split[1];
 						BaseContext applicationContext = BaseContext.CTX;
-						VariableContext variableContext = new VariableContext();
+						ThreadVariableContext variableContext = new ThreadVariableContext();
 						if (null == applicationContext.getThreadLocalUtil().getValue()) {
 							applicationContext.getThreadLocalUtil().openThreadLocal(variableContext);
 						}

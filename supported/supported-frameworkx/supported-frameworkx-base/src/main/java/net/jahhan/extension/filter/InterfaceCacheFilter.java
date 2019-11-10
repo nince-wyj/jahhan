@@ -22,14 +22,14 @@ import net.jahhan.cache.constants.RedisConstants;
 import net.jahhan.cache.util.SerializerUtil;
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
-import net.jahhan.common.extension.context.BaseVariable;
 import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.Assert;
 import net.jahhan.lock.DistributedLock;
 import net.jahhan.lock.util.ServiceReentrantLockUtil;
-import net.jahhan.service.context.AuthenticationVariable;
 import net.jahhan.service.service.bean.User;
 import net.jahhan.spi.Filter;
+import net.jahhan.variable.AuthenticationVariable;
+import net.jahhan.variable.BaseThreadVariable;
 
 @Activate(group = Constants.PROVIDER, order = 1000)
 @Extension("interfaceCacheFilter")
@@ -97,7 +97,7 @@ public class InterfaceCacheFilter implements Filter {
 			}
 		}
 
-		BaseVariable baseVariable = BaseVariable.getBaseVariable();
+		BaseThreadVariable baseVariable = (BaseThreadVariable) BaseThreadVariable.getThreadVariable("base");
 		sb.append("_").append(baseVariable.getSign());
 
 		return sb.toString();
@@ -125,7 +125,8 @@ public class InterfaceCacheFilter implements Filter {
 				switch (cache.fastBackType()) {
 
 				case USERID:
-					User user = AuthenticationVariable.getAuthenticationVariable().getUser();
+					User user = ((AuthenticationVariable) AuthenticationVariable
+							.getThreadVariable("authentication")).getUser();
 					Assert.notNull(user, "无用户信息", JahhanErrorCode.NO_AUTHORITY);
 					key = createrCacheKey(cache, interfaceClassName, implMethod, invocation) + "_" + user.getUserId();
 					break;

@@ -11,8 +11,18 @@ public abstract class PackageUtil {
 
 	static {
 		String servicePath = BaseConfiguration.SERVICE_PATH;
-		String[] servicePathSplit = servicePath.split(",");
-		servicePathList = Arrays.asList(servicePathSplit);
+		if (null != servicePath ) {
+			if(servicePath.indexOf(",") > 0) {
+				String[] servicePathSplit = servicePath.split(",");
+				servicePathList = Arrays.asList(servicePathSplit);
+			}else {
+				servicePathList = new ArrayList<>();
+				servicePathList.add(servicePath);
+			}
+			
+		} else {
+			servicePathList = new ArrayList<>();
+		}
 	}
 
 	/**

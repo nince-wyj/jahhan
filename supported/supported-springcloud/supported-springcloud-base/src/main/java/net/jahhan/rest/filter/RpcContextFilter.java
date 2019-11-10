@@ -20,10 +20,11 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import net.jahhan.common.extension.constant.BaseConfiguration;
 import net.jahhan.common.extension.context.BaseContext;
-import net.jahhan.common.extension.context.BaseVariable;
-import net.jahhan.common.extension.context.VariableContext;
+import net.jahhan.common.extension.context.ThreadVariableContext;
 import net.jahhan.common.extension.utils.StringUtils;
-import net.jahhan.request.context.RequestVariable;
+import net.jahhan.variable.BaseGlobalVariable;
+import net.jahhan.variable.BaseThreadVariable;
+import net.jahhan.variable.RequestVariable;
 
 @Priority(Integer.MIN_VALUE + 1)
 public class RpcContextFilter implements ContainerRequestFilter, ClientRequestFilter, ContainerResponseFilter {
@@ -42,11 +43,11 @@ public class RpcContextFilter implements ContainerRequestFilter, ClientRequestFi
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 		BaseContext applicationContext = BaseContext.CTX;
-		VariableContext variableContext = new VariableContext();
+		ThreadVariableContext variableContext = new ThreadVariableContext();
 		applicationContext.getThreadLocalUtil().openThreadLocal(variableContext);
-		BaseVariable base = BaseVariable.getBaseVariable();
+		BaseThreadVariable base = (BaseThreadVariable) BaseThreadVariable.getThreadVariable("base");
 
-		RequestVariable requestVariable = RequestVariable.getVariable();
+		RequestVariable requestVariable = (RequestVariable) RequestVariable.getThreadVariable("request");
 		requestVariable.setRequest(request);
 
 		// this only works for servlet containers
@@ -86,13 +87,13 @@ public class RpcContextFilter implements ContainerRequestFilter, ClientRequestFi
 		base.setRequestId(requestId);
 		base.setChainId(chainId);
 		base.setBehaviorId(behaviorId);
-		BaseContext.CTX.setChain(chainId, Thread.currentThread());
+		((BaseGlobalVariable) BaseContext.CTX.getVariable("base")).setChain(chainId, Thread.currentThread());
 	}
 
 	@Override
 	public void filter(ClientRequestContext requestContext) throws IOException {
 		int size = 0;
-		RequestVariable requestVariable = RequestVariable.getVariable();
+		RequestVariable requestVariable = (RequestVariable) RequestVariable.getThreadVariable("request");
 		for (Map.Entry<String, String> entry : requestVariable.getAttachments().entrySet()) {
 			if (entry.getValue().contains(",") || entry.getValue().contains("=") || entry.getKey().contains(",")
 					|| entry.getKey().contains("=")) {
@@ -121,7 +122,7 @@ public class RpcContextFilter implements ContainerRequestFilter, ClientRequestFi
 	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext)
 			throws IOException {
 		MultivaluedMap<String, Object> headers = responseContext.getHeaders();
-		RequestVariable requestVariable = RequestVariable.getVariable();
+		RequestVariable requestVariable = (RequestVariable) RequestVariable.getThreadVariable("request");
 		if (BaseConfiguration.IS_DEBUG) {
 			headers.add("Access-Control-Allow-Origin", "*");
 			headers.add("Access-Control-Allow-Headers", "x-requested-with, ssi-token");

@@ -6,9 +6,9 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
-import net.jahhan.jdbc.pojo.page.Pagable;
-import net.jahhan.jdbc.pojo.page.Paged;
 import net.jahhan.demo.pojo.TUserDemoInfo;
+import net.jahhan.jdbc.dopage.Pagable;
+import net.jahhan.jdbc.dopage.Paged;
 
 /**
  * t_user_demo_info:用户信息表

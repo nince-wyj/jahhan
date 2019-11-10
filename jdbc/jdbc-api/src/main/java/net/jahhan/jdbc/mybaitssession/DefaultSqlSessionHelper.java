@@ -40,12 +40,12 @@ public class DefaultSqlSessionHelper implements SqlSession {
 
 	@Override
 	public <T> T selectOne(String statement) {
-		return this.<T> selectOne(statement, null);
+		return this.<T>selectOne(statement, null);
 	}
 
 	@Override
 	public <T> T selectOne(String statement, Object parameter) {
-		List<T> list = this.<T> selectList(statement, parameter);
+		List<T> list = this.<T>selectList(statement, parameter);
 		if (list.size() == 1) {
 			return list.get(0);
 		} else if (list.size() > 1) {
@@ -226,7 +226,7 @@ public class DefaultSqlSessionHelper implements SqlSession {
 
 	@Override
 	public <T> T getMapper(Class<T> type) {
-		return configuration.<T> getMapper(type, this);
+		return configuration.<T>getMapper(type, this);
 	}
 
 	@Override
@@ -278,7 +278,7 @@ public class DefaultSqlSessionHelper implements SqlSession {
 	static class SQLExceptionFactory {
 		public static RuntimeException wrapException(String message, Exception e) {
 			if (SQLException.class.isInstance(e) && message != null && message.contains("Incorrect string value")) {
-				return new JahhanException(1, "内容含有特殊字符", e);
+				return new JahhanException(JahhanErrorCode.CONFIGURATION_ERROR, "内容含有特殊字符", e);
 			}
 			return new PersistenceException(ErrorContext.instance().message(message).cause(e).toString(), e);
 		}
@@ -286,19 +286,19 @@ public class DefaultSqlSessionHelper implements SqlSession {
 
 	@Override
 	public <T> Cursor<T> selectCursor(String statement) {
-		JahhanException.throwException( JahhanErrorCode.UNSUPPORT_ERROR, "不支持");
+		JahhanException.throwException(JahhanErrorCode.UNSUPPORT_ERROR, "不支持");
 		return null;
 	}
 
 	@Override
 	public <T> Cursor<T> selectCursor(String statement, Object parameter) {
-		JahhanException.throwException( JahhanErrorCode.UNSUPPORT_ERROR, "不支持");
+		JahhanException.throwException(JahhanErrorCode.UNSUPPORT_ERROR, "不支持");
 		return null;
 	}
 
 	@Override
 	public <T> Cursor<T> selectCursor(String statement, Object parameter, RowBounds rowBounds) {
-		JahhanException.throwException( JahhanErrorCode.UNSUPPORT_ERROR, "不支持");
+		JahhanException.throwException(JahhanErrorCode.UNSUPPORT_ERROR, "不支持");
 		return null;
 	}
 

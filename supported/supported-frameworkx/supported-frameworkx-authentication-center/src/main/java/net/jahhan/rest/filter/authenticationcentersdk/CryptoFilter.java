@@ -35,16 +35,17 @@ import com.frameworkx.common.extension.utils.ExtensionExtendUtil;
 import net.jahhan.common.extension.constant.BaseConfiguration;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.common.extension.context.BaseContext;
-import net.jahhan.common.extension.context.BaseVariable;
 import net.jahhan.common.extension.exception.JahhanException;
-import net.jahhan.common.extension.utils.Assert;
+import net.jahhan.common.extension.utils.HttpAssert;
 import net.jahhan.common.extension.utils.JsonUtil;
 import net.jahhan.common.extension.utils.StringUtils;
 import net.jahhan.service.authenticationcenter.Authentication;
-import net.jahhan.service.context.AuthenticationVariable;
 import net.jahhan.service.service.bean.User;
 import net.jahhan.service.service.constant.UserTokenType;
 import net.jahhan.spi.common.ICrypto;
+import net.jahhan.variable.AuthenticationVariable;
+import net.jahhan.variable.BaseGlobalVariable;
+import net.jahhan.variable.BaseThreadVariable;
 
 @Priority(Integer.MIN_VALUE + 100)
 @Named
@@ -98,18 +99,18 @@ public class CryptoFilter
 
 			String uriMd5Sign = md5Crypto
 					.encrypt(requestContext.getMethod() + path + requestUri.getRawQuery() + context, null);
-			AuthenticationVariable.getAuthenticationVariable().setSign(uriMd5Sign);
-			AuthenticationVariable.getAuthenticationVariable().setDocRequest(docRequest);
+			((AuthenticationVariable) AuthenticationVariable.getThreadVariable("authentication")).setSign(uriMd5Sign);
+			((AuthenticationVariable) AuthenticationVariable.getThreadVariable("authentication")).setDocRequest(docRequest);
 			boolean needDecrypt = authentication.decryptToken(tokenMap);
 			if (needDecrypt && !(docRequest && BaseConfiguration.IS_DEBUG)) {
-				AuthenticationVariable.getAuthenticationVariable().setCrypt(true);
-				String key = AuthenticationVariable.getAuthenticationVariable().getKey();
-				Assert.notNullString(key, "鉴权秘钥获取失败！", HttpStatus.SC_UNAUTHORIZED, JahhanErrorCode.NO_AUTHORITY);
+				((AuthenticationVariable) AuthenticationVariable.getThreadVariable("authentication")).setCrypt(true);
+				String key = ((AuthenticationVariable) AuthenticationVariable.getThreadVariable("authentication")).getKey();
+				HttpAssert.notNullString(key, "鉴权秘钥获取失败！", HttpStatus.SC_UNAUTHORIZED, JahhanErrorCode.NO_AUTHORITY);
 				context = aesCrypto.decrypt(context, key);
 			}
 			String requestMd5Sign = md5Crypto
 					.encrypt(requestContext.getMethod() + path + requestUri.getRawQuery() + context, null);
-			BaseVariable.getBaseVariable().setSign(requestMd5Sign);
+			((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).setSign(requestMd5Sign);
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			try {
 				out.write(context.getBytes());
@@ -129,7 +130,7 @@ public class CryptoFilter
 
 	@Override
 	public void filter(ClientRequestContext requestContext) throws IOException {
-		String token = BaseContext.CTX.getToken();
+		String token = ((BaseGlobalVariable) BaseContext.CTX.getVariable("base")).getToken();
 		if (token != null) {
 			requestContext.getHeaders().add(AUTHORIZATION_HEADER, "BASIC_TOKEN " + token);
 		} else {
@@ -140,7 +141,7 @@ public class CryptoFilter
 	@Override
 	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext)
 			throws IOException {
-		AuthenticationVariable authenticationVariable = AuthenticationVariable.getAuthenticationVariable();
+		AuthenticationVariable authenticationVariable = (AuthenticationVariable) AuthenticationVariable.getThreadVariable("authentication");
 		try {
 			boolean crypt = authenticationVariable.isCrypt();
 			if (crypt) {
@@ -170,7 +171,7 @@ public class CryptoFilter
 
 	@Override
 	public void filter(ClientRequestContext requestContext, ClientResponseContext responseContext) throws IOException {
-		boolean needDecrypt = AuthenticationVariable.getAuthenticationVariable().isCrypt();
+		boolean needDecrypt = ((AuthenticationVariable) AuthenticationVariable.getThreadVariable("authentication")).isCrypt();
 		URI uriInfo = requestContext.getUri();
 		String path = uriInfo.getPath();
 		boolean docRequest = path.endsWith("/swagger");
@@ -183,8 +184,8 @@ public class CryptoFilter
 				sb.append(line);
 			}
 			String context = sb.toString();
-			String key = AuthenticationVariable.getAuthenticationVariable().getKey();
-			Assert.notNullString(key, "鉴权秘钥获取失败！", HttpStatus.SC_UNAUTHORIZED, JahhanErrorCode.NO_AUTHORITY);
+			String key = ((AuthenticationVariable) AuthenticationVariable.getThreadVariable("authentication")).getKey();
+			HttpAssert.notNullString(key, "鉴权秘钥获取失败！", HttpStatus.SC_UNAUTHORIZED, JahhanErrorCode.NO_AUTHORITY);
 			context = aesCrypto.decrypt(context, key);
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			try {

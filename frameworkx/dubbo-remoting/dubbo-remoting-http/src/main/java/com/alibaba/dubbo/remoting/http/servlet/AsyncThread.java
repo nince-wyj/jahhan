@@ -11,7 +11,7 @@ import com.alibaba.dubbo.remoting.http.HttpHandler;
 
 import lombok.Setter;
 import net.jahhan.common.extension.context.BaseContext;
-import net.jahhan.common.extension.context.VariableContext;
+import net.jahhan.common.extension.context.ThreadVariableContext;
 
 /**
  * 接口异步线程方法
@@ -30,7 +30,7 @@ public class AsyncThread implements Runnable {
 
 	@Override
 	public void run() {
-		VariableContext variableContext = new VariableContext();
+		ThreadVariableContext variableContext = new ThreadVariableContext();
 		BaseContext.CTX.getThreadLocalUtil().openThreadLocal(variableContext);
 		try {
 			if (handler == null) {// service not found.

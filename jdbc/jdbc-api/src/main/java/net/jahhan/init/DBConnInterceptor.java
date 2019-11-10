@@ -10,16 +10,16 @@ import org.aopalliance.intercept.MethodInvocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.jahhan.common.extension.context.BaseVariable;
 import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.jdbc.annotation.DBConnect;
 import net.jahhan.jdbc.annotation.DBConnections;
 import net.jahhan.jdbc.conn.DBConnFactory;
 import net.jahhan.jdbc.constant.enumeration.DBConnectLevel;
 import net.jahhan.jdbc.constant.enumeration.DBConnectStrategy;
-import net.jahhan.jdbc.context.DBVariable;
 import net.jahhan.jdbc.dbconnexecutor.DBConnExecutorHolder;
 import net.jahhan.spi.common.BroadcastSender;
+import net.jahhan.variable.BaseThreadVariable;
+import net.jahhan.variable.DBVariable;
 
 public class DBConnInterceptor implements MethodInterceptor {
 	private static Logger logger = LoggerFactory.getLogger(DBConnInterceptor.class);
@@ -27,7 +27,7 @@ public class DBConnInterceptor implements MethodInterceptor {
 	private BroadcastSender broadcastSender;
 	@Override
 	public Object invoke(MethodInvocation invocation) throws Throwable {
-		DBVariable dbVariable = DBVariable.getDBVariable();
+		DBVariable dbVariable = (DBVariable) DBVariable.getThreadVariable("db");
 		DBConnections dBConnects = invocation.getMethod().getAnnotation(DBConnections.class);
 		Object obj = null;
 		if (null == dBConnects) {
@@ -71,7 +71,7 @@ public class DBConnInterceptor implements MethodInterceptor {
 			}
 			try {
 				obj = invocation.proceed();
-				if (BaseVariable.getBaseVariable().isDbLazyCommit()) {
+				if (((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).isDbLazyCommit()) {
 
 				} else {
 					for (DBConnExecutorHolder connExec : transactionExecutorList) {
@@ -88,8 +88,8 @@ public class DBConnInterceptor implements MethodInterceptor {
 				logger.error("DBConnHandler error {}", e);
 				throw e;
 			} finally {
-				if (BaseVariable.getBaseVariable().isDbLazyCommit()) {
-					broadcastSender.setChainNode(BaseVariable.getBaseVariable().getChainId());
+				if (((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).isDbLazyCommit()) {
+					broadcastSender.setChainNode(((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).getChainId());
 				} else {
 					List<DBConnExecutorHolder> holders = new ArrayList<>();
 					holders.addAll(allExecutorList);

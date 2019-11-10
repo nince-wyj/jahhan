@@ -15,6 +15,8 @@
  */
 package net.jahhan.extension.transporter;
 
+import javax.inject.Singleton;
+
 import com.alibaba.dubbo.common.URL;
 import com.alibaba.dubbo.remoting.Client;
 import com.alibaba.dubbo.remoting.RemotingException;
@@ -22,6 +24,7 @@ import com.alibaba.dubbo.remoting.Server;
 import com.alibaba.dubbo.remoting.transport.netty4.NettyClient;
 import com.alibaba.dubbo.remoting.transport.netty4.NettyServer;
 
+import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.spi.ChannelHandler;
 import net.jahhan.spi.Transporter;
 
@@ -29,6 +32,8 @@ import net.jahhan.spi.Transporter;
  * @author ding.lid
  * @author qinliujie
  */
+@Extension("netty4")
+@Singleton
 public class NettyTransporter implements Transporter {
 
     public static final String NAME = "netty4";

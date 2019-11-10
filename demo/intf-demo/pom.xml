@@ -11,9 +11,6 @@
 		<repository>
 			<id>jahhan</id>
 			<url>http://47.100.61.97:8081/nexus/content/repositories/jahhan</url>
-			<SNAPSHOT>
-				<enabled>true</enabled>
-			</SNAPSHOT>
 		</repository>
 		<repository>
 			<id>central</id>

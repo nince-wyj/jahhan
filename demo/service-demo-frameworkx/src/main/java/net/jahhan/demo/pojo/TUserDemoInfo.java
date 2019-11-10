@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 import javax.validation.constraints.*;
 
-import net.jahhan.jdbc.SuperPojo;
+import net.jahhan.jdbc.SuperDO;
 import net.jahhan.jdbc.validategroup.*;
 import org.hibernate.validator.constraints.*;
 import io.swagger.annotations.ApiModel;
@@ -22,7 +22,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "用户信息表")
-public class TUserDemoInfo extends SuperPojo<TUserDemoInfo> {
+public class TUserDemoInfo extends SuperDO<TUserDemoInfo> {
 
 	private static final long serialVersionUID = 10000000L;
 		

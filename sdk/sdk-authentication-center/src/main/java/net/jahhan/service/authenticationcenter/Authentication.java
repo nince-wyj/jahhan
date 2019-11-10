@@ -21,16 +21,17 @@ import net.jahhan.cache.util.SerializerUtil;
 import net.jahhan.common.extension.constant.BaseConfiguration;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.common.extension.context.BaseContext;
-import net.jahhan.common.extension.context.BaseVariable;
-import net.jahhan.common.extension.exception.JahhanException;
-import net.jahhan.common.extension.utils.Assert;
-import net.jahhan.service.context.AuthenticationVariable;
+import net.jahhan.common.extension.exception.HttpException;
+import net.jahhan.common.extension.utils.HttpAssert;
 import net.jahhan.service.service.bean.Service;
 import net.jahhan.service.service.bean.TokenOVO;
 import net.jahhan.service.service.bean.User;
 import net.jahhan.service.service.constant.UserTokenType;
 import net.jahhan.spi.TokenCache;
 import net.jahhan.spi.common.ICrypto;
+import net.jahhan.variable.AuthenticationVariable;
+import net.jahhan.variable.BaseGlobalVariable;
+import net.jahhan.variable.BaseThreadVariable;
 
 @Named
 @Singleton
@@ -47,7 +48,8 @@ public class Authentication {
 
 	public boolean decryptToken(Map<String, String> tokenMap) {
 		boolean needDecrypt = true;
-		AuthenticationVariable authenticationVariable = AuthenticationVariable.getAuthenticationVariable();
+		AuthenticationVariable authenticationVariable = (AuthenticationVariable) AuthenticationVariable
+				.getThreadVariable("authentication");
 		if (tokenMap.containsKey("DEBUG") && BaseConfiguration.IS_DEBUG) {
 			String idInfo = tokenMap.get("DEBUG");
 			for (String info : idInfo.split(",")) {
@@ -78,6 +80,7 @@ public class Authentication {
 			authenticationVariable.setNoneToken(true);
 			return false;
 		}
+		BaseGlobalVariable baseGlobalVariable = (BaseGlobalVariable)BaseContext.CTX.getVariable("base");
 		if (tokenMap.containsKey("BASIC_TOKEN")) {
 			String token = tokenMap.get("BASIC_TOKEN");
 			byte[] serviceBytes = cache.getBinary(("BASIC_TOKEN_" + SERVICE + "_" + token).getBytes());
@@ -87,7 +90,7 @@ public class Authentication {
 				needDecrypt = false;
 			} else {
 				ServiceAuthenticationOVO authentication = serviceInft.authentication(token);
-				Assert.notNull(authentication, "鉴权失败！", HttpStatus.SC_UNAUTHORIZED, JahhanErrorCode.NO_AUTHORITY);
+				HttpAssert.notNull(authentication, "鉴权失败！", HttpStatus.SC_UNAUTHORIZED, JahhanErrorCode.NO_AUTHORITY);
 				if (authentication.getTokenType().equals("BASIC_TOKEN")) {
 					service = new Service();
 					service.setServiceCode(authentication.getServiceCode());
@@ -100,8 +103,8 @@ public class Authentication {
 			authenticationVariable.setService(service);
 		} else if (tokenMap.containsKey("ACCESS_TOKEN")) {
 			String ciphertext = tokenMap.get("ACCESS_TOKEN");
-			String requestId = BaseVariable.getBaseVariable().getRequestId();
-			String thirdKey = BaseContext.CTX.getThirdPubKey();
+			String requestId = ((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).getRequestId();
+			String thirdKey = baseGlobalVariable.getThirdPubKey();
 
 			String key = thirdKey.substring(0, 8) + requestId.substring(0, 8);
 			String decrypt = crypto.decrypt(ciphertext, key);
@@ -115,7 +118,7 @@ public class Authentication {
 				service = SerializerUtil.deserialize(serviceBytes, Service.class);
 			} else {
 				ServiceAuthenticationOVO authentication = serviceInft.authentication(token);
-				Assert.notNull(authentication, "鉴权失败！", HttpStatus.SC_UNAUTHORIZED, JahhanErrorCode.NO_AUTHORITY);
+				HttpAssert.notNull(authentication, "鉴权失败！", HttpStatus.SC_UNAUTHORIZED, JahhanErrorCode.NO_AUTHORITY);
 				if (authentication.getTokenType().equals("ACCESS_TOKEN")) {
 					service = new Service();
 					service.setServiceCode(authentication.getServiceCode());
@@ -139,15 +142,15 @@ public class Authentication {
 		}
 		if (tokenMap.containsKey(UserTokenType.BEARER_TOKEN.getValue())) {
 			String ciphertext = tokenMap.get(UserTokenType.BEARER_TOKEN.getValue());
-			String requestId = BaseVariable.getBaseVariable().getRequestId();
-			String appKey = BaseContext.CTX.getAppPubKey();
+			String requestId = ((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).getRequestId();
+			String appKey = baseGlobalVariable.getAppPubKey();
 			String key = appKey.substring(0, 8) + requestId.substring(0, 8);
 			String decrypt = crypto.decrypt(ciphertext, key);
 			String[] split = decrypt.split("_");
 			String tokenAndNonce = split[0];
 			String token = tokenAndNonce.substring(0, tokenAndNonce.length() - 4);
 			String nonce = tokenAndNonce.substring(tokenAndNonce.length() - 4);
-			Assert.isTrue(nonce.length() == 4, "TOKEN错误！", HttpStatus.SC_UNAUTHORIZED, JahhanErrorCode.NO_AUTHORITY);
+			HttpAssert.isTrue(nonce.length() == 4, "TOKEN错误！", HttpStatus.SC_UNAUTHORIZED, JahhanErrorCode.NO_AUTHORITY);
 			byte[] userBytes = cache
 					.getBinary((UserTokenType.BEARER_TOKEN.getValue() + "_" + SERVICE + "_" + token).getBytes());
 			User user = null;
@@ -160,7 +163,7 @@ public class Authentication {
 			} else {
 				UserAuthenticationOVO authentication = userInft.authentication(token,
 						UserTokenType.BEARER_TOKEN.getValue(), null, null, null);
-				Assert.notNull(authentication, "鉴权失败！", HttpStatus.SC_UNAUTHORIZED, JahhanErrorCode.NO_AUTHORITY);
+				HttpAssert.notNull(authentication, "鉴权失败！", HttpStatus.SC_UNAUTHORIZED, JahhanErrorCode.NO_AUTHORITY);
 				if (null == authentication.getUserId()) {
 					String requestMode = split[1];
 					if (requestMode.equals("l")) {
@@ -169,7 +172,7 @@ public class Authentication {
 						authenticationVariable.setFirstSingleToken(true);
 						return true;
 					} else {
-						JahhanException.throwException(HttpStatus.SC_UNAUTHORIZED, JahhanErrorCode.NO_AUTHORITY,
+						HttpException.throwException(HttpStatus.SC_UNAUTHORIZED, JahhanErrorCode.NO_AUTHORITY,
 								"错误的token信息！");
 					}
 				} else {
@@ -192,7 +195,7 @@ public class Authentication {
 				tokenIVO.setRefreshToken(refreshToken);
 				tokenIVO.setToken(token);
 				TokenOVO tokenOVO = userInft.refreshToken(tokenIVO);
-				Assert.notNull(tokenOVO, "鉴权失败！", HttpStatus.SC_UNAUTHORIZED, JahhanErrorCode.NO_AUTHORITY);
+				HttpAssert.notNull(tokenOVO, "鉴权失败！", HttpStatus.SC_UNAUTHORIZED, JahhanErrorCode.NO_AUTHORITY);
 				user.setTokenOVO(tokenOVO);
 				cache.setEx(
 						(UserTokenType.BEARER_TOKEN.getValue() + "_" + SERVICE + "_" + tokenOVO.getToken()).getBytes(),
@@ -212,18 +215,18 @@ public class Authentication {
 		} else if (tokenMap.containsKey(UserTokenType.SINGLE_TOKEN.getValue())) {
 			String ciphertext = tokenMap.get(UserTokenType.SINGLE_TOKEN.getValue());
 			ciphertext = ciphertext.replace(" ", "+");
-			if (!ciphertext.equals(BaseContext.CTX.getFirstSingleToken())) {
-				String browserKey = BaseContext.CTX.getBrowserSecrityKey();
+			if (!ciphertext.equals(baseGlobalVariable.getFirstSingleToken())) {
+				String browserKey = baseGlobalVariable.getBrowserSecrityKey();
 				String decrypt = crypto.decrypt(ciphertext, browserKey);
 				String token = decrypt.substring(0, decrypt.length() - 4);
 				String nonce = decrypt.substring(decrypt.length() - 4);
 				String newNonce = RandomStringUtils.randomAlphanumeric(4);
 				UserAuthenticationOVO authentication = userInft.authentication(token,
 						UserTokenType.SINGLE_TOKEN.getValue(), nonce, newNonce, authenticationVariable.getSign());
-				Assert.notNull(authentication, "鉴权失败！", HttpStatus.SC_UNAUTHORIZED, JahhanErrorCode.NO_AUTHORITY);
+				HttpAssert.notNull(authentication, "鉴权失败！", HttpStatus.SC_UNAUTHORIZED, JahhanErrorCode.NO_AUTHORITY);
 				if (null == authentication.getUserId()) {
 					authenticationVariable.setFirstSingleToken(true);
-					authenticationVariable.setKey(BaseContext.CTX.getBrowserPubKey());
+					authenticationVariable.setKey(baseGlobalVariable.getBrowserPubKey());
 					return true;
 				}
 				User user = new User();
@@ -237,10 +240,10 @@ public class Authentication {
 				user.setUserAuthorizationType(UserTokenType.SINGLE_TOKEN);
 				setUser(user);
 			}
-			authenticationVariable.setKey(BaseContext.CTX.getBrowserPubKey());
+			authenticationVariable.setKey(baseGlobalVariable.getBrowserPubKey());
 		} else if (tokenMap.containsKey(UserTokenType.OPEN_TOKEN.getValue())) {
 			String ciphertext = tokenMap.get(UserTokenType.OPEN_TOKEN.getValue());
-			String innerSecrityKey = BaseContext.CTX.getInnerSecrityKey();
+			String innerSecrityKey = baseGlobalVariable.getInnerSecrityKey();
 			String decrypt = crypto.decrypt(ciphertext, innerSecrityKey);
 			String token = decrypt.substring(0, decrypt.length() - 4);
 			byte[] userBytes = cache
@@ -255,7 +258,7 @@ public class Authentication {
 			} else {
 				UserAuthenticationOVO authentication = userInft.authentication(token,
 						UserTokenType.OPEN_TOKEN.getValue(), null, null, null);
-				Assert.notNull(authentication, "鉴权失败！", HttpStatus.SC_UNAUTHORIZED, JahhanErrorCode.NO_AUTHORITY);
+				HttpAssert.notNull(authentication, "鉴权失败！", HttpStatus.SC_UNAUTHORIZED, JahhanErrorCode.NO_AUTHORITY);
 				user = new User();
 				user.setUserAuthorizationType(UserTokenType.OPEN_TOKEN);
 				user.setUserId(authentication.getUserId());
@@ -273,7 +276,7 @@ public class Authentication {
 				tokenIVO.setRefreshToken(refreshToken);
 				tokenIVO.setToken(token);
 				TokenOVO tokenOVO = userInft.refreshToken(tokenIVO);
-				Assert.notNull(tokenOVO, "鉴权失败！", HttpStatus.SC_UNAUTHORIZED, JahhanErrorCode.NO_AUTHORITY);
+				HttpAssert.notNull(tokenOVO, "鉴权失败！", HttpStatus.SC_UNAUTHORIZED, JahhanErrorCode.NO_AUTHORITY);
 				user.setTokenOVO(tokenOVO);
 				cache.setEx(
 						(UserTokenType.BEARER_TOKEN.getValue() + "_" + SERVICE + "_" + tokenOVO.getToken()).getBytes(),
@@ -285,7 +288,8 @@ public class Authentication {
 	}
 
 	private void setUser(User user) {
-		AuthenticationVariable authenticationVariable = AuthenticationVariable.getAuthenticationVariable();
+		AuthenticationVariable authenticationVariable = (AuthenticationVariable) AuthenticationVariable
+				.getThreadVariable("authentication");
 		authenticationVariable.setUser(user);
 	}
 }

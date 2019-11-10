@@ -4,12 +4,12 @@ import java.util.concurrent.TimeUnit;
 
 import net.jahhan.cache.Redis;
 import net.jahhan.cache.RedisFactory;
-import net.jahhan.cache.context.RedisVariable;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
-import net.jahhan.common.extension.context.BaseVariable;
 import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.LogUtil;
 import net.jahhan.lock.DistributedLock;
+import net.jahhan.variable.BaseThreadVariable;
+import net.jahhan.variable.RedisVariable;
 
 public class ServiceReentrantLock implements DistributedLock {
 	private Redis redis;
@@ -32,7 +32,7 @@ public class ServiceReentrantLock implements DistributedLock {
 	@Override
 	public void lock() {
 		String ret = null;
-		String requestId = BaseVariable.getBaseVariable().getRequestId();
+		String requestId = ((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).getRequestId();
 		if (level > 0) {
 			LogUtil.lockInfo("reget serviceLock:" + lockName + ",lock request:" + requestId + ",level:" + level);
 			level++;
@@ -73,7 +73,7 @@ public class ServiceReentrantLock implements DistributedLock {
 	@Override
 	public boolean tryLock() {
 		Long ret = null;
-		String requestId = BaseVariable.getBaseVariable().getRequestId();
+		String requestId = ((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).getRequestId();
 		if (level > 0) {
 			LogUtil.lockInfo("reget serviceLock:" + lockName + ",lock request:" + requestId + ",level:" + level);
 			level++;
@@ -91,12 +91,12 @@ public class ServiceReentrantLock implements DistributedLock {
 	@Override
 	public void unlock() {
 		level--;
-		String requestId = BaseVariable.getBaseVariable().getRequestId();
+		String requestId = ((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).getRequestId();
 		LogUtil.lockInfo("unlock serviceLock:" + lockName + ",lock request:" + requestId + ",level:" + level);
 		if (level == 0) {
 			Long result = (Long) redis.releaseNoneReentrantLock(lockName, requestId);
 			if (result == 1) {
-				RedisVariable.getDBVariable().removeServiceLock(lockName);
+				((RedisVariable) RedisVariable.getThreadVariable("redis")).removeServiceLock(lockName);
 				LogUtil.lockInfo("release serviceLock:" + lockName + ",lock request:" + requestId + ",level:" + level);
 			} else {
 				LogUtil.lockInfo(

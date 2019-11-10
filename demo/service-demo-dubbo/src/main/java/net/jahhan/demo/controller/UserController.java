@@ -2,16 +2,15 @@ package net.jahhan.demo.controller;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import javax.servlet.http.HttpServletResponse;
 
-import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
+
+//import com.alibaba.dubbo.config.annotation.Service;
 
 import lombok.extern.slf4j.Slf4j;
 //import net.jahhan.authenticationcenter.intf.UserIntf;
 //import net.jahhan.authenticationcenter.vo.UserAuthenticationOVO;
 import net.jahhan.cache.annotation.Cache;
-import net.jahhan.common.extension.annotation.GlobalSyncTransaction;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.common.extension.utils.Assert;
 import net.jahhan.demo.dao.NUserDemoDao;
@@ -24,9 +23,10 @@ import net.jahhan.demo.vo.UserNameIVO;
 import net.jahhan.demo.vo.UserOVO;
 import net.jahhan.demo.vo.UserRegistIVO;
 import net.jahhan.demo.vo.UserRegistOVO;
-import net.jahhan.test.intf.TestService;
+import net.jahhan.lombok.annotation.ApiImpl;
 
 @Service
+@ApiImpl
 @Slf4j
 @Singleton
 public class UserController implements DemoIntf {

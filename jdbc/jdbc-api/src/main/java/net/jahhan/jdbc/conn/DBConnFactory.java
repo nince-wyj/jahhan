@@ -5,9 +5,9 @@ import java.sql.SQLException;
 import java.util.concurrent.atomic.AtomicLong;
 
 import net.jahhan.common.extension.context.BaseContext;
-import net.jahhan.common.extension.context.BaseVariable;
 import net.jahhan.jdbc.constant.enumeration.DBConnectLevel;
 import net.jahhan.spi.DataSourcePoolInit;
+import net.jahhan.variable.BaseThreadVariable;
 
 /**
  * 
@@ -48,7 +48,7 @@ public class DBConnFactory {
 	}
 
 	public static Connection WRITE_CONNECTION(String dataSource) throws SQLException {
-		if (BaseVariable.getBaseVariable().isDbLazyCommit()) {
+		if (((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).isDbLazyCommit()) {
 			return dsPool.getHoldConnection(dataSource);
 		}else{
 			return dsPool.getWriteConnection(dataSource);

@@ -8,13 +8,14 @@ import javax.inject.Singleton;
 import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.annotation.Order;
 import net.jahhan.common.extension.context.BaseContext;
-import net.jahhan.common.extension.context.BaseVariable;
-import net.jahhan.common.extension.context.VariableContext;
+import net.jahhan.common.extension.context.ThreadVariableContext;
 import net.jahhan.common.extension.exception.JahhanException;
-import net.jahhan.request.context.RequestVariable;
 import net.jahhan.spring.aspect.Filter;
 import net.jahhan.spring.aspect.Invocation;
 import net.jahhan.spring.aspect.Invoker;
+import net.jahhan.variable.BaseGlobalVariable;
+import net.jahhan.variable.BaseThreadVariable;
+import net.jahhan.variable.RequestVariable;
 
 @Extension("variablecontext")
 @Singleton
@@ -23,12 +24,12 @@ public class VariableContextFilter implements Filter {
 
 	public Object invoke(Invoker invoker, Invocation invocation) throws JahhanException {
 		BaseContext applicationContext = BaseContext.CTX;
-		VariableContext variableContext = new VariableContext();
+		ThreadVariableContext variableContext = new ThreadVariableContext();
 		if (null == applicationContext.getThreadLocalUtil().getValue()) {
 			applicationContext.getThreadLocalUtil().openThreadLocal(variableContext);
 		}
-		BaseVariable base = BaseVariable.getBaseVariable();
-		RequestVariable requestVariable = RequestVariable.getVariable();
+		BaseThreadVariable base = (BaseThreadVariable) BaseThreadVariable.getThreadVariable("base");
+		RequestVariable requestVariable = (RequestVariable) RequestVariable.getThreadVariable("request");
 		Map<String, String> attachments = requestVariable.getAttachments();
 		String requestId = attachments.get("request_id");
 		String chainId = attachments.get("chain_id");
@@ -48,7 +49,7 @@ public class VariableContextFilter implements Filter {
 		base.setRequestId(requestId);
 		base.setChainId(chainId);
 		base.setBehaviorId(behaviorId);
-		BaseContext.CTX.setChain(chainId, Thread.currentThread());
+		((BaseGlobalVariable) BaseContext.CTX.getVariable("base")).setChain(chainId, Thread.currentThread());
 
 		return invoker.invoke(invocation);
 	}

@@ -26,8 +26,8 @@ import net.jahhan.jdbc.conn.ConnectionWarpper;
 import net.jahhan.jdbc.conn.DBConnFactory;
 import net.jahhan.jdbc.constant.enumeration.DBConnectLevel;
 import net.jahhan.jdbc.constant.enumeration.DBConnectStrategy;
-import net.jahhan.jdbc.context.DBVariable;
 import net.jahhan.jdbc.dbconnexecutor.DBConnExecutorHolder;
+import net.jahhan.variable.DBVariable;
 
 @Singleton
 public class DBSessionHelper implements SessionHandler {
@@ -125,7 +125,7 @@ public class DBSessionHelper implements SessionHandler {
 	}
 
 	public Connection _getConnection(String dataSource, DBConnectLevel type) throws SQLException {
-		DBVariable dbVariable = DBVariable.getDBVariable();
+		DBVariable dbVariable = (DBVariable) DBVariable.getThreadVariable("db");
 		if (dbVariable == null) {
 			return null;
 		}

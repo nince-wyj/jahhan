@@ -10,14 +10,6 @@
 		<repository>
 			<id>jahhan</id>
 			<url>http://47.100.61.97:8081/nexus/content/repositories/jahhan</url>
-			<SNAPSHOT>
-				<enabled>true</enabled>
-			</SNAPSHOT>
-		</repository>
-		<repository>
-			<id>central</id>
-			<name>Team Nexus Repository</name>
-			<url>http://47.100.61.97:8081/nexus/content/repositories/central</url>
 		</repository>
 	</repositories>
 	<properties>
@@ -56,6 +48,13 @@
 			<groupId>org.neo4j</groupId>
 			<artifactId>neo4j-jdbc-driver</artifactId>
 			<version>3.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun</groupId>
+			<artifactId>tools</artifactId>
+			<version>1.6.0</version>
+			<scope>system</scope>
+			<systemPath>${env.JAVA_HOME}/lib/tools.jar</systemPath>
 		</dependency>
 	</dependencies>
 
@@ -119,6 +118,11 @@
 						<compilerArgs>
 							<arg>-parameters</arg>
 						</compilerArgs>
+						<annotationProcessors>
+							<annotationProcessor>
+								net.jahhan.javac.apiimpl.ApiImplAnnotationInjectProcessor
+							</annotationProcessor>
+						</annotationProcessors>
 					</configuration>
 				</plugin>
 			</plugins>

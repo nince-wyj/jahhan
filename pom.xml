@@ -34,22 +34,6 @@
 		<tag>${project.version}</tag>
 	</scm>
 
-	<repositories>
-		<repository>
-			<id>jahhan</id>
-			<name>Maven Central Staging Repository</name>
-			<url>http://47.100.61.97:8081/repository/maven-public/</url>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>jahhan</id>
-			<name>Maven Central Staging Repository</name>
-			<url>http://47.100.61.97:8081/repository/maven-public/</url>
-		</pluginRepository>
-	</pluginRepositories>
-
-
 	<modules>
 		<module>common</module>
 
@@ -64,7 +48,7 @@
 		<module>sdk</module>
 		<module>supported</module>
 
-		<!-- <module>dependency</module> -->
+		<module>dependency</module>
 		<!-- <module>mq</module> -->
 	</modules>
 	<properties>
@@ -92,7 +76,7 @@
 		<version.kryo>2.24.0</version.kryo>
 		<version.kryo_serializers>0.26</version.kryo_serializers>
 		<version.logback>1.2.3</version.logback>
-		<version.mysql_connector>5.1.29</version.mysql_connector>
+		<version.mysql_connector>8.0.18</version.mysql_connector>
 		<version.resteasy>3.1.4.Final</version.resteasy>
 		<version.servlet>3.1.0</version.servlet>
 		<version.slf4j>1.7.25</version.slf4j>
@@ -375,13 +359,6 @@
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
 				<version>${version.mysql_connector}</version>
-			</dependency>
-
-
-			<dependency>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>jetty</artifactId>
-				<version>${version.jetty}</version>
 			</dependency>
 
 			<dependency>

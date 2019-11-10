@@ -220,7 +220,7 @@ public class RestProtocol extends AbstractProxyProtocol {
 		return target.proxy(serviceType);
 	}
 
-	protected int getErrorCode(Throwable e) {
+	protected String getErrorCode(Throwable e) {
 		// TODO
 		return super.getErrorCode(e);
 	}

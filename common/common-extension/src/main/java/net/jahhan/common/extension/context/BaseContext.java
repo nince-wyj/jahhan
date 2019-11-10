@@ -9,7 +9,6 @@ import javax.inject.Singleton;
 import com.google.inject.Injector;
 
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @author nince
@@ -27,57 +26,43 @@ public class BaseContext {
 	@Inject
 	private Injector injector;
 	@Inject
-	private ThreadLocalUtil<VariableContext> threadLocalUtil;
+	private ThreadLocalUtil<ThreadVariableContext> threadLocalUtil;
 	@Getter
 	private Node node = Node.getInstance();
-	private Map<String, Thread> chainMap = new ConcurrentHashMap<>();
-	@Getter
-	@Setter
-	private String token;
-	@Getter
-	@Setter
-	private String innerSecrityKey;
-	@Getter
-	@Setter
-	private String appPubKey;
-	@Getter
-	@Setter
-	private String thirdPubKey;
-	@Getter
-	@Setter
-	private String browserSecrityKey;
-	@Getter
-	@Setter
-	private String browserPubKey;
-	@Getter
-	@Setter
-	private String firstSingleToken;
+	private static Map<String, Variable> variableMap = new ConcurrentHashMap<>();
 
-	public void setChain(String chainId, Thread t) {
-		chainMap.put(chainId, t);
+	public void putVariable(String type, Variable variable) {
+		variableMap.put(type, variable);
 	}
 
-	public Thread getChainThread(String chainId) {
-		return chainMap.get(chainId);
-	}
-
-	public void removeChain(String chainId) {
-		chainMap.remove(chainId);
-	}
-
-	public boolean containsChain(String chainId) {
-		return chainMap.containsKey(chainId);
+	public Variable getVariable(String type) {
+		Variable variable = variableMap.get(type);
+		if (null == variable) {
+			Map<String, Class<? extends Variable>> globalMap = Variable.getGlobalMap();
+			Class<? extends Variable> class1 = globalMap.get(type);
+			try {
+				variable = class1.newInstance();
+			} catch (InstantiationException | IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		}
+		return variable;
 	}
 
 	public Injector getInjector() {
 		return injector;
 	}
 
-	public ThreadLocalUtil<VariableContext> getThreadLocalUtil() {
+	public ThreadLocalUtil<ThreadVariableContext> getThreadLocalUtil() {
 		return threadLocalUtil;
 	}
 
-	public VariableContext getVariableContext() {
-		return threadLocalUtil.getValue();
+	public ThreadVariableContext getVariableContext() {
+		ThreadVariableContext value = threadLocalUtil.getValue();
+		if (null == value) {
+			threadLocalUtil.openThreadLocal(new ThreadVariableContext());
+			value = threadLocalUtil.getValue();
+		}
+		return value;
 	}
 }

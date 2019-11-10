@@ -121,7 +121,7 @@ public abstract class AbstractProxyProtocol extends AbstractProtocol {
         return re;
     }
 
-    protected int getErrorCode(Throwable e) {
+    protected String getErrorCode(Throwable e) {
         return JahhanErrorCode.UNKNOW_ERROR;
     }
 

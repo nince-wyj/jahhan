@@ -18,7 +18,6 @@ import net.jahhan.common.extension.annotation.Extension;
 import net.jahhan.common.extension.annotation.GlobalSyncTransaction;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.common.extension.context.BaseContext;
-import net.jahhan.common.extension.context.BaseVariable;
 import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.ExtensionUtil;
 import net.jahhan.common.extension.utils.LogUtil;
@@ -27,12 +26,13 @@ import net.jahhan.jdbc.annotation.DBConnections;
 import net.jahhan.jdbc.conn.DBConnFactory;
 import net.jahhan.jdbc.constant.enumeration.DBConnectLevel;
 import net.jahhan.jdbc.constant.enumeration.DBConnectStrategy;
-import net.jahhan.jdbc.context.DBVariable;
 import net.jahhan.jdbc.dbconnexecutor.DBConnExecutorHolder;
 import net.jahhan.jdbc.globaltransaction.DBConnExecutorHolderCache;
 import net.jahhan.register.ClusterMessageHolder;
 import net.jahhan.spi.Filter;
 import net.jahhan.spi.common.BroadcastSender;
+import net.jahhan.variable.BaseThreadVariable;
+import net.jahhan.variable.DBVariable;
 
 @Activate(group = Constants.PROVIDER, order = 1000)
 @Extension("dbConnect")
@@ -52,8 +52,8 @@ public class DBConnectFilter implements Filter {
 		}
 		DBConnections dBConnects = implMethod.getAnnotation(DBConnections.class);
 		GlobalSyncTransaction globalSyncTransaction = implMethod.getAnnotation(GlobalSyncTransaction.class);
-		BaseVariable baseVariable = BaseVariable.getBaseVariable();
-		DBVariable dbVariable = DBVariable.getDBVariable();
+		BaseThreadVariable baseVariable = (BaseThreadVariable) BaseThreadVariable.getThreadVariable("base");
+		DBVariable dbVariable = (DBVariable) DBVariable.getThreadVariable("db");
 		if (null != globalSyncTransaction) {
 			if (!baseVariable.isDbLazyCommit()) {
 				baseVariable.setDbLazyCommit(true);
@@ -124,7 +124,7 @@ public class DBConnectFilter implements Filter {
 			} else {
 				closeAllConnection(commit);
 			}
-			DBVariable.getDBVariable().clearLocalCache();
+			((DBVariable) DBVariable.getThreadVariable("db")).clearLocalCache();
 		}
 		return result;
 	}
@@ -140,7 +140,7 @@ public class DBConnectFilter implements Filter {
 	}
 
 	private void closeAllConnection(boolean commit) {
-		DBVariable dbVariable = DBVariable.getDBVariable();
+		DBVariable dbVariable = (DBVariable) DBVariable.getThreadVariable("db");
 		Set<String> dataSources = dbVariable.getDataSources();
 		for (String dataSource : dataSources) {
 			List<DBConnExecutorHolder> dbConnExecutorHolders = dbVariable.getDBConnExecutorHolders(dataSource);

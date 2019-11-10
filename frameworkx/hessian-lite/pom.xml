@@ -9,7 +9,7 @@
 	</parent>
 	<artifactId>hessian-lite</artifactId>
 	<packaging>jar</packaging>
-	<version>3.2.1-fixed-2</version>
+	<version>${hessian_lite_version}</version>
 	<name>Hessian Lite(Alibaba embed version)</name>
 	<properties>
 		<build.skip_maven_deploy>false</build.skip_maven_deploy>

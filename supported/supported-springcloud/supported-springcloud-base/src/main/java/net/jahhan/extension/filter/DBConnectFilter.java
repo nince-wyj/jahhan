@@ -12,20 +12,20 @@ import net.jahhan.common.extension.annotation.GlobalSyncTransaction;
 import net.jahhan.common.extension.annotation.Order;
 import net.jahhan.common.extension.constant.JahhanErrorCode;
 import net.jahhan.common.extension.context.BaseContext;
-import net.jahhan.common.extension.context.BaseVariable;
 import net.jahhan.common.extension.exception.JahhanException;
 import net.jahhan.common.extension.utils.ExtensionUtil;
 import net.jahhan.common.extension.utils.LogUtil;
 import net.jahhan.jdbc.annotation.DBConnect;
 import net.jahhan.jdbc.annotation.DBConnections;
 import net.jahhan.jdbc.conn.DBConnFactory;
-import net.jahhan.jdbc.context.DBVariable;
 import net.jahhan.jdbc.dbconnexecutor.DBConnExecutorHolder;
 import net.jahhan.register.ClusterMessageHolder;
 import net.jahhan.spi.common.BroadcastSender;
 import net.jahhan.spring.aspect.Filter;
 import net.jahhan.spring.aspect.Invocation;
 import net.jahhan.spring.aspect.Invoker;
+import net.jahhan.variable.BaseThreadVariable;
+import net.jahhan.variable.DBVariable;
 
 @Singleton
 @Order(1000)
@@ -37,14 +37,14 @@ public class DBConnectFilter implements Filter {
 		Method method = invocation.getMethod();
 		DBConnections dBConnects = method.getAnnotation(DBConnections.class);
 		GlobalSyncTransaction globalSyncTransaction = method.getAnnotation(GlobalSyncTransaction.class);
-		BaseVariable baseVariable = BaseVariable.getBaseVariable();
+		BaseThreadVariable baseVariable = (BaseThreadVariable) BaseThreadVariable.getThreadVariable("base");
 		if (null != globalSyncTransaction) {
 			if (!baseVariable.isDbLazyCommit()) {
 				baseVariable.setDbLazyCommit(true);
 				baseVariable.setGlobalSyncTransactionHold(true);
 			}
 		}
-		DBVariable dbVariable = DBVariable.getDBVariable();
+		DBVariable dbVariable = (DBVariable) DBVariable.getThreadVariable("db");
 		if (null != dBConnects && dBConnects.value().length > 0) {
 			for (DBConnect dBConnect : dBConnects.value()) {
 				String dataSource = dBConnect.dataSource();
@@ -55,7 +55,7 @@ public class DBConnectFilter implements Filter {
 				dbVariable.setDBConnectStrategy(dataSource, dBConnect.value());
 			}
 		}
-		String chainId = BaseVariable.getBaseVariable().getChainId();
+		String chainId = ((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).getChainId();
 		Object result = null;
 		boolean commit = true;
 		try {
@@ -99,7 +99,7 @@ public class DBConnectFilter implements Filter {
 	}
 
 	private void closeAllConnection(boolean commit) {
-		DBVariable dbVariable = DBVariable.getDBVariable();
+		DBVariable dbVariable = (DBVariable) DBVariable.getThreadVariable("db");
 		Set<String> dataSources = dbVariable.getDataSources();
 		for (String dataSource : dataSources) {
 			List<DBConnExecutorHolder> dbConnExecutorHolders = dbVariable.getDBConnExecutorHolders(dataSource);

@@ -7,9 +7,9 @@ import com.alibaba.dubbo.rpc.Result;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import net.jahhan.common.extension.context.OperationMessage;
-import net.jahhan.service.context.AuthenticationVariable;
 import net.jahhan.service.service.bean.Service;
 import net.jahhan.service.service.bean.User;
+import net.jahhan.variable.AuthenticationVariable;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -34,7 +34,7 @@ public class UserOperationMessage extends OperationMessage {
 		if (null != errorMessage) {
 			this.exceptionMsg = errorMessage;
 		}
-		AuthenticationVariable authenticationVariable = AuthenticationVariable.getAuthenticationVariable();
+		AuthenticationVariable authenticationVariable = (AuthenticationVariable) AuthenticationVariable.getThreadVariable("authentication");
 		this.user = authenticationVariable.getUser();
 		this.service = authenticationVariable.getService();
 	}

@@ -7,11 +7,11 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import net.jahhan.common.extension.context.BaseVariable;
 import net.jahhan.common.extension.utils.LogUtil;
-import net.jahhan.jdbc.context.DBVariable;
 import net.jahhan.jdbc.dbconnexecutor.DBConnExecutorHolder;
 import net.jahhan.spi.common.BroadcastSender;
+import net.jahhan.variable.BaseThreadVariable;
+import net.jahhan.variable.DBVariable;
 
 @Singleton
 public class DBConnExecutorHolderUtil {
@@ -19,7 +19,7 @@ public class DBConnExecutorHolderUtil {
 	private BroadcastSender broadcastSender;
 
 	public void commit(boolean commit) {
-		DBVariable dbVariable = DBVariable.getDBVariable();
+		DBVariable dbVariable = (DBVariable) DBVariable.getThreadVariable("db");
 		Set<String> dataSources = dbVariable.getDataSources();
 		for (String dataSource : dataSources) {
 			List<DBConnExecutorHolder> dbConnExecutorHolders = dbVariable.getDBConnExecutorHolders(dataSource);
@@ -35,7 +35,7 @@ public class DBConnExecutorHolderUtil {
 						}
 					} catch (Exception e) {
 						LogUtil.error("全局事务提交失败！！！！！！！！！！！", e);
-						broadcastSender.send("TRANSACTION_ROLLBACK", BaseVariable.getBaseVariable().getChainId());
+						broadcastSender.send("TRANSACTION_ROLLBACK", ((BaseThreadVariable) BaseThreadVariable.getThreadVariable("base")).getChainId());
 						dbConnExecutorHolder.rollback();
 					} finally {
 						try {

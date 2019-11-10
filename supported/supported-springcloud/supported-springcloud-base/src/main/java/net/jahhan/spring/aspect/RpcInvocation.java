@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 
-import net.jahhan.request.context.RequestVariable;
+import net.jahhan.variable.RequestVariable;
 
 public class RpcInvocation implements Invocation, Serializable {
 	private static final long serialVersionUID = -4355285085441097045L;
@@ -24,7 +24,7 @@ public class RpcInvocation implements Invocation, Serializable {
 	private ProceedingJoinPoint pjp;
 
 	private Class<?> implClass;
-	
+
 	public RpcInvocation() {
 	}
 
@@ -38,7 +38,9 @@ public class RpcInvocation implements Invocation, Serializable {
 		this.implClass = method.getDeclaringClass();
 		this.parameterTypes = parameterTypes == null ? new Class<?>[0] : parameterTypes;
 		this.arguments = arguments == null ? new Object[0] : arguments;
-		this.attachments = attachments == null ? RequestVariable.getVariable().getAttachments() : attachments;
+		this.attachments = attachments == null
+				? ((RequestVariable) RequestVariable.getThreadVariable("request")).getAttachments()
+				: attachments;
 		this.invoker = invoker;
 		this.pjp = pjp;
 	}
