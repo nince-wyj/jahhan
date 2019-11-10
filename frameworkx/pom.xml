@@ -35,7 +35,7 @@
 		<fastjson_version>1.2.38</fastjson_version>
 		<bsf_version>3.1</bsf_version>
 		<sorcerer_version>0.8</sorcerer_version>
-		<zookeeper_version>3.4.9</zookeeper_version>
+		<zookeeper_version>3.4.14</zookeeper_version>
 		<zkclient_version>0.2</zkclient_version>
 		<curator_version>2.12.0</curator_version>
 		<jedis_version>2.9.0</jedis_version>
