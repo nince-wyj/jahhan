@@ -80,7 +80,7 @@
 		<version.resteasy>3.1.4.Final</version.resteasy>
 		<version.servlet>3.1.0</version.servlet>
 		<version.slf4j>1.7.25</version.slf4j>
-		<version.spring>4.3.10.RELEASE</version.spring>
+		<version.spring>4.3.29.RELEASE</version.spring>
 		<version.spring_boot>1.5.9.RELEASE</version.spring_boot>
 		<version.tomcat_embed>8.0.44</version.tomcat_embed>
 		<version.validation>1.1.0.Final</version.validation>
