@@ -77,7 +77,7 @@
 		<version.kryo_serializers>0.26</version.kryo_serializers>
 		<version.logback>1.2.3</version.logback>
 		<version.mysql_connector>8.0.18</version.mysql_connector>
-		<version.resteasy>3.1.4.Final</version.resteasy>
+		<version.resteasy>4.5.7.Final</version.resteasy>
 		<version.servlet>3.1.0</version.servlet>
 		<version.slf4j>1.7.25</version.slf4j>
 		<version.spring>4.3.10.RELEASE</version.spring>
