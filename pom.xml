@@ -59,7 +59,7 @@
 		<version.commons_lang3>3.4</version.commons_lang3>
 		<version.commons_logging>1.2</version.commons_logging>
 		<version.curator>2.12.0</version.curator>
-		<version.dubbo>2.6.0</version.dubbo>
+		<version.dubbo>2.6.12</version.dubbo>
 		<version.ehcache>2.10.4</version.ehcache>
 		<version.fastjson>1.2.38</version.fastjson>
 		<version.fst>1.55</version.fst>
