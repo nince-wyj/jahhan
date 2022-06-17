@@ -61,7 +61,7 @@
 		<version.curator>2.12.0</version.curator>
 		<version.dubbo>2.6.0</version.dubbo>
 		<version.ehcache>2.10.4</version.ehcache>
-		<version.fastjson>1.2.38</version.fastjson>
+		<version.fastjson>1.2.83</version.fastjson>
 		<version.fst>1.55</version.fst>
 		<version.guice>4.0</version.guice>
 		<version.guice_servlet>4.0</version.guice_servlet>
