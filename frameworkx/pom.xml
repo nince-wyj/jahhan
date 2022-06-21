@@ -94,7 +94,7 @@
 
 		<maven-surefire-plugin_version>3.1</maven-surefire-plugin_version>
 		<c3p0_version>0.9.1.2</c3p0_version>
-		<mysql_connector_version>5.1.29</mysql_connector_version>
+		<mysql_connector_version>8.0.28</mysql_connector_version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
