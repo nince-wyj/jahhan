@@ -67,7 +67,7 @@
 		<version.guice_servlet>4.0</version.guice_servlet>
 		<version.hessian>4.0.38</version.hessian>
 		<version.hibernate_validator>5.4.1.Final</version.hibernate_validator>
-		<version.jackson>2.8.5</version.jackson>
+		<version.jackson>2.13.4.1</version.jackson>
 		<version.javassist>3.20.0-GA</version.javassist>
 		<version.javax_el>3.0.1-b08</version.javax_el>
 		<version.javax_ws_rs>2.0</version.javax_ws_rs>
